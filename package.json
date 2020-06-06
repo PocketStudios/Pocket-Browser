@@ -1,0 +1,21 @@
+{
+  "name": "pocket-browser",
+  "productName": "Pocket Browser",
+  "version": "1.0.0",
+  "description": "An open-sourced browser",
+  "main": "main.js",
+  "dependencies": {
+    "dialog": "^0.3.1",
+    "fs": "0.0.1-security",
+    "remote": "^0.2.6"
+  },
+  "devDependencies": {
+    "electron": "^9.0.0"
+  },
+  "scripts": {
+    "start": "electron .",
+    "build": "build.bat"
+  },
+  "author": "Pocket, Inc.",
+  "license": "MIT"
+}

@@ -1,0 +1,41 @@
+<script>
+    var browserVersion = 1.0;
+</script>
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css">
+         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        
+
+ <script src="external/jquery.js"></script>
+ <script src="external/popper.js"></script>
+ <script src="external/bootstrap.js"></script>
+ <link rel="stylesheet" href="external/bootstrap.css">
+ 
+        <title>Pocket Browser</title>
+    </head>
+    <body>
+        <nav class="nav">
+            <button onclick="goBack()" class="btn btn-light"><</button>
+            <button onclick="goForward()" class="btn btn-light">></button>
+            <button onclick="goHome()" class="btn btn-light">Home</button>
+            <button onclick="reloadPage()" class="btn btn-light" id="reload">R</button>
+            <img id="favicon" class="favicon">
+            <input id="address" class="url" placeholder="Enter web address">
+            <button onclick="loadURL()" class="btn btn-success">Go</button>
+            <button onclick="loadDev()" class="btn btn-light">Dev</button>
+            &nbsp;
+            &nbsp;
+                <div class="spinner-grow text-dark" role="status" id="state">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+               
+            
+        </nav>
+        
+        <webview id="view" class="page" src="http://www.duck.com/" autosize="on"></webview>
+    </body>
+    <script src="system.js"></script>
+    <script src="browser.js"></script>
+    
+</html>
