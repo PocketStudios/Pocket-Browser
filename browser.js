@@ -21,7 +21,7 @@ console.log("Going forward..")
 }
 function goHome() {
     console.log("Going home..")
-    webview.src = "http://duck.com";
+    webview.src = "https://duck.com";
 }
 function reloadPage() {
     webview.reload();
@@ -76,6 +76,7 @@ openSystemPage(url.slice(9).toLowerCase());
     } else {
         let https = url.slice(0, 8).toLowerCase();
     let http = url.slice(0, 7).toLowerCase();
+    let file = url.slice(0, 8).toLowerCase();
     if (https === "https://") {
   
         loadingSystemPage=false;
@@ -84,10 +85,12 @@ openSystemPage(url.slice(9).toLowerCase());
   
         loadingSystemPage=false;
         webview.src = url;
-    } else {
-  
+    } else if (file === "file:///") {
         loadingSystemPage=false;
-        webview.src = "http://" + url;
+        webview.src = url;
+} else {
+        loadingSystemPage=false;
+        webview.src = "https://" + url;
     }
 
     console.log("Non-System Page Detected")
@@ -99,7 +102,7 @@ function changeAddress() {
         loadingSystemPage=false;
         document.getElementById("state").hidden = true
     } else {    
-        if (webview.src.slice(0,8).toLowerCase() !== "https://" && webview.src.slice(0,8).toLowerCase() !== "file:///") {
+        if (webview.src.slice(0, 7) === "http://") {
         let myNotification = new Notification('In-Secure Webpage', {
   body: "Don't write any personal information.",
   icon: "s-icon.png"
@@ -125,3 +128,13 @@ webview.addEventListener("page-favicon-updated",changeFavicon)
 
 window.addEventListener('online',  backOnline)
 window.addEventListener('offline', wentOffline)
+
+
+var input = document.getElementById("address");
+
+input.addEventListener("keyup", function(event) {
+  if (event.keyCode === 13) {
+    event.preventDefault();
+    document.getElementById("go").click();
+  }
+});

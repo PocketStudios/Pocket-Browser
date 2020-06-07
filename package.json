@@ -1,12 +1,13 @@
 {
   "name": "pocket-browser",
   "productName": "Pocket Browser",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "An open-sourced browser",
   "main": "main.js",
   "dependencies": {
     "dialog": "^0.3.1",
     "fs": "0.0.1-security",
+    "jquery": "^3.5.1",
     "remote": "^0.2.6"
   },
   "devDependencies": {
