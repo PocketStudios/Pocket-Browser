@@ -24,7 +24,6 @@ function createWindow () {
   mainWindow.loadFile('index.html')
   // remove the default electronjs menu
   mainWindow.setMenu(null)
-  mainWindow.title("Loading.. - Pocket Browser")
 
 }
 
@@ -39,6 +38,7 @@ app.whenReady().then(() => {
     // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
+  app.allowRendererProcessReuse=false;
 })
 
 // Quit when all windows are closed.

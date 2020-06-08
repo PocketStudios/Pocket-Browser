@@ -1,33 +1,47 @@
 const electron = require("electron").remote
+const fs = require("fs");
+const log = require('electron-log');
 
-console.log("Loading browser.js")
+  var homePage;
+  goHome();
+
+  log.info("Starting browser..")
 var webview = document.getElementById("view");
-var state = document.getElementById("state");
 var onlineState = true;
 
 function goBack() {
 if(webview.canGoBack()) {
-console.log("Going back..")
+    log.info("Going back on request.")
 webview.goBack();
 changeAddress();
 }
 }
 function goForward() {
     if(webview.canGoForward()) {
-console.log("Going forward..")
-    webview.goForward();
+        log.info("Going forward on request.")
+            webview.goForward();
     changeAddress();
     }
 }
 function goHome() {
-    console.log("Going home..")
-    webview.src = "https://duck.com";
+    log.info("Going home on request.")
+        fs.readFile('./system/data/home.pocket', function (err, data) {
+        if (err) {
+            log.error("couldn't read file: ./system/data/home.pocket: " + err)
+          throw err; 
+        }
+       homePage=data;
+       webview.src = homePage;
+       log.info("Loading successfull")
+    
+      });
 }
 function reloadPage() {
+    log.info("Reloading on request..")
     webview.reload();
 }
 function changeFavicon(event) {
-    console.log("Changing favicon..")
+    log.info("Favicon changed")
         document.getElementById("favicon").src = event.favicons[0];
     document.getElementById("favicon").hidden = false;
       
@@ -37,7 +51,7 @@ function changeFavicon(event) {
 
 }
 function changeTitle() {
-    console.log("Changing title")
+    log.error("Title changed.")
     var viewTitle = webview.getTitle();
     if (viewTitle === "") {
         electron.getCurrentWindow().title = webview.src + " - Pocket Browser";
@@ -46,7 +60,7 @@ function changeTitle() {
     }
 }
 function loadDev() {
-    console.log("toggling dev tools")
+    log.info("Toggling DevTools from " + webview.isDevToolsOpened() + " to " + !webview.isDevToolsOpened())
     if (webview.isDevToolsOpened()) {
         webview.closeDevTools();
     } else {
@@ -54,6 +68,7 @@ function loadDev() {
     }
 }
 function wentOffline() {
+    log.warn("Connection lost.")
     onlineState=false;
     loadSystemPage("connection")
 
@@ -61,7 +76,9 @@ function wentOffline() {
 }
 function backOnline() {
     if (onlineState === false) {
+      log.warn("Connection is back.")  
     goBack();
+    onlineState=true;
     }
 }
 
@@ -70,35 +87,42 @@ function loadURL() {
     var url = document.getElementById("address").value;  
 
     if (isSystemPage(url)) {
-console.log("System Page Detected");
+log.info("Loading system page: " + url);
 loadingSystemPage=true;
 openSystemPage(url.slice(9).toLowerCase());
     } else {
-        let https = url.slice(0, 8).toLowerCase();
-    let http = url.slice(0, 7).toLowerCase();
-    let file = url.slice(0, 8).toLowerCase();
-    if (https === "https://") {
-  
+        log.info("Attempting to load URL: " + url);
+    if (url.slice(0, 8).toLowerCase() === "https://") {
+        log.info("Loading via HTTPS")
         loadingSystemPage=false;
         webview.src = url;
-    } else if (http === "http://") {
-  
+    } else if (url.slice(0, 7).toLowerCase() === "http://") {
+        log.info("Loading via HTTP")
         loadingSystemPage=false;
         webview.src = url;
-    } else if (file === "file:///") {
+    } else if (url.slice(0, 8).toLowerCase() === "file:///") {
+        log.info("Loading local file")
         loadingSystemPage=false;
         webview.src = url;
 } else {
+    log.info("Loading via Search.")
         loadingSystemPage=false;
-        webview.src = "https://" + url;
+fs.readFile('./system/data/engine.pocket', function (err, data) {
+    if (err) {
+        log.error("Couldn't read file: ./system/data/engine.pocket: " + err)
+      throw err; 
+    }
+    webview.src = String(data).replace("%s",url);
+    log.error("Loading successfull!")
+  });
     }
 
-    console.log("Non-System Page Detected")
+    
     }
 }
 function changeAddress() {
     if (loadingSystemPage === true) {
-        console.log("No changing address");
+        log.info("No changing address. system page.")
         loadingSystemPage=false;
         document.getElementById("state").hidden = true
     } else {    
@@ -107,9 +131,10 @@ function changeAddress() {
   body: "Don't write any personal information.",
   icon: "s-icon.png"
 })
+log.info("Sent notification due to insecure page.")
 
         }
-        console.log("Changing address..")
+        log.info("Changing address. normal URL.")
     document.getElementById("address").value = webview.src;
     document.getElementById("state").hidden = true
     changeTitle()
@@ -117,6 +142,7 @@ function changeAddress() {
     document.getElementById("reload").className = "btn btn-light";
 }
 function changeState() {
+    log.info("Changing reloading state to: true")
     document.getElementById("state").hidden = false;
     document.getElementById("reload").className = "btn btn-light disabled";
 }
@@ -129,12 +155,11 @@ webview.addEventListener("page-favicon-updated",changeFavicon)
 window.addEventListener('online',  backOnline)
 window.addEventListener('offline', wentOffline)
 
-
-var input = document.getElementById("address");
-
-input.addEventListener("keyup", function(event) {
+document.getElementById("address").addEventListener("keyup", function(event) {
   if (event.keyCode === 13) {
+      log.info("Enter is clicked inside Input URL")
     event.preventDefault();
     document.getElementById("go").click();
+
   }
 });

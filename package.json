@@ -6,6 +6,7 @@
   "main": "main.js",
   "dependencies": {
     "dialog": "^0.3.1",
+    "electron-log": "^4.2.1",
     "fs": "0.0.1-security",
     "jquery": "^3.5.1",
     "remote": "^0.2.6"

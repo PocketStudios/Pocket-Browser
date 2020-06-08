@@ -1,19 +1,38 @@
-function getSettings() {
-    var fs = require("fs");
-         
-    var jsonEngine = fs.readFileSync("data/engine.json", 'utf8');
+const fs = require('fs');
+const log = require('electron-log');
     
-    var jsEngine = JSON.parse(jsonEngine);
-
-    document.getElementById("currentEngine").innerHTML += jsEngine.url;
-
-
-alert("settings done")
+    function getSettings() {
+    fs.readFile('./system/data/engine.pocket', function (err, data) {
+      if (err) {
+          log.error("Couldn't load file: /system/data/engine.pocket: " + err)
+        throw err; 
+      }
+      try {
+      
+      var engine = String(data).replace("%s","<u>SearchTerm</u>");
+    document.getElementById("currentEngine").innerHTML += "<b>" + engine + "</b>";
+        
+      } catch(err) {
+          log.error("Couldn't add currentEngine URL");
+          log.error("Normal: " + data);
+          log.error("With Cut: " + engine)
+      }
+    });    
 }
+
+
+
 function changeSearchEngine() {
 var newEngine = document.getElementById("engine").value;
-    var fs = require("fs");
 
-        fs.writeFileSync("data/engine.json", JSON.stringify(newEngine));
-        alert("done")
+fs.writeFile('./system/data/engine.pocket', newEngine, function (err) {
+    if (err) {
+      throw err; 
+    }
+
+  });
+  let myNotification = new Notification('Pocket Browser', {
+    body: "Search Engine is changed successfully!.",
+    icon: "../s-icon.png"
+  })
 }

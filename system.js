@@ -1,8 +1,9 @@
-console.log("Loading system.js")
+const {BrowserWindow} = require("electron").remote;
+
+log.info("Loading system")
 function isSystemPage(url) {
-    var urlCut = url.slice(0, 9).toLowerCase();
-    if (urlCut === "pocket://") {
-        console.log("System page is detected by function")
+    if (url.slice(0, 9).toLowerCase() === "pocket://") {
+        log.info("System page is detected by function")
         return true;
         
     }
@@ -10,13 +11,24 @@ function isSystemPage(url) {
 }
 function openSystemPage(page) {
     
-    console.log("Loading system page: " + page);
-var webview = document.getElementById("view");
-webview.src = "system/" + page + ".html";
-document.getElementById("address").value = "pocket://" + page;
-document.getElementById("state").hidden = "true";
-changeTitle();
-document.getElementById("favicon").src = "system/favicon.ico"
+    log.info("Loading system page: " + page);
+    const systemPage = new BrowserWindow({
+        //default width and height of electron window
+        width: 600,
+        height: 400,
+        webPreferences: {
+          //allow node integration
+          //allows node to work in HTML and JS files.
+          nodeIntegration: true,
+          
+        }
+      })
+
+    systemPage.loadFile("system/" + page + ".html");
+    systemPage.setMenu(null);
+    systemPage.title("Pocket Browser " + page)
+    //systemPage.webContents.openDevTools();
+
 }
 function loadSystemPage(page) {
     document.getElementById("address").value = "pocket://" + page;

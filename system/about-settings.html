@@ -8,8 +8,10 @@
             }
             img {
                 border-radius: 50%;
-                border: 4px solid black;
+                border: 1px solid black;
                 animation: rainbow 2s infinite;
+                width: 80%;
+                height: 20%;
             }
             @keyframes rainbow {
                 0%{
@@ -28,10 +30,53 @@
                     background-color: red;
                 }
             }
+            #nav {
+  height: 100%;
+  width: 15%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: darkslategrey;
+  overflow-x: hidden;
+  padding-top: 20px;
+            }
+            #body {
+                margin-left: 15%;
+            }
+            nav button {
+                width: 100%;
+                height: 10%;
+                background-color: lightskyblue;
+                transition-duration: 0.4s;
+                color: darkgrey;
+                border: 1px solid black;
+                }
+
+
+nav button:hover {
+  background-color: darkgrey; /* Green */
+  color: cyan;
+}
+            
         </style>
     </head>
     <body>
-        <h3><img src="../s-icon.png"> Pocket Browser</h3>
+        <nav id="nav">
+            <img src="../s-icon.png">
+            <br>
+            <a href="settings.html"><button>Search</button></a>
+        <br>
+        <a href="home.html"><button>Home Page</button></a>
+        <br>
+        <button>Downloads</button>
+        <br>
+        <button>Notifications</button>
+        <br>
+        <a href="about-settings.html"><button>About</button></a>
+        </nav>
+        <div id="body">
+        <h3>About:</h3>
         <p>Version: 1.2 (Pre-release)</p>
         <p>Chromium: <span id="chrome-version">83</span></p> 
         <p>OS: <span id="os"></span> <span id="arch"></span></p>
@@ -40,5 +85,7 @@
         <br>
         <h5 style="color:green">&copy; 2020 Pocket, Inc. All rights reserved. </h5> <!-- Please keep this or above one to support the actual developer-->
         <script src="src/about.js"></script>
+        <script src="src/nav.js"></script>
+
     </body>
 </html>

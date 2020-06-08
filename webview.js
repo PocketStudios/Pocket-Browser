@@ -1,3 +1,13 @@
+/*
+
+this script is not used in Pocket Browser V1.2+,
+
+will be edited and used again at later time.
+
+   -Pocket Team.
+
+*/
+
 window.onload = () => {
     const $ = require('jquery')
     

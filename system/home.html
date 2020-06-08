@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Search Engine - Settings</title>
+        <title>Home Page - Settings</title>
         <style>
             body {
                 background-color: lightskyblue;
@@ -61,11 +61,11 @@ nav button:hover {
             
         </style>
     </head>
-    <body onload="getSettings()">
+    <body>
         <nav id="nav">
             <img src="../s-icon.png">
             <br>
-        <a href="settings.html"><button>Search</button></a>
+            <a href="settings.html"><button>Search</button></a>
         <br>
         <a href="home.html"><button>Home Page</button></a>
         <br>
@@ -77,15 +77,13 @@ nav button:hover {
         </nav>
         <div id="body">
         
-        <h3>Search Engine:</h3>
-        <p><input style="width: 50%" id="engine" placeholder="http://example.com/%s"><button onclick="changeSearchEngine()">Change</button></p>
-        <h6 style="text-align: center;">Write <u>%s</u> instead of query</h6>
+        <h3>Home Page:</h3>
+        <p><input id="home" style="width: 50%;" placeholder="http://example.com"><button onclick="changeHomePage()">Change</button></p>
         <hr style="width:25%">
-        <p id="currentEngine">Current Engine: </p>
+        <p id="currentHome">Current Home: </p>
         
     </div>
 
-    <script src="src/settings.js"></script>
-    <script src="src/nav.js"></script>
+    <script src="src/home.js"></script>
     </body>
 </html>

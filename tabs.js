@@ -1,3 +1,4 @@
+
 const {BrowserWindow} = require("electron").remote;
 function addTab() {
     const newWindow = new BrowserWindow({
@@ -17,5 +18,6 @@ function addTab() {
   newWindow.loadFile('index.html')
   // remove the default electronjs menu
   newWindow.setMenu(null)
-  newWindow.title("Loading.. - Pocket Browser")
+
+  log.info("Opening new tab.");
 }
