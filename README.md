@@ -1,5 +1,6 @@
-<img src="pocket-browser.gif">
-# Pocket Browser (In-Development)
+<img src="browser-logo.gif" style="border-radius:50%">
+
+<h1>Pocket Browser (In-Development)</h1>
 
 The browser that'll make your browsing more secure.
 
