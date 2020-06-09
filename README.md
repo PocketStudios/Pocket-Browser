@@ -1,3 +1,4 @@
+<img src="pocket-browser.gif">
 # Pocket Browser (In-Development)
 
 The browser that'll make your browsing more secure.
