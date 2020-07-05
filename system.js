@@ -1,4 +1,3 @@
-const {BrowserWindow} = require("electron").remote;
 
 log.info("Loading system")
 function isSystemPage(url) {
@@ -12,7 +11,7 @@ function isSystemPage(url) {
 function openSystemPage(page) {
     
     log.info("Loading system page: " + page);
-    const systemPage = new BrowserWindow({
+    const systemPage = new electron.BrowserWindow({
         //default width and height of electron window
         width: 600,
         height: 400,

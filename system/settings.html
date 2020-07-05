@@ -51,6 +51,7 @@
                 transition-duration: 0.4s;
                 color: darkgrey;
                 border: 1px solid black;
+                border-radius: 10px
                 }
 
 
@@ -58,14 +59,14 @@ nav button:hover {
   background-color: darkgrey; /* Green */
   color: cyan;
 }
-            
+
         </style>
     </head>
     <body onload="getSettings()">
         <nav id="nav">
             <img src="../s-icon.png">
             <br>
-        <a href="settings.html"><button>Search</button></a>
+        <a href="settings.html"><button><b>Search</b></button></a>
         <br>
         <a href="home.html"><button>Home Page</button></a>
         <br>
@@ -76,13 +77,13 @@ nav button:hover {
         <a href="about-settings.html"><button>About</button></a>
         </nav>
         <div id="body">
-        
+
         <h3>Search Engine:</h3>
         <p><input style="width: 50%" id="engine" placeholder="http://example.com/%s"><button onclick="changeSearchEngine()">Change</button></p>
         <h6 style="text-align: center;">Write <u>%s</u> instead of query</h6>
         <hr style="width:25%">
         <p id="currentEngine">Current Engine: </p>
-        
+
     </div>
 
     <script src="src/settings.js"></script>

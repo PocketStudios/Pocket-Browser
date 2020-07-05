@@ -16,14 +16,14 @@ function createWindow () {
       //allows node to work in HTML and JS files.
       nodeIntegration: true,
       webviewTag: true,
-      
+
     }
   })
 
   // load the index.html of the app.
   mainWindow.loadFile('index.html')
   // remove the default electronjs menu
-  mainWindow.setMenu(null)
+  //mainWindow.setMenu(null)
 
 }
 

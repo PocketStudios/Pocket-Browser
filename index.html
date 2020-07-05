@@ -5,7 +5,8 @@
     <head>
         <link rel="stylesheet" href="style.css">
          <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        
+         <link rel="stylesheet" href="node_modules/electron-tabs/electron-tabs.css">
+
 
  <script>
          window.jQuery = window.$ = require('./external/jquery.js');
@@ -17,31 +18,64 @@
         <title>Pocket Browser</title>
     </head>
     <body>
+
         <nav class="nav">
-            <button onclick="addTab()" class="btn btn-light">+</button>
+
+           <button onclick="addTab()" class="btn btn-light">+</button>
             <button onclick="goBack()" class="btn btn-light"><</button>
             <button onclick="goForward()" class="btn btn-light">></button>
             <button onclick="goHome()" class="btn btn-light">Home</button>
             <button onclick="reloadPage()" class="btn btn-light" id="reload">R</button>
-            <img id="favicon" class="favicon">
+
             <input id="address" class="url" placeholder="Enter web address">
             <button type="submit" id="go" onclick="loadURL()" class="btn btn-success">Go</button>
-            
+
             <button onclick="loadDev()" class="btn btn-light">Dev</button>
             &nbsp;
             &nbsp;
                 <div class="spinner-border text-dark" role="status" id="state">
                     <span class="sr-only">Loading...</span>
                   </div>
-               
-            
+
+
         </nav>
-        
-        <webview id="view" class="page" autosize="on"></webview>
+        <div class="etabs-tabgroup bg-light">
+            <div class="etabs-tabs"></div>
+            <div class="etabs-buttons"></div>
+          </div>
+          <div class="etabs-views"></div>
+        <script>
+            const TabGroup = require("electron-tabs");
+    let tabGroup = new TabGroup();
+    //TAB
+            let mainTab = tabGroup.addTab({
+                title: "New Tab",
+                active: true,
+            });
+
+</script>
+
+<script src="browser.js"></script>
+<script src="system.js"></script>
+<script src="tabs.js"></script>
+
+<script>
+    goHome();
+    mainTab.webview.addEventListener('did-finish-load',function(){
+        changeAddress(mainTab)
+    });
+    mainTab.webview.addEventListener("page-favicon-updated",function () {
+        changeFavicon(event,mainTab);
+    })
+    mainTab.webview.addEventListener('did-start-loading', changeState);
+    mainTab.webview.addEventListener('page-title-updated', function(){
+        log.info("title change attempt")
+        changeTitle(mainTab,event)
+    })
+</script>
 
     </body>
-    <script src="system.js"></script>
-    <script src="browser.js"></script>
-    
-    
+
+
+
 </html>
