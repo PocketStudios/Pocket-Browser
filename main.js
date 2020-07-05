@@ -23,7 +23,7 @@ function createWindow () {
   // load the index.html of the app.
   mainWindow.loadFile('index.html')
   // remove the default electronjs menu
-  //mainWindow.setMenu(null)
+  mainWindow.setMenu(null)
 
 }
 
