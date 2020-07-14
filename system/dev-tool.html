@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+         button {
+            background-color: lightskyblue;
+            transition-duration: 0.4s;
+            color: darkslategrey;
+            border: 2px solid black;
+        }
+
+
+         button:hover {
+            background-color: darkslategrey; /* Green */
+            color: lightskyblue;
+            border-color: darkslategray;
+        }
+    </style>
+
+    <meta charset="UTF-8">
+    <title>Pocket Browser Developer</title>
+</head>
+<body bgcolor="lightskyblue">
+<h1 style="font-family: 'Comic Sans MS'"><u>Developer Tool:</u></h1>
+<button onclick="loadPbDev()"><h3>Dev Tools</h3></button>
+<button onclick="getPbLogs()"><h3>Get Log</h3></button>
+<br>
+<p id="info"></p>
+
+<script>
+    var {BrowserWindow} = require("electron").remote;
+    function loadPbDev() {
+        BrowserWindow.getAllWindows().forEach(value => {
+            value.webContents.toggleDevTools();
+        })
+    }
+    function addInfo(name, info) {
+        document.getElementById('info').innerHTML += name + " : " + info + "<br>";
+    }
+    addInfo("os: ",process.platform + " " + process.arch)
+    var x;
+    for (x in process.versions) {
+        addInfo(x,process.versions[x])
+    }
+</script>
+</body>
+</html>

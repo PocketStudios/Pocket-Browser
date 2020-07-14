@@ -3,7 +3,7 @@ const log = require('electron-log');
 
 window.onload = function() {
     
-    fs.readFile('./system/data/home.pocket', function (err, data) {
+    fs.readFile(__dirname + '/data/home.pocket', function (err, data) {
       if (err) {
          log.error("Couldn't load file: /system/data/home.pocket: " + err);
         throw err; 
@@ -22,7 +22,7 @@ window.onload = function() {
 function changeHomePage() {
 var newHome = document.getElementById("home").value;
 
-fs.writeFile('./system/data/home.pocket', newHome, function (err) {
+fs.writeFile(__dirname + '/data/home.pocket', newHome, function (err) {
     if (err) {
       
       throw err; 

@@ -2,7 +2,7 @@ const fs = require('fs');
 const log = require('electron-log');
     
     function getSettings() {
-    fs.readFile('./system/data/engine.pocket', function (err, data) {
+    fs.readFile(__dirname + '/data/engine.pocket', function (err, data) {
       if (err) {
           log.error("Couldn't load file: /system/data/engine.pocket: " + err)
         throw err; 
@@ -25,7 +25,7 @@ const log = require('electron-log');
 function changeSearchEngine() {
 var newEngine = document.getElementById("engine").value;
 
-fs.writeFile('./system/data/engine.pocket', newEngine, function (err) {
+fs.writeFile(__dirname + '/data/engine.pocket', newEngine, function (err) {
     if (err) {
       throw err; 
     }

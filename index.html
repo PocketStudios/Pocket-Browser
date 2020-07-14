@@ -1,41 +1,64 @@
+<!--
+ The Official Pocket Browser Code,
+ Created and Written by the Pocket, Inc.
+ © 2020 Pocket Inc.
+ github.com/PocketInc/Pocket-Browser
+-->
 <script>
-    var browserVersion = 1.3;
+    // simple browser version variable.
+    var browserVersion = 1.4;
 </script>
 <html>
     <head>
+        <!-- custom style.cs file -->
         <link rel="stylesheet" href="style.css">
          <!-- jQuery first, then Popper.js, then Bootstrap JS -->
          <link rel="stylesheet" href="node_modules/electron-tabs/electron-tabs.css">
 
 
  <script>
+         //adding jquery in node app.
          window.jQuery = window.$ = require('./external/jquery.js');
  </script>
  <script src="external/popper.js"></script>
  <script src="external/bootstrap.js"></script>
  <link rel="stylesheet" href="external/bootstrap.css">
- <script src="tabs.js"></script>
+
         <title>Pocket Browser</title>
     </head>
     <body>
-
-        <nav class="nav">
-
-           <button onclick="addTab()" class="btn btn-light">+</button>
-            <button onclick="goBack()" class="btn btn-light"><</button>
-            <button onclick="goForward()" class="btn btn-light">></button>
-            <button onclick="goHome()" class="btn btn-light">Home</button>
-            <button onclick="reloadPage()" class="btn btn-light" id="reload">R</button>
+        <!-- navigation bar -->
+        <nav class="nav bg-light">
+            <button style="border-radius: 50%" onclick="goBack()" class="btn btn-light"><img src="./node_modules/bootstrap-icons/icons/arrow-left-short.svg" alt="" width="25" height="25" title="Back">
+            </button>
+            <button style="border-radius: 50%" onclick="goForward()" class="btn btn-light"><img src="./node_modules/bootstrap-icons/icons/arrow-right-short.svg" alt="" width="25" height="25" title="Forward"></button>
+            <button style="border-radius: 50%" onclick="goHome()" class="btn btn-light"><img src="./node_modules/bootstrap-icons/icons/house.svg" alt="" width="25" height="25" title="Home"></button>
+            <button style="border-radius: 50%" onclick="reloadPage()" class="btn btn-light" id="reload"><img src="./node_modules/bootstrap-icons/icons/bootstrap-reboot.svg" alt="" width="25" height="25" title="Reload"></button>
 
             <input id="address" class="url" placeholder="Enter web address">
-            <button type="submit" id="go" onclick="loadURL()" class="btn btn-success">Go</button>
+            <button type="submit" id="go" onclick="loadURL()" class="btn btn-light" style="border-radius: 50%"><img src="./node_modules/bootstrap-icons/icons/search.svg" alt="" width="15" height="15" title="Go"></button>
+            <button hidden="hidden" style="border-radius: 50%" class="wifi" id="wifi"><img src="node_modules/bootstrap-icons/icons/wifi-off.svg" width="25" height="25" title="No Internet"></button>
 
-            <button onclick="loadDev()" class="btn btn-light">Dev</button>
+            &nbsp;<div class="btn-group" style="position:absolute;right:2;">
+            <button style="border-radius: 50%" type="button" class="btn btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img src="./node_modules/bootstrap-icons/icons/three-dots-vertical.svg" alt="" width="25" height="25" title="Menu">
+
+            </button>
+            <div class="dropdown-menu dropdown-menu-right">
+                <button class="dropdown-item" type="button" onclick="addTab()">New Tab<small>     -     Ctrl+T</small></button>
+                <button class="dropdown-item" type="button" onclick="addWindow()">New Window<small>     -     Ctrl+N</small></button>
+                <button class="dropdown-item" type="button" onclick="loadDev()">Developer Tools</button>
+                <button class="dropdown-item" type="button">History<small>     -     Ctrl+H</small></button>
+                <button class="dropdown-item" type="button">Downloads<small>     -     Ctrl+J</small></button>
+                <button class="dropdown-item" type="button" onclick="openSystemPage('extentions')">Extentions</button>
+                <button class="dropdown-item" type="button" onclick="openSystemPage('settings')">Settings<small>     -     Ctrl+Alt+S</small></button>
+                <button class="dropdown-item" type="button" onclick="openSystemPage('about')">About</button>
+                <button class="dropdown-item" type="button" onclick="electron.app.exit()">Exit</button>
+            </div>
+        </div>
             &nbsp;
-            &nbsp;
-                <div class="spinner-border text-dark" role="status" id="state">
-                    <span class="sr-only">Loading...</span>
-                  </div>
+
+
 
 
         </nav>
@@ -45,33 +68,30 @@
           </div>
           <div class="etabs-views"></div>
         <script>
+            //create tab group and add a tab.
             const TabGroup = require("electron-tabs");
     let tabGroup = new TabGroup();
     //TAB
             let mainTab = tabGroup.addTab({
                 title: "New Tab",
                 active: true,
+
             });
 
 </script>
 
+<!-- add external scripts -->
 <script src="browser.js"></script>
 <script src="system.js"></script>
 <script src="tabs.js"></script>
-
+<script src="events.js"></script>
 <script>
-    goHome();
-    mainTab.webview.addEventListener('did-finish-load',function(){
-        changeAddress(mainTab)
-    });
-    mainTab.webview.addEventListener("page-favicon-updated",function () {
-        changeFavicon(event,mainTab);
-    })
-    mainTab.webview.addEventListener('did-start-loading', changeState);
-    mainTab.webview.addEventListener('page-title-updated', function(){
-        log.info("title change attempt")
-        changeTitle(mainTab,event)
-    })
+    //setup the page
+    //load homepage
+goHome();
+
+// add events to tab.
+    addEventsToTab(mainTab, true)
 </script>
 
     </body>

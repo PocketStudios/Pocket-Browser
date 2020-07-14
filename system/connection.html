@@ -1,15 +1,58 @@
+<!-- TODO: Update the design -->
 <html>
     <head>
+        <script>
+            window.jQuery = window.$ = require('../external/jquery.js');
+        </script>
         <style>
             body {
-                font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+                background-color: lightskyblue;
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"
+            }
+            button {
+                background-color: white;
+                border: 2px solid deepskyblue;
+                padding: 10px 24px;
+                transition-duration: 1s;
+		color: deepskyblue;
+		border-radius: 10px;
+            }
+            button:hover {
+                background-color: deepskyblue;
+		color: black;
 
             }
+	    #help {
+	border-left: 2px solid deepskyblue;
+	border-right: 2px solid deepskyblue;
+}
         </style>
-        <title>Connection Error</title>
+        <title>Connection Lost</title>
     </head>
     <body>
-<h2 style="text-align: center;">Couldn't connect to Server.</h2>
+<h2 style="text-align: center;color: deepskyblue"><u>Couldn't connect to Server.</u></h2>
 <p style="text-align: center;">Maybe check your internet connection?</p>
+    <p style="text-align: center"><small>Error Code: <b style='color:red'>PB_NO_NET</b></small></p>
+    <hr style="border-color: deepskyblue;width:50%">
+    <p style="text-align: center"><button onclick="toggleHelp()">Fix</button></p>
+    <div id="help">
+        <ul style="text-align: center;list-style-position: inside;">
+            <li>Turn on Wi-fi and reconnect.</li>
+            <br>
+            <li>Check your Router and it's wires.</li>
+            <br>
+            <li>Contact your ISP.</li>
+        </ul>
+    </div>
+    <script>
+        $('#help').hide();
+        function toggleHelp() {
+            if($("#help").is(":visible")){
+                $("#help").hide();
+            } else{
+                $("#help").show();
+            }
+        }
+    </script>
     </body>
 </html>

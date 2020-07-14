@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Credits</title>
+        <title>Credits - Pocket Browser</title>
         <style>
             body {
                 background-color: lightskyblue;
@@ -9,9 +9,9 @@
             img {
                 border-radius: 50%;
                 border: 4px solid black;
-            animation: rainbow 2s infinite;
+                animation: rainbow-bg 2s infinite;
             }
-            @keyframes rainbow {
+            @keyframes rainbow-bg {
                 0%{
                     background-color: red;
                 }
@@ -28,10 +28,39 @@
                     background-color: red;
                 }
             }
+            .rainbow {
+
+            animation: rainbow 4s infinite;
+            }
+            @keyframes rainbow {
+                0%{
+                    color: red;
+                }
+                25%{
+                    color: lightgreen;
+                }
+                50%{
+                    color: blue;
+                }
+                75%{
+                    color: yellow;
+                }
+                100%{
+                    color: red;
+                }
+            }
         </style>
     </head>
     <body>
         <h3><img src="../s-icon.png"> Pocket Browser</h3>
-      
+        <h4>Powered by:</h4>
+        <p>ElectronJS: &copy; GitHub.</p>
+        <p>NodeJS: &copy; NodeJS</p>
+        <p>Chromium: &copy; Google.</p>
+        <h4>Other:</h4>
+        <p>electron-tabs: Manages browser tabs functionality.</p>
+        <hr style="width: 25%;border-color: deepskyblue">
+        <p style="text-align: center"><small>&copy; 2020. <b class="rainbow">Pocket, Inc.</b></small></p>
+
     </body>
 </html>

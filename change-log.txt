@@ -1,0 +1,22 @@
+V1.4:
+
+- Changed background of tool bar.
+- Replaced the loading icon in tool bar to loading icon in tabs.
+- Added menu bar.
+- Organized the code.
+- App Source can now be seen easily, no longer in app.asar archive.
+- Added the connetion lost icon with notification.
+- Added icons. (arrows, house,..)
+- Added right click menu. (has bugs)
+- Added Simple Download Compatibility. (no pause or progress, TODO: will be changed later)
+- Started working on error pages.
+- Fixed Google not allowing logging in.
+- Fixed Tabs bugs.
+- Fixed Big titles taking all browser window.
+- Fixed WebPage always loading.
+- Changed Settings Design.
+- Changed No Connection Design.
+- Created ChangeLog.
+-------------------------
+Pocket Browser Change Log
+(C) 2020 - Pocket Inc.
