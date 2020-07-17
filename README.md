@@ -11,4 +11,4 @@
 <h3>Build from source:</h3>
 <p>To build from source, please look at the wiki page: <a href="http://github.com/PocketInc/Pocket-Browser/wiki/build">Building</a></p>
 <hr>
-<p>&copy; 2020 Copyright Pocket, Inc. All rights reserved.</p>
+<p>&copy; 2020 - Pocket, Inc. All rights reserved.</p>
