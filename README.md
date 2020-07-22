@@ -5,6 +5,9 @@
 <p>Annoyed from getting tracked while browsing the web?</p>
 <p>Download <a href="http://github.com/PocketInc/Pocket-Browser/releases">Pocket Browser</a> and stop all tracking activities</p>
 <hr>
+<h3>Contributing:</h3>
+<p>If you'd like to help this project, please look at the <a href="https://github.com/PocketInc/Pocket-Browser/issues/1">Issue #1</a>
+<hr>
 <h3>Run from source:</h3>
 <p>To run from source, please look at the wiki page: <a href="http://github.com/PocketInc/Pocket-Browser/wiki/run">Running</a></p>
 <hr>
