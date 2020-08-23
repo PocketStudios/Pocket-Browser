@@ -4,6 +4,9 @@
 <hr width="25%">
 <p>Annoyed from getting tracked while browsing the web?</p>
 <p>Download <a href="http://github.com/PocketInc/Pocket-Browser/releases">Pocket Browser</a> and stop all tracking activities</p>
+<a href="https://snapcraft.io/pocket-browser">
+<img alt="Get it from the Snap Store" src="https://snapcraft.io/static/images/badges/en/snap-store-black.svg" />
+</a>
 <hr>
 <h3>Contributing:</h3>
 <p>If you'd like to help this project, please look at the <a href="https://github.com/PocketInc/Pocket-Browser/issues/1">Issue #1</a>
