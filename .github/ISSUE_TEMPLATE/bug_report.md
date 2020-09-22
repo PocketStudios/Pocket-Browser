@@ -26,7 +26,7 @@ Error Code: (if found)
 **Steps**:
 ```Steps to produce the error.```
 
-*Additional context**:
+**Additional context**:
 ```Add anything else?```
  
 **Log:**
