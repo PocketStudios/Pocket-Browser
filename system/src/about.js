@@ -1,4 +1,3 @@
-const log = require("electron-log");
 
 window.addEventListener('DOMContentLoaded', () => {
   try {
@@ -13,9 +12,8 @@ window.addEventListener('DOMContentLoaded', () => {
   replaceText('os', process.platform);
   replaceText('arch',process.arch)
   replaceText('dir',process.execPath)
-  log.info("About page is done successfully!")
 }
 catch(err) {
-log.error("Error in About page: " + err);
+console.error(err);
 }
 })
