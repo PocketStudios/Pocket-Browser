@@ -19,7 +19,9 @@
 <hr>
 <h3>Need Help?</h3>
 <a href="https://pocket-inc.ml/discord">Official Discord</a>
+<br>
 <a href="https://pocket-inc.ml/support">Contact Us</a>
+<br>
 <a href="mailto:support@pocket-inc.ml">support@pocket-inc.ml</a>
 <hr>
 <p>&copy; 2020 - Pocket, Inc. All rights reserved.</p>
