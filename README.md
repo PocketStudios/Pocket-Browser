@@ -17,4 +17,9 @@
 <h3>Build from source:</h3>
 <p>To build from source, please look at the wiki page: <a href="http://github.com/PocketInc/Pocket-Browser/wiki/build">Building</a></p>
 <hr>
+<h3>Need Help?</h3>
+<a href="https://pocket-inc.ml/discord">Official Discord</a>
+<a href="https://pocket-inc.ml/support">Contact Us</a>
+<a href="mailto:support@pocket-inc.ml">support@pocket-inc.ml</a>
+<hr>
 <p>&copy; 2020 - Pocket, Inc. All rights reserved.</p>
