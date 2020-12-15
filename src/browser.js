@@ -70,7 +70,6 @@ function goHome() {
     })
 
 }
-
 //function to reload active  tab.
 function reloadPage() {
     var getTab = tabGroup.getActiveTab();
@@ -175,6 +174,7 @@ function backOnline() {
         pocket.info("Warning: Connection is back.")
         onlineState=true;
         document.getElementById("wifi").hidden = "hidden";
+        reloadPage()
 
         betaNotify("Connection is back!","You're reconnected to the Internet.")
     }

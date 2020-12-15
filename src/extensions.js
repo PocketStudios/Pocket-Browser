@@ -59,16 +59,54 @@ log.error = function (msg) {
 }
 //Events
 //InComplete.
+//Load WebPage of Extensions
+function loadWeb(id) {
+    const lblExtensions = new lbl(dataPath + "/data/extensions.pocket")
+    let exid = 0;
+    lblExtensions.on("line", function (line) {
+        require("fs").readFile(line + "/extension.json","utf8",function (error,data) {
+            if (error) console.error(error);
+            if (exid == id) {
+                var fileData = JSON.parse(data)
+                const extensionPage = new electron.BrowserWindow({
+                    width: 600,
+                    height: 400,
+                    resizable: false,
+                    webPreferences: {
+                        nodeIntegration: true,
+                    }
+                })
 
+                extensionPage.loadFile(line + "/" + fileData.files['web']);
+
+                extensionPage.setMenu(null);
+                extensionPage.setTitle(fileData.name + " - Pocket Browser")
+            }
+            exid++;
+        })
+
+    })
+}
 //Loading Extensions
 const lbl = require("line-by-line");
 window.onload = function () {
     if (!require("fs").existsSync(require("electron").remote.app.getPath("userData") + "/data/extensions.pocket")) return;
     const lblExtensions = new lbl(dataPath + "/data/extensions.pocket")
-
+    let exid = 0;
     lblExtensions.on("line", function (line) {
+        require("fs").readFile(line + "/extension.json","utf8",function (error,data) {
+            if (error) console.error(error);
+            var fileData = JSON.parse(data)
         var tag = document.createElement("script");
-        tag.src = line + "/api.js";
+        tag.src = line + "/" + fileData.files['main'];
         document.getElementById("extensions").appendChild(tag);
+
+            if(fileData.files['web']) {
+                document.getElementById("extensionsBtn").hidden = false;
+                document.getElementById("extensions-pages").innerHTML += "<button class='dropdown-item' type='button' onclick='loadWeb(" + exid + ")'>" + fileData.name + "</button>"
+            }
+            exid++;
+        })
+
     })
 }

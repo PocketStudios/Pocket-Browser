@@ -32,7 +32,7 @@ function openSystemPage(page) {
                     //allow node integration
                     //allows node to work in HTML and JS files.
                     nodeIntegration: true,
-
+                    webviewTag: true
                 }
             })
 
@@ -45,7 +45,6 @@ function openSystemPage(page) {
             systemPage.setMenu(null);
             //set title, will be changed when html title is loaded.
             systemPage.setTitle(page + " - Pocket Browser")
-
 }
 //function for loading system pages in a tab instead of in a window.
 function loadSystemPage(page, window = 0,target) {

@@ -7,7 +7,6 @@ function addEventsToTab(targetTab) {
     const domready = emittedOnce(targetTab.webview,"dom-ready");
     Promise.all([domready]).then(() => {
 
-
         //USER AGENT:
         // change useragent to Pb's official user agent.
         var newAgent = targetTab.webview.getUserAgent().replace(" Electron/" + process.versions['electron'],"").replace("PocketBrowser/1.5.0","Edg/84.0.522.44")
@@ -91,6 +90,7 @@ function addEventsToTab(targetTab) {
     })
     // when page starts loading run change state function.
     targetTab.webview.addEventListener('did-start-loading', function(){
+        if (onlineState == false) betaNotify("Internet Problem!","You don't have internet connection!")
         changeState(targetTab);
     });
     // when page title is updated, then run change title function.
@@ -167,6 +167,12 @@ document.getElementById("address").addEventListener('drop',function (event) {
 event.preventDefault();
     document.getElementById('address').value = event.dataTransfer.getData("Text")
 })
+document.getElementById("address").addEventListener('keypress',function (event) {
+    if (event.code == "Enter") {
+        event.preventDefault();
+        document.getElementById('go').click();
+    }
+})
 
 //select all text in address bar when clicked on it.
 document.getElementById("address").addEventListener("click",function () {
@@ -199,7 +205,7 @@ window.addEventListener("keypress",function (event) {
         } else if (event.key === "w") {
             targetTab.close();
         } else if (event.altKey && event.key === "s") {
-            openSystemPage("settings");
+            openSystemPage("search");
         } else if (event.key === 'j') {
             openSystemPage("downloads")
         } else if (event.key == "escape") {
