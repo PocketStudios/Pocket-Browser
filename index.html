@@ -6,7 +6,7 @@
 -->
 <script>
     // simple browser version variable.
-    var browserVersion = 1.5;
+    var browserVersion = require("./package.json").version;
     var darkMode = false;
     var webDark = false;
 </script>
@@ -26,12 +26,20 @@
          //adding jquery in node app.
          window.jQuery = window.$ = require('./external/jquery.js');
  </script>
+        <!-- Bootstrap & Popper -->
  <script src="external/popper.js"></script>
  <script src="external/bootstrap.js"></script>
  <link rel="stylesheet" href="external/bootstrap.css">
+        <!-- AutoComplete -->
 <link rel="stylesheet" href="external/autocomplete.css">
+        <!-- Drag Tabs - Drogula -->
         <link rel="stylesheet" href="node_modules/dragula/dist/dragula.css">
-
+        <!-- Notifications - awesome-notifications -->
+        <link rel="stylesheet" href="node_modules/awesome-notifications/dist/style.css">
+        <script src="node_modules/awesome-notifications/dist/index.var.js"></script>
+        <script>
+            let notifier = new AWN();
+        </script>
         <title>Pocket Browser</title>
     </head>
     <body>
@@ -46,7 +54,26 @@
             <button onclick="goForward()" class="btn btn-light noradius"><img src="./node_modules/bootstrap-icons/icons/arrow-right-short.svg" alt="" width="25" height="25" title="Forward"></button>
             <button onclick="goHome()" class="btn btn-light noradius"><img src="./node_modules/bootstrap-icons/icons/house.svg" alt="" width="25" height="25" title="Home"></button>
             <button onclick="reloadPage()" class="btn btn-light noradius" id="reload"><img src="./node_modules/bootstrap-icons/icons/bootstrap-reboot.svg" alt="" width="25" height="25" title="Reload"></button>
-
+            <div class="btn-group" id="bookmakrsBtn">
+                <button class="btn btn-light noradius" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="node_modules/bootstrap-icons/icons/bookmarks.svg" width="25" height="25" title="Extensions">
+                </button>
+                <div class="dropdown-menu">
+                    <button class="dropdown-item" onclick="addBookmark()">Add Bookmark</button>
+                    <div class="dropdown-divider"></div>
+                    <p class="custom-dropdown-item"><b>Bookmarks:</b></p>
+                    <div id="bookmarked"></div>
+                </div>
+            </div>
+            <div class="btn-group" id="downloads" hidden="hidden">
+                <button class="btn btn-light noradius" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="node_modules/bootstrap-icons/icons/download.svg" width="25" height="25" title="Downloads">
+                </button>
+                <div class="dropdown-menu">
+                    <p class="custom-dropdown-item"><b>Downloads:</b></p>
+                    <div id="downloads-list"></div>
+                </div>
+            </div>
             &nbsp;<div class="btn-group">
             <button class="btn icon" id="shieldButton" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <img id="shield" src="./node_modules/bootstrap-icons/icons/shield-check.svg" alt="" width="25" height="25" title="Secure">
@@ -76,7 +103,7 @@
                 <img src="node_modules/bootstrap-icons/icons/tools.svg" width="15" height="15" title="Extensions">
             </button>
             <div class="dropdown-menu">
-                <p class="custom-dropdown-item">Extensions:</p>
+                <p class="custom-dropdown-item"><b>Extensions:</b></p>
                 <div id="extensions-pages"></div>
             </div>
             </div>
@@ -90,10 +117,10 @@
                 <button class="dropdown-item" type="button" onclick="addWindow()">New Window<small>     -     Ctrl+N</small></button>
                 <button class="dropdown-item" type="button" onclick="loadDev()">Developer Tools</button>
                 <button class="dropdown-item" type="button" onclick="openSystemPage('history')">History<small>     -     Ctrl+H</small></button>
-                <button class="dropdown-item" type="button">Downloads<small>     -     Ctrl+J</small></button>
                 <button class="dropdown-item" type="button" onclick="openSystemPage('extensions')">Extentions</button>
-                <div class="custom-dropdown-item"><button class="btn custom-btn-light" type="button" onclick="findInPage()">Find</button> <b> | </b> <button class="btn custom-btn-light" onclick="zoom('add')"><img src="node_modules/bootstrap-icons/icons/zoom-in.svg" width="15" height="15" title="Zoom In"> </button> <button class="btn custom-btn-light" onclick="zoom('minus')"><img src="node_modules/bootstrap-icons/icons/zoom-out.svg" width="15" height="15" title="Zoom out"> </button> </div>
+                <div class="custom-dropdown-item"><button class="btn custom-btn-light" type="button" onclick="toggleFullscreen()"><img src="node_modules/bootstrap-icons/icons/fullscreen.svg" id="fullSc" width="15" height="15" title="Full Screen"></button> <b> | </b> <button class="btn custom-btn-light" onclick="zoom('add')"><img src="node_modules/bootstrap-icons/icons/zoom-in.svg" width="15" height="15" title="Zoom In"> </button> <button class="btn custom-btn-light" onclick="zoom('minus')"><img src="node_modules/bootstrap-icons/icons/zoom-out.svg" width="15" height="15" title="Zoom out"> </button> </div>
                 <button class="dropdown-item" type="button" onclick="openSystemPage('search')">Settings<small>     -     Ctrl+Alt+S</small></button>
+                <button class="dropdown-item" type="button" onclick="openSystemPage('feedback')">Feedback</button>
                 <button class="dropdown-item" type="button" onclick="openSystemPage('about')">About</button>
                 <button class="dropdown-item" type="button" onclick="electron.app.exit()">Exit</button>
             </div>
@@ -142,23 +169,6 @@ goHome();
     addEventsToTab(mainTab)
 </script>
 
-
-
-        <div id="toasts">
-        <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="10000">
-            <div class="toast-header">
-                <img src="system/favicon.ico" class="rounded mr-2" alt="Pb" width="25" height="25">
-                <strong class="mr-auto" id="notifyTitle"></strong>
-                <small></small>
-                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="toast-body bg-light" id="notifyBody">
-
-            </div>
-        </div>
-        </div>
         <div class="alert alert-light" role="alert" id="link" hidden="hidden">
 
               </div>
@@ -167,8 +177,12 @@ goHome();
     </body>
 <div id="extensions"></div>
     <script>
-        if (browserVersion < latestVersion) {
-            betaNotify("Update Available!","<button class='btn btn-info' onclick='openSystemPage(`updater`)'>Update</button>")
+        loadBookmarks()
+        if (parseFloat(browserVersion) < parseFloat(latestVersion)) {
+            notifier.options.labels.info = "Update!";
+            notifier.info("<p>New version is out now!</p><button class='btn btn-info btn-sm' onclick='openSystemPage(`updater`)'>Update</button>")
         }
+        //load start page if first load
+        if (!fs.existsSync(dataPath + "/data/errors.pocket")) openSystemPage("start")
     </script>
 </html>

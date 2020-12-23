@@ -1,22 +1,6 @@
 /*
  * © 2020 - Pocket Inc.
  */
-
-$("#toast").hide();
-$("#toast").toast("hide");
-
-$("#toast").on("hidden.bs.toast",function () {
-    $("#toast").hide();
-})
-
-function betaNotify(title,body,hide) {
-document.getElementById("notifyTitle").innerHTML = title;
-document.getElementById("notifyBody").innerHTML = body;
-
-    $("#toast").show();
-    $("#toast").toast("show");
-
-}
 function loadTheme() {
 var nbOfbuttons = document.getElementsByTagName("button").length;
 for (var btns = 0; btns < nbOfbuttons; btns++) {
@@ -28,7 +12,6 @@ document.getElementById("nav").classList.add("bg-pbdark")
     document.getElementsByClassName("etabs-tabgroup")[0].classList.remove("bg-light")
     document.getElementsByClassName("etabs-tabgroup")[0].classList.add("bg-pbdark")
     document.body.classList.add("bg-pbdark");
-
     var nbOfTabs = document.getElementsByClassName("etabs-tab").length;
     for (var tabs = 0; tabs < nbOfTabs; tabs++) {
         document.getElementsByClassName("etabs-tab")[tabs].classList.add("tab-pbdark")
@@ -52,6 +35,8 @@ fs.readFile(dataPath + "/data/theme.pocket","utf8",function (err,data) {
         loadTheme()
         darkMode = true;
         pocket.info("Dark Theme is enabled")
+        notifier.options.labels.info = "Dark Mode";
+        notifier.info("Dark Mode is currently in Beta.")
     }
 })
 fs.readFile(dataPath + "/data/website.pocket","utf8",function (err,data) {

@@ -12,6 +12,7 @@ img {
     animation: rainbow 2s infinite;
     width: 80%;
     height: 18%;
+    -webkit-user-drag: none;
 }
 @keyframes rainbow {
     0%{
@@ -56,16 +57,20 @@ nav button {
 
 nav button:hover {
     background-color: darkslategrey; /* Green */
-    color: lightskyblue;
+    color: #87cefa;
     border-color: lightskyblue;
 }
 
 .x {
     background-color: red;
     transition-duration: 0.4s;
+    float: right;
     color: darkslategrey;
+    text-align: center;
+    width: 4%;
+    height: 5%;
     border: 1px solid black;
-    border-radius: 25px;
+    border-radius: 5px;
 }
 .x:hover {
     background-color: darkred; /* Green */
@@ -107,9 +112,56 @@ button:hover {
     outline-color: darkslategrey;
     border: 2px solid darkslategrey;
     background-color: lightskyblue;
-    transition: background-color 1s ease-out;
+    transition: background-color 1s ease-out, color 1s ease-out;
+}
+.input:hover {
+    background-color: skyblue;
 }
 .input:focus {
     color: lightskyblue;
     background-color: darkslategrey;
+}
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+    top: 100%;
+    left: 50%;
+    margin-left: -60px;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+*:focus {outline: none}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Send a Feedback</title>
+    <link rel="stylesheet" href="src/style.css">
+    <style>
+        body {
+            background-color: lightskyblue;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        }
+        img {
+            border-radius: 50%;
+            border: 4px solid black;
+            animation: rainbow 2s infinite;
+            width: 128px;
+            height: 128px;
+        }
+        @keyframes rainbow {
+            0%{
+                background-color: red;
+            }
+            25%{
+                background-color: lightgreen;
+            }
+            50%{
+                background-color: blue;
+            }
+            75%{
+                background-color: yellow;
+            }
+            100%{
+                background-color: red;
+            }
+        }
+    </style>
+
+</head>
+<body>
+<center>
+    <img src="../style/b-icon.png">
+    <h3>Send a Feedback</h3>
+    <p id="info"></p>
+    <textarea class="input" style="height: 35vh;width: 75%" placeholder="The browser looks good, but it needs.." id="feedback"></textarea>
+    <br>
+    <button class="btn" onclick="sendFeedback()" id="btn">Send</button>
+    </center>
+<script>
+    let fs = require("fs");
+    let dataPath = require("electron").remote.app.getPath("userData");
+    let fetch = require("node-fetch");
+    async function sendFeedback() {
+        let feedback = document.getElementById("feedback").value;
+        let os = process.platform;
+        let ver = require("../package.json").version;
+        let {URLSearchParams} = require("url");
+        const params = new URLSearchParams();
+        params.append('desc', feedback);
+        params.append('os',os)
+        params.append('ver',ver)
+
+        await fetch("https://pocket-inc.ml/api/browser/feedback.php",{
+            method: "POST",
+            body: params
+        });
+        document.getElementById("feedback").disabled = "disabled"
+        document.getElementById("info").innerHTML = "Sent!"
+        document.getElementById("btn").onclick = "";
+    }
+</script>
+</body>
+</html>

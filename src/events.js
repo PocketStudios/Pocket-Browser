@@ -9,7 +9,7 @@ function addEventsToTab(targetTab) {
 
         //USER AGENT:
         // change useragent to Pb's official user agent.
-        var newAgent = targetTab.webview.getUserAgent().replace(" Electron/" + process.versions['electron'],"").replace("PocketBrowser/1.5.0","Edg/84.0.522.44")
+        var newAgent = targetTab.webview.getUserAgent().replace(" Electron/" + process.versions['electron'],"").replace("PocketBrowser/1.6.0","Edg/89.0.731.0")
 
         targetTab.webview.setUserAgent(newAgent)
 
@@ -90,7 +90,8 @@ function addEventsToTab(targetTab) {
     })
     // when page starts loading run change state function.
     targetTab.webview.addEventListener('did-start-loading', function(){
-        if (onlineState == false) betaNotify("Internet Problem!","You don't have internet connection!")
+        notifier.options.labels.alert = "Internet Problem!"
+        if (onlineState == false) notifier.alert("Check your internet connection!")
         changeState(targetTab);
     });
     // when page title is updated, then run change title function.
@@ -98,16 +99,13 @@ function addEventsToTab(targetTab) {
         changeTitle(targetTab,event)
     })
     targetTab.webview.addEventListener('did-fail-load',function (event) {
-        fs.exists(__dirname + '/system/error/' + event.errorCode + ".html", function (exists) {
-            pocket.error("Error occured: " + event.errorCode + " | " + event.errorDescription);
-            if (event.errorCode == -3) return;
-            if (exists === true) {
-                openSystemPage("error/" + event.errorCode)
-            } else {
-                openSystemPage('error')
-            }
-
-        })
+        if (event.errorCode == -3) return;
+        notifier.options.labels.alert = "Error: " + event.errorCode
+        notifier.alert(event.errorDescription)
+        if (event.errorCode == -21 || event.errorCode == -106) loadSystemPage("connection")
+        if (event.errorCode == -113) loadSystemPage("insecure")
+        if (event.errorCode == -6) loadSystemPage("file")
+        sendError(event.errorCode)
     })
 targetTab.webview.addEventListener("found-in-page",function (event) {
 document.getElementById("findResults").innerHTML = event.result.matches;
@@ -167,10 +165,12 @@ document.getElementById("address").addEventListener('drop',function (event) {
 event.preventDefault();
     document.getElementById('address').value = event.dataTransfer.getData("Text")
 })
-document.getElementById("address").addEventListener('keypress',function (event) {
-    if (event.code == "Enter") {
-        event.preventDefault();
+document.getElementById("address").addEventListener('keydown',function (event) {
+    if (event.code === "Enter") {
         document.getElementById('go').click();
+    } else if (event.key === "Escape") {
+        event.preventDefault()
+        document.getElementById("address").value = tabGroup.getActiveTab().webview.src;
     }
 })
 
@@ -208,8 +208,6 @@ window.addEventListener("keypress",function (event) {
             openSystemPage("search");
         } else if (event.key === 'j') {
             openSystemPage("downloads")
-        } else if (event.key == "escape") {
-            document.getElementById("address").value = tabGroup.getActiveTab().webview.src;
         }
     }
 })
@@ -218,7 +216,7 @@ window.addEventListener("keypress",function (event) {
 //auto-complete compatibility
 
     const autocomplete = require("autocompleter");
-
+    let suggestions;
 
     autocomplete({
         minLength: 1,
@@ -226,7 +224,12 @@ window.addEventListener("keypress",function (event) {
         fetch: function (text, update) {
             text = text.toLowerCase();
             getHistory();
-            var suggestions = fullHistory.filter(n => n.label.toLowerCase().includes(text))
+            suggestions = fullHistory.filter(n => n.label.toLowerCase().includes(text))
+            for (let i=0;i<suggestions.length;i++) {
+                if (suggestions[i].label.length > 100) {
+                    suggestions[i].label = suggestions[i].label.slice(0,100) + "..."
+                }
+            }
             update(suggestions);
 
         },
@@ -238,4 +241,45 @@ document.getElementById("go").click();
 
 const emittedOnce = (element, eventName) => new Promise(resolve => {
     element.addEventListener(eventName, event => resolve(event), { once: true })
+})
+let downloads = [];
+let downloadItems = [];
+electron.session.defaultSession.on('will-download',function (event,item,webContents) {
+    if (downloads[item.getFilename()]) {
+        item.stop();
+        return;
+    }
+    document.getElementById("downloads").hidden = "";
+   document.getElementById('downloads-list').innerHTML += "<button class='custom-dropdown-item' onclick='downloadSettings(`" + item.getFilename() + "`)'><span id='di-" + Object.keys(downloads).length + "'>" + item.getFilename() + "</span> - <span id='d-" + Object.keys(downloads).length + "'>Starting..</span></button>";
+   downloads[item.getFilename()] = Object.keys(downloads).length;
+   downloadItems[item.getFilename()] = item;
+
+   item.on("updated",function (event,state) {
+       if (state === 'progressing') {
+           if (item.isPaused()) {
+               document.getElementById("d-" + downloads[item.getFilename()]).innerHTML = "Paused";
+           } else {
+               if (item.getFilename() && document.getElementById("d-" + downloads[item.getFilename()])) {
+               document.getElementById("d-" + downloads[item.getFilename()]).innerHTML = Math.floor((100.0 * item.getReceivedBytes()) / item.getTotalBytes()) + "%";
+               }
+            }
+       }
+   })
+    item.on("done",function (event, state) {
+        if (state == "completed") {
+            document.getElementById("d-" + downloads[item.getFilename()]).innerHTML = "Done!"
+            downloads[item.getFilename()] = undefined;
+            downloadItems[item.getFilename()] = undefined;
+        }
+    })
+})
+
+electron.globalShortcut.register("Control+T",function () {
+    if (!electron.getCurrentWindow().isFocused()) return;
+    addTab()
+})
+electron.globalShortcut.register("F6",function () {
+    if (!electron.getCurrentWindow().isFocused()) return;
+    document.getElementById("address").focus()
+    electron.getCurrentWindow().webContents.selectAll()
 })

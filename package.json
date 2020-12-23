@@ -1,19 +1,21 @@
 {
   "name": "pocket-browser",
   "productName": "Pocket Browser",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "An open-sourced browser",
   "main": "main.js",
   "dependencies": {
     "autocompleter": "^6.0.3",
+    "awesome-notifications": "^3.1.1",
     "bootstrap-icons": "^1.0.0-alpha5",
     "dragula": "^3.7.2",
     "electron": "^9.0.5",
-    "electron-context-menu": "^2.1.0",
     "electron-builder": "latest",
+    "electron-context-menu": "^2.1.0",
     "electron-tabs": "^0.15.0",
     "fs": "0.0.1-security",
     "line-by-line": "^0.1.6",
+    "node-fetch": "^2.6.1",
     "remote": "^0.2.6"
   },
   "devDependencies": {

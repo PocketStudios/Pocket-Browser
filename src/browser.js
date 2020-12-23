@@ -158,8 +158,8 @@ function wentOffline() {
         pocket.info("Warning: Connection lost.")
         onlineState = false;
         document.getElementById("wifi").hidden = "";
-
-        betaNotify("Connection Lost!","Please check your Internet Connection.")
+        notifier.options.labels.warning = "Connection Lost!";
+        notifier.warning("Check your internet connection!")
 
     }
 }
@@ -174,9 +174,8 @@ function backOnline() {
         pocket.info("Warning: Connection is back.")
         onlineState=true;
         document.getElementById("wifi").hidden = "hidden";
-        reloadPage()
-
-        betaNotify("Connection is back!","You're reconnected to the Internet.")
+        notifier.options.labels.warning = "Connection Back!";
+        notifier.warning("Reconnected to the internet!")
     }
 }
 
@@ -195,9 +194,10 @@ function loadURL() {
     if (isSystemPage(url)) {
         pocket.info("Loading system page: " + url);
         loadingSystemPage=true;
-        openSystemPage(url.slice(9).toLowerCase());
+        systemPageType(url.slice(9))
     } else {
         var getTab = tabGroup.getActiveTab();
+        getTab.webview.nodeIntegration = false;
         if (url.slice(0, 8).toLowerCase() === "https://") {
             pocket.info("Loading via HTTPS")
             loadingSystemPage=false;
@@ -244,7 +244,8 @@ function changeAddress(target,event) {
             if (event.url.slice(0,8) === "https://") {
                 var protocol = "https";
             } else if (event.url.slice(0, 7) === "http://") {
-                betaNotify("In-Secure Webpage!","Don't write any personal information.")
+                notifier.options.labels.warning = "In-Secure Webpage!"
+                notifier.warning("Don't write personal information!")
             var protocol = "http"
             } else {
                 var protocol = "";
@@ -318,8 +319,12 @@ function changeSecureState(state) {
 
 function changeSitePerms(perm) {
 var getTab = tabGroup.getActiveTab();
+    var dataPath = require("electron").remote.app.getPath("userData");
+
+if (!fs.existsSync(dataPath + "/data/perms")) fs.mkdirSync(dataPath + "/data/perms");
 if (perm === 0) {
     //notifications
+    if (!fs.existsSync(dataPath + "/data/perms/not")) fs.mkdirSync(dataPath + "/data/perms/not")
  var notPerm = confirm("Do you want to give notifications access to current website?");
 
     if (getTab.webview.src.slice(0,8) === "https://") {
@@ -337,7 +342,6 @@ if (perm === 0) {
     }
 
  if (notPerm === true) {
-     var dataPath = require("electron").remote.app.getPath("userData");
 
      fs.writeFile(dataPath + '/data/perms/not/' + address, 'true', function (err) {
          if (err) return pocket.error(err);
@@ -350,8 +354,8 @@ if (perm === 0) {
      fs.writeFile( dataPath + '/data/perms/not/' + address, 'false', function (err) {
          if (err) return pocket.error(err);
          getTab.webview.executeJavaScript("window.Notification = null")
-
-         betaNotify("Notifications Disabled!","You've successfully disabled notifications for current website.")
+         notifier.options.labels.info = "Notifications";
+         notifier.info("Disabled for current website!");
      });
 
  }
@@ -397,7 +401,21 @@ function checkPerms(target,event) {
         }
     });
 
-
+    fs.access(dataPath + '/data/perms/pop/' + address, fs.constants.F_OK | fs.constants.W_OK, (err) => {
+        if (err) {
+            pocket.info("Perms File not found/not readable: " + address)
+            return false;
+        } else {
+            fs.readFile(dataPath + '/data/perms/pop/' + address, "utf8", function (err, data) {
+                if (err) return pocket.error(err);
+                if (data == "false") {
+                    target.webview.executeJavaScript("window.open = null").then(r => function () {
+                        pocket.info("Turning off popups")
+                    })
+                }
+            })
+        }
+    });
 
 }
 
@@ -490,6 +508,9 @@ function getHistory() {
     })
 }
 
+/*
+    Removed for Next Update
+
 function findInPage() {
     document.getElementById("toasts").innerHTML = "<div id=\"findinpage\" class=\"toast\" role=\"alert\" aria-live=\"assertive\" aria-atomic=\"true\" data-autohide=\"false\">\n" +
         "            <div class=\"toast-header\">\n" +
@@ -519,6 +540,20 @@ function find() {
 
     tabGroup.getActiveTab().webview.findInPage(text)
 }
+*/
+function toggleFullscreen() {
+    let newState = !electron.getCurrentWindow().isFullScreen();
+    electron.getCurrentWindow().setFullScreen(newState);
+    if (newState == false) {
+        document.getElementById("fullSc").src = "node_modules/bootstrap-icons/icons/fullscreen.svg"
+        notifier.options.labels.info = "FullScreen";
+        notifier.info("Fullscreen is now disabled!");
+    } else {
+     document.getElementById("fullSc").src = "node_modules/bootstrap-icons/icons/fullscreen-exit.svg"
+     notifier.options.labels.info = "FullScreen";
+     notifier.info("Fullscreen is now enabled!");
+    }
+}
 function zoom(type) {
     if (type == "add") {
         var newZoom = tabGroup.getActiveTab().webview.getZoomLevel() + 0.5;
@@ -527,5 +562,73 @@ function zoom(type) {
         var newZoom = tabGroup.getActiveTab().webview.getZoomLevel() - 0.5;
         tabGroup.getActiveTab().webview.setZoomLevel(newZoom)
     }
-    betaNotify("Pocket Browser","Zoom Level: " + tabGroup.getActiveTab().webview.getZoomLevel())
+    notifier.options.labels.info = "Page Zoom"
+    notifier.info("Zoom Level: " + tabGroup.getActiveTab().webview.getZoomLevel())
 }
+
+function downloadSettings(name) {
+    let buttons;
+    if (downloadItems[name].isPaused()) {
+        let action = electron.dialog.showMessageBoxSync(electron.getCurrentWindow(), {
+            message: "What action do you want to run on '" + name + "'",
+            buttons: ['Resume', 'Stop', 'Close']
+        })
+        if (action == 0) downloadItems[name].resume();
+        else if (action == 1) downloadItems[name].cancel();
+    } else {
+        let action = electron.dialog.showMessageBoxSync(electron.getCurrentWindow(), {
+            message: "What action do you want to run on '" + name + "'",
+            buttons: ['Pause', 'Stop', 'Close']
+        })
+        if (action == 0) downloadItems[name].pause();
+        else if (action == 1) downloadItems[name].cancel();
+    }
+}
+function sendError(code) {
+    if (fs.existsSync(dataPath + "/data/errors.pocket")) {
+        console.log("exists")
+        if (fs.readFileSync(dataPath + "/data/errors.pocket",{encoding: "utf8"}) === "true") {
+            // send
+            pocket.info("Sent Error Report to Pocket Team.");
+            return fetch(encodeURI("https://pocket-inc.ml/api/browser/error.php?error=" + code + "&os=" + process.platform + "&ver=" + browserVersion));
+        }
+    }
+    pocket.info("Didn't send report to Pocket Team due to setting disabled.")
+}
+
+function addBookmark() {
+    let tab = tabGroup.getActiveTab();
+    let name = tab.webview.getTitle();
+    let url = tab.webview.src;
+    if (!fs.existsSync(dataPath + "/data")) fs.mkdir(dataPath + "/data");
+    let newData;
+    if (fs.existsSync(dataPath + "/data/bookmarks.json")) {
+        let current = fs.readFileSync(dataPath + "/data/bookmarks.json");
+        let json = JSON.parse(current);
+        json[name] = url;
+        newData= JSON.stringify(json)
+    } else {
+        newData = '{"' + name + '": "' + url + '"}'
+    }
+    fs.writeFileSync(dataPath + "/data/bookmarks.json",newData);
+    loadBookmarks()
+
+}
+function loadBookmarks() {
+    document.getElementById("bookmarked").innerHTML = ""
+    if (fs.existsSync(dataPath + "/data/bookmarks.json")) {
+        let file = fs.readFileSync(dataPath + "/data/bookmarks.json");
+        let bookmarks = JSON.parse(file)
+        let bookmarksObj = Object.keys(bookmarks)
+        for (let i=0;i<bookmarksObj.length;i++) {
+            document.getElementById("bookmarked").innerHTML += "<div class='dropdown-item' onclick='openBookmark(" + i + ")'>" + bookmarksObj[i] + "</div>";
+        }
+    }
+    }
+    function openBookmark(id) {
+        let file = fs.readFileSync(dataPath + "/data/bookmarks.json");
+        let bookmarks = JSON.parse(file)
+        let bookmarksObj = Object.keys(bookmarks)
+        let currentTab = tabGroup.getActiveTab();
+        currentTab.webview.loadURL(bookmarks[bookmarksObj[id]])
+    }

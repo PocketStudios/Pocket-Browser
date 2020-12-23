@@ -23,7 +23,9 @@ height: calc(100% - 95%);
     outline-color: black;
 }
 body {
-    margin:0
+    margin: 0;
+    background-color: #f8f9fa!important;
+    overflow: hidden;
 }
 #wifi {
     background-color: red;
@@ -49,14 +51,9 @@ body {
 .icon {
     border-radius: 50%!important;
 }
-.pb-toast {
+#toasts {
     position: absolute;
     top: 0;
-    right: 0;
-}
-#toast {
-    position: absolute;
-    bottom: 0;
     right: 0;
 }
 .noradius {
@@ -118,4 +115,23 @@ background-color: #303030!important;
 }
 .tab-button-pbdark:hover {
     border-radius: 50%!important;
+}
+*:focus {outline: none}
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
