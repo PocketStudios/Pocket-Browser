@@ -24,4 +24,4 @@
 <br>
 <a href="mailto:support@pocket-inc.ml">support@pocket-inc.ml</a>
 <hr>
-<p>&copy; 2020 - Pocket, Inc. All rights reserved.</p>
+<p>&copy; 2021 - Pocket, Inc. All rights reserved.</p>

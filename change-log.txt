@@ -1,3 +1,8 @@
+v1.6.1:
+
+- Bug Fixes.
+- Small Improvements.
+
 v1.6:
 - Added Updater.
 - Added Sync.
@@ -56,4 +61,4 @@ V1.4:
 - Created ChangeLog.
 -------------------------
 Pocket Browser Change Log
-(C) 2020 - Pocket Inc.
+(C) 2021 - Pocket Inc.

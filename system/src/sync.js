@@ -12,15 +12,14 @@ async function getSync() {
         }
     };
 let state = await fetch("https://pocket-inc.ml/api/browser/logged.php?redirect=browser",opts).then(response => response.json());
-
 if (state.state === "success") {
     data = await fetch("https://pocket-inc.ml/api/browser/get_data.php",opts).then(response => response.json());
     document.getElementById("sync").innerHTML = "<small>Logged in: <b>" + state.user + "</b></small><br><small>Latest Sync: <b>" + data.latest + "</b></small><br><br><button onclick='Sync()'>Sync</button> <button onclick='loadSync()'>Load</button>";
 } else if(state.state === "error") {
-        document.getElementById("sync").innerHTML = "<p>Email:<br><input id='em' type='email'></p><p>Password:<br><input id='pas' type='password'></p><button onclick='login()'>Login</button>"
+        document.getElementById("sync").innerHTML = "<p>Email:<br><input id='em' type='email'></p><p>Password:<br><input id='pas' type='password'></p><button onclick='login()'>Login</button><br><br><small>Register at: pocket-inc.ml/register</small>"
 }
     } else {
-        document.getElementById("sync").innerHTML = "<p>Email:<br><input id='em' type='email'></p><p>Password:<br><input id='pas' type='password'></p><button onclick='login()'>Login</button>"
+        document.getElementById("sync").innerHTML = "<p>Email:<br><input id='em' type='email'></p><p>Password:<br><input id='pas' type='password'></p><button onclick='login()'>Login</button><br><br><small>Register at: pocket-inc.ml/register</small>"
 
     }
 }

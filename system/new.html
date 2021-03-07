@@ -3,14 +3,23 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon"/>
 
     <style>
+
         body {
             background-image: url("https://source.unsplash.com/daily");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
         }
         input {
-            width: 50%;
+            width: 40%;
             border: 2px solid lightskyblue;
             border-radius: 25px;
             height: 5%;
+            transition: width 500ms ease-out;
+        }
+        input:focus {
+            outline: 0;
+            width: 50%;
         }
         button {
             background-color: lightskyblue;
@@ -23,7 +32,7 @@
         button:hover {
             background-color: darkslategrey;
             border-color: lightskyblue;
-            color: lightskyblue;
+            color: skyblue;
         }
         img {
             border-radius: 50%;
@@ -52,13 +61,14 @@
 </head>
 <body>
 <p style="text-align: center"><img src="../style/b-icon.png"></p>
-<p style="text-align: center"><input id="search"></p>
-<p style="text-align: center"><button onclick="loadURL()" style="background-color: #00BBD9">Go</button></p>
+<p style="text-align: center"><input id="search" placeholder="Search"></p>
+<p style="text-align: center"><button onclick="loadURL()">Go</button></p>
 
 <script>
-    function loadURL() {
+    async function loadURL() {
     let term = document.getElementById('search').value.replace(/ /g,"+");
-    window.open("https://duckduckgo.com/?q=" + term)
+    await window.open("https://duckduckgo.com/?q=" + term);
+    window.close();
     }
 </script>
 </body>

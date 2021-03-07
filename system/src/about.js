@@ -12,6 +12,7 @@ window.addEventListener('DOMContentLoaded', () => {
   replaceText('os', process.platform);
   replaceText('arch',process.arch)
   replaceText('dir',process.execPath)
+  replaceText('version',require('electron').remote.app.getVersion());
 }
 catch(err) {
 console.error(err);

@@ -3,13 +3,13 @@ var dataPath = require("electron").remote.app.getPath("userData");
 
 //Function to easily add and modify tab events.
 
-function addEventsToTab(targetTab) {
+function addEventsToTab(targetTab,focus) {
     const domready = emittedOnce(targetTab.webview,"dom-ready");
     Promise.all([domready]).then(() => {
 
         //USER AGENT:
         // change useragent to Pb's official user agent.
-        var newAgent = targetTab.webview.getUserAgent().replace(" Electron/" + process.versions['electron'],"").replace("PocketBrowser/1.6.0","Edg/89.0.731.0")
+        var newAgent = targetTab.webview.getUserAgent().replace(" Electron/" + process.versions['electron'],"").replace("PocketBrowser/1.6.1","Edg/90.0.796.0")
 
         targetTab.webview.setUserAgent(newAgent)
 
@@ -45,7 +45,7 @@ function addEventsToTab(targetTab) {
                 }
             ]
         });
-
+        if (focus == true) targetTab.activate();
     })
 // when page finishes loading, run changeAddress functiion.
     targetTab.webview.addEventListener('did-finish-load',function(){
@@ -133,9 +133,10 @@ document.getElementById("findResults").innerHTML = event.result.matches;
     })
     targetTab.webview.addEventListener("new-window",function (window) {
         window.preventDefault();
-        addTab(window.url)
-        console.log("Window Created to url " + window.url)
-        console.log(window)
+        addTab(window.url,true)
+    })
+    targetTab.webview.addEventListener('close',function () {
+        targetTab.close();
     })
 }
 //Other Events
@@ -166,9 +167,7 @@ event.preventDefault();
     document.getElementById('address').value = event.dataTransfer.getData("Text")
 })
 document.getElementById("address").addEventListener('keydown',function (event) {
-    if (event.code === "Enter") {
-        document.getElementById('go').click();
-    } else if (event.key === "Escape") {
+    if (event.key == "Escape") {
         event.preventDefault()
         document.getElementById("address").value = tabGroup.getActiveTab().webview.src;
     }
@@ -272,14 +271,4 @@ electron.session.defaultSession.on('will-download',function (event,item,webConte
             downloadItems[item.getFilename()] = undefined;
         }
     })
-})
-
-electron.globalShortcut.register("Control+T",function () {
-    if (!electron.getCurrentWindow().isFocused()) return;
-    addTab()
-})
-electron.globalShortcut.register("F6",function () {
-    if (!electron.getCurrentWindow().isFocused()) return;
-    document.getElementById("address").focus()
-    electron.getCurrentWindow().webContents.selectAll()
 })

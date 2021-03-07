@@ -1,12 +1,13 @@
 <html>
     <head>
         <title>About - Pocket Browser</title>
+        <script type="text/javascript" src="https://pocket-inc.ml/api/updater.js"></script>
         <style>
             body {
                 background-color: lightskyblue;
                 font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
             }
-            img {
+            .img {
                 border-radius: 50%;
                 border: 4px solid black;
                 animation: rainbow 2s infinite;
@@ -31,14 +32,27 @@
         </style>
     </head>
     <body>
-        <h3><img src="../style/s-icon.png"> Pocket Browser</h3>
-        <p>Version: 1.6</p>
+        <h3><img src="../style/s-icon.png" class="img"> Pocket Browser</h3>
+        <p>Version: <span id="update"></span><span id="version"></span></p>
         <p>Chromium: <span id="chrome-version">83</span></p> 
         <p>OS: <span id="os"></span> <span id="arch"></span></p>
         <p><span id="dir"></span></p>
-        <hr style="width: 25%;float:left;"> 
+        <hr style="width: 25%;float:left;">
         <br>
-        <h5 style="color:green">&copy; 2020 - Pocket, Inc. All rights reserved. </h5> <!-- Please keep this or above one to support the actual developer-->
+        <h5 style="color:green">&copy; 2021 - Pocket, Inc. All rights reserved. </h5> <!-- Please keep this or above one to support the actual developer-->
         <script src="src/about.js"></script>
+        <script>
+            if (require('electron').remote.app.getVersion() == latestVersion) {
+                document.getElementById('update').innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="12" fill="green" class="bi bi-check-circle" viewBox="0 0 16 16">\n' +
+                    '  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>\n' +
+                    '  <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>\n' +
+                    '</svg>'
+            } else {
+                document.getElementById('update').innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="12" fill="red" class="bi bi-upload" viewBox="0 0 16 16">\n' +
+                    '  <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>\n' +
+                    '  <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>\n' +
+                    '</svg>'
+            }
+        </script>
     </body>
 </html>

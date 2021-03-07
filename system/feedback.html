@@ -50,7 +50,9 @@
     let dataPath = require("electron").remote.app.getPath("userData");
     let fetch = require("node-fetch");
     async function sendFeedback() {
+        if (!document.getElementById('feedback').value) return;
         let feedback = document.getElementById("feedback").value;
+        if (feedback == "" || feedback == null) return;
         let os = process.platform;
         let ver = require("../package.json").version;
         let {URLSearchParams} = require("url");

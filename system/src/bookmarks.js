@@ -1,5 +1,5 @@
 /*
- * &copy; 2020 - Pocket Inc.
+ * &copy; 2021 - Pocket Inc.
  */
 let fs = require("fs")
 var dataPath = require("electron").remote.app.getPath("userData");

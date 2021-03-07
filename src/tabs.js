@@ -1,11 +1,11 @@
 /*
  The Official Pocket Browser Code,
  Created and Written by the Pocket, Inc.
- © 2020 Pocket Inc.
+ © 2021 Pocket Inc.
  github.com/PocketInc/Pocket-Browser
  */
 
-function addTab(page) {
+function addTab(page,focus = false) {
   const TabGroup = require("electron-tabs")
   //create a tab with title New Tab.
   //if page is provided, load it.
@@ -20,7 +20,7 @@ function addTab(page) {
 
   });
   //add events from events.js
-  addEventsToTab(tab)
+  addEventsToTab(tab,focus)
 
   if (darkMode == true) loadTheme();
 }

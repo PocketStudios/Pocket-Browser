@@ -1,5 +1,5 @@
 /*
- * © 2020 - Pocket Inc.
+ * © 2021 - Pocket Inc.
  */
 const fs = require("fs");
 const electron = require("electron");

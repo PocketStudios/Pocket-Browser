@@ -1,8 +1,5 @@
 <html>
 <head>
-    <script>
-        window.jQuery = window.$ = require('../../external/jquery.js');
-    </script>
     <style>
         body {
             background-color: lightskyblue;
@@ -33,7 +30,6 @@
 <p style="text-align: center;">Maybe reopen the browser?</p>
 <p style="text-align: center"><small>Error Code: <b style='color:red'>PB_FILE_NOT_FOUND</b></small></p>
 <hr style="border-color: deepskyblue;width:50%">
-<p style="text-align: center"><button onclick="toggleHelp()">Fix</button></p>
 <div id="help">
     <ul style="text-align: center;list-style-position: inside;">
         <li>Check your internet connection.</li>
@@ -43,15 +39,5 @@
         <li>Contact support.</li>
     </ul>
 </div>
-<script>
-    $('#help').hide();
-    function toggleHelp() {
-        if($("#help").is(":visible")){
-            $("#help").hide();
-        } else{
-            $("#help").show();
-        }
-    }
-</script>
 </body>
 </html>

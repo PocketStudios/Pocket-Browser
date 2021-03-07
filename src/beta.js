@@ -1,5 +1,5 @@
 /*
- * © 2020 - Pocket Inc.
+ * © 2021 - Pocket Inc.
  */
 function loadTheme() {
 var nbOfbuttons = document.getElementsByTagName("button").length;

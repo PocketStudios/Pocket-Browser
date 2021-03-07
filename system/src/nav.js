@@ -1,5 +1,5 @@
 /*
- * © 2020 - Pocket Inc.
+ * © 2021 - Pocket Inc.
  */
 
 document.getElementById("nav").innerHTML = '<p style="text-align: center"><img src="../style/s-icon.png"></p>\n' +

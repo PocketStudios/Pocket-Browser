@@ -1,7 +1,7 @@
 /*
  The Official Pocket Browser Code,
  Created and Written by the Pocket, Inc.
- © 2020 Pocket Inc.
+ © 2021 Pocket Inc.
  github.com/PocketInc/Pocket-Browser
  */
 
@@ -62,7 +62,11 @@ function goHome() {
                 if (err || data == "") return;
                 else {
                     homePage = data;
-                    getTab.webview.loadURL(data);
+                    if (isSystemPage(data)) {
+                        systemPageType(data.slice(9))
+                    } else {
+                        getTab.webview.loadURL(data);
+                    }
                 }
 
             });
@@ -246,7 +250,7 @@ function changeAddress(target,event) {
             } else if (event.url.slice(0, 7) === "http://") {
                 notifier.options.labels.warning = "In-Secure Webpage!"
                 notifier.warning("Don't write personal information!")
-            var protocol = "http"
+                var protocol = "http"
             } else {
                 var protocol = "";
                 pocket.info("Changed Address, Unknown Protocol.")
@@ -298,7 +302,6 @@ function changeSecureState(state) {
                 document.getElementById("shield").title = "In-Secure";
                 document.getElementById("secureText").innerHTML = "In-secure connection via <b>HTTP</b>";
                 document.getElementById("secureText").style.color = "red";
-
             } else {
                 document.getElementById("secureText").innerHTML = "";
 

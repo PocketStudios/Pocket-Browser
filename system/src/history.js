@@ -1,5 +1,5 @@
 /*
- * &copy; 2020 - Pocket Inc.
+ * &copy; 2021 - Pocket Inc.
  */
 
 const lbl = require("line-by-line");
