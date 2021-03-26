@@ -17,13 +17,13 @@
     "remote": "^0.2.6"
   },
   "devDependencies": {
-    "electron-builder": "latest",
-    "electron": "^9.0.5"
+    "electron": "^9.0.5",
+    "electron-builder": "latest"
   },
   "scripts": {
     "start": "electron .",
     "build": "electron-builder",
-    "debug": "electron --inspect=8080 ."
+    "debug": "ELECTRON_ENV=dev electron ."
   },
   "author": "Pocket, Inc.",
   "repository": {

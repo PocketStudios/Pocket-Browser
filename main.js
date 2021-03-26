@@ -35,6 +35,9 @@ function createWindow () {
     session.defaultSession.on("will-download",function (e,item) {
         item.setSavePath(app.getPath("downloads") + "/" + item.getFilename())
     })
+    if (process.env.ELECTRON_ENV == "dev") {
+    mainWindow.openDevTools();
+    }
  }
 
 // This method will be called when Electron has finished

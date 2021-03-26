@@ -9,7 +9,7 @@ function addEventsToTab(targetTab,focus) {
 
         //USER AGENT:
         // change useragent to Pb's official user agent.
-        var newAgent = targetTab.webview.getUserAgent().replace(" Electron/" + process.versions['electron'],"").replace("PocketBrowser/1.6.1","Edg/90.0.796.0")
+        var newAgent = targetTab.webview.getUserAgent().replace(" Electron/" + process.versions['electron'],"").replace("PocketBrowser/1.6.2","Edg/91.0.831.1")
 
         targetTab.webview.setUserAgent(newAgent)
 
