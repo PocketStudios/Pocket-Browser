@@ -93,6 +93,7 @@ function addEventsToTab(targetTab,focus) {
         notifier.options.labels.alert = "Internet Problem!"
         if (onlineState == false) notifier.alert("Check your internet connection!")
         changeState(targetTab);
+        checkMode(targetTab);
     });
     // when page title is updated, then run change title function.
     targetTab.webview.addEventListener('page-title-updated', function(){
@@ -156,7 +157,6 @@ tabGroup.on("tab-removed", (functionTab, tabGroup) => {
         pocket.info("Closed a tab, but there's still more tabs..");
     } else {
         pocket.info("Closed all tabs.");
-        addTab();
     }
 });
 
@@ -220,7 +220,8 @@ window.addEventListener("keypress",function (event) {
     autocomplete({
         minLength: 1,
         input: document.getElementById("address"),
-        fetch: function (text, update) {
+        fetch: async function (text, update) {
+            let website = text;
             text = text.toLowerCase();
             getHistory();
             suggestions = fullHistory.filter(n => n.label.toLowerCase().includes(text))
@@ -228,6 +229,23 @@ window.addEventListener("keypress",function (event) {
                 if (suggestions[i].label.length > 100) {
                     suggestions[i].label = suggestions[i].label.slice(0,100) + "..."
                 }
+            }
+            if (text.includes(".com") || text.includes(".net") || text.includes(".org") || text.includes("www.") || text.includes("http")) {
+                suggestions.unshift(Object.create({
+                    label: website,
+                    value: website
+                }));
+            } else if (text.startsWith("pocket://")) {
+                suggestions.unshift(Object.create({label: website + " - System Page", value: website}));
+            } else if (text.startsWith("file:///")) {
+                suggestions.unshift(Object.create({label: website + " - Local File",value: website}));
+            } else {
+                data = await fs.readFileSync(dataPath + '/data/engine.pocket');
+                    suggestions.unshift(Object.create({
+                        label: website + " - Search",
+                        value: String(data).replace("%s",website.replace(" ","+"))
+                    }));
+
             }
             update(suggestions);
 

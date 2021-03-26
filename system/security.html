@@ -1,0 +1,37 @@
+<html>
+<head>
+    <title>Security - Settings</title>
+
+    <link rel="stylesheet" href="src/style.css">
+    <style>.normal-img {
+        width: unset;
+        height: unset;
+        animation: 0;
+        border-radius: 0;
+        border: 0;
+    }</style>
+</head>
+<body>
+<div id="body">
+    <nav id="nav"></nav>
+    <h3>Security:</h3>
+    <div class="container">
+    <div class="row">
+        <div class="col">
+            <button class="btn big-btn h-50" id="basic" onclick="changeMode(0)"><img class="normal-img" src="../node_modules/bootstrap-icons/icons/shield-exclamation.svg" width="12" height="12"><br> Basic</button>
+        </div>
+        <div class="col">
+            <button class="btn big-btn" id="balanced" onclick="changeMode(1)"><img class="normal-img" src="../node_modules/bootstrap-icons/icons/shield.svg" width="12" height="12"><br> Balanced</button>
+        </div>
+        <div class="col">
+            <button class="btn big-btn" id="strict" onclick="changeMode(2)"><img class="normal-img" src="../node_modules/bootstrap-icons/icons/shield-check.svg" width="12" height="12"><br> Strict</button>
+        </div>
+    </div>
+        <div id="info"></div>
+    </div>
+
+</div>
+<script src="src/security.js"></script>
+<script src="src/nav.js"></script>
+</body>
+</html>

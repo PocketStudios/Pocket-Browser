@@ -39,7 +39,7 @@
     const logReader = new lbl(logPath)
     logReader.on("line",function (line) {
         document.getElementById("info").innerHTML += line.replace("[INFO]","<b style='color:yellow'>[INFO]</b>").replace("[ERR]","<b style='color:red'>[ERR]</b>") + "<br>";
-        console.log("new line.")
+        window.scrollTo(0,document.body.scrollHeight);
     })
     function resetLog() {
 require("fs").writeFile(logPath,"",function (err) {

@@ -60,7 +60,10 @@ nav button:hover {
     color: #87cefa;
     border-color: lightskyblue;
 }
-
+.big-btn {
+    width: 20vh;
+    height: 20vh!important;
+}
 .x {
     background-color: red;
     transition-duration: 0.4s;
@@ -104,7 +107,11 @@ button:hover {
     border-color: darkslategrey;
 }
 .container {
-    padding-left: 20%;
+    width: 75%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
 }
 .input {
     width: 50%;
@@ -164,4 +171,19 @@ button:hover {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
+}
+.row {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+.col {
+    -ms-flex-preferred-size: 0;
+    flex-basis: 0;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    max-width: 100%;
 }

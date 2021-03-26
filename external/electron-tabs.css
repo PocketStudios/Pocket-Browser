@@ -7,6 +7,7 @@
   -webkit-user-select: none;
   user-select: none;
   display: none;
+  overflow: auto;
 }
 
 .etabs-tabgroup.visible {

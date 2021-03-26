@@ -20,6 +20,7 @@ pocket.info("Pocket Browser - v" + browserVersion)
 var webview = mainTab.webview;
 //Online State variable to track if internet connection is available.
 var onlineState = true;
+var dataPath = require("electron").remote.app.getPath("userData");
 
 
 // Function to go back in active tab.
@@ -286,6 +287,37 @@ if (!target.webview.isLoadingMainFrame()) {
     target.setIcon("");
 }
 }
+let allowedWebsites = [];
+let unallowedWebsites = [];
+let mode = 1;
+
+if (fs.existsSync(dataPath + "/data/security.pocket")) {
+        mode = fs.readFileSync(dataPath + "/data/security.pocket");
+    }
+
+async function checkMode(target) {
+    let website = target.webview.src;
+    if (mode == 1) {
+        if (!website.includes("https") && !website.includes("file:///") && !website.includes("pocket://")) {
+            if (!unallowedWebsites.includes(website)) {
+                if (!allowedWebsites.includes(website)) {
+                    let ask = confirm("The target page is unencrypted, do you want to continue?");
+                    if (ask === true) {
+                        allowedWebsites.push(website)
+                        target.webview.loadURL(website);
+                    } else {
+                        loadSystemPage("security/insecure")
+                        unallowedWebsites.push(website)
+                    }
+                }
+            } else loadSystemPage("security/insecure")
+        }
+    } else if (mode == 2) {
+        if (!website.includes("https") && !website.includes("file:///") && !website.includes("pocket://")) {
+            loadSystemPage("security/insecure");
+        }
+    }
+}
 
 function changeSecureState(state) {
     try {
@@ -304,7 +336,6 @@ function changeSecureState(state) {
                 document.getElementById("secureText").style.color = "red";
             } else {
                 document.getElementById("secureText").innerHTML = "";
-
                 document.getElementById("shieldButton").hidden = true;
                 document.getElementById("shield").title = "";
             }
