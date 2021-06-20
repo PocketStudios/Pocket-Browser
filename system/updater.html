@@ -61,7 +61,7 @@
                             }
                         }
                     })
-                    item.once('done', (event, state) => {
+                    item.once('done', async (event, state) => {
                         if (state === 'completed') {
                             document.getElementById('info').innerHTML = `Download Successfull, Openning File!`
                             await electron.shell.openPath(item.getSavePath())

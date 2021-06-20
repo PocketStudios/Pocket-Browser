@@ -28,17 +28,18 @@ function goBack() {
     // get the active tab
     var getTab = tabGroup.getActiveTab();
     //if the webview can go back.
-    if(getTab.webview.canGoBack()) {
+    if (getTab.webview.canGoBack()) {
         //log, then go back and change address.
         getTab.webview.goBack();
     }
 }
+
 // Function to go forward in active tab.
 function goForward() {
     // get the active tab
     var getTab = tabGroup.getActiveTab();
     //if the webview can go forward.
-    if(getTab.webview.canGoForward()) {
+    if (getTab.webview.canGoForward()) {
         //log, go forward and change address.
         getTab.webview.goForward();
     }
@@ -60,7 +61,7 @@ function goHome() {
 
         } else {
             fs.readFile(dataPath + '/data/home.pocket', "utf8", function (err, data) {
-                if (err || data == "") return;
+                if (err || data == "") {}
                 else {
                     homePage = data;
                     if (isSystemPage(data)) {
@@ -75,6 +76,7 @@ function goHome() {
     })
 
 }
+
 //function to reload active  tab.
 function reloadPage() {
     var getTab = tabGroup.getActiveTab();
@@ -84,19 +86,20 @@ function reloadPage() {
 //function to change favicon. powered by the favicon updated event.
 //event code can be found in events.js
 
-function changeFavicon(event,tab) {
+function changeFavicon(event, tab) {
     //try, if catched error log it.
     try {
         //event.favicons[0] = the favicon url taken from event.
         tab.setIcon(event.favicons[0])
-    } catch(err) {
+    } catch (err) {
         pocket.error("Error " + err + ": while changing favicon")
         pocket.error("Favicon Data: " + event.favicons[0])
     }
 }
+
 //function to change title.
 //powered by the title updated event in events.js
-function changeTitle(target,event) {
+function changeTitle(target, event) {
 //try, if catched error, log it.
     try {
 
@@ -111,7 +114,7 @@ function changeTitle(target,event) {
             if (target.webview.getTitle() != "") {
                 if (target.webview.getTitle().length > 20) {
                     pocket.info("Warning: Title is long.")
-                    target.setTitle(target.webview.getTitle().slice(0,20) + "..") //set tab title.
+                    target.setTitle(target.webview.getTitle().slice(0, 20) + "..") //set tab title.
                     target.tabElements.title.title = target.webview.getTitle();
                     if (tabGroup.getActiveTab() == target) { // if the active tab is the tab that needs title change.
                         electron.getCurrentWindow().title = target.webview.getTitle() + " - Pocket Browser" // then change the window title.
@@ -126,7 +129,7 @@ function changeTitle(target,event) {
         } else {
             if (viewTitle.length > 20) {
                 pocket.info("Warning: Title is long.")
-                target.setTitle(viewTitle.slice(0,20) + "..") //set tab title.
+                target.setTitle(viewTitle.slice(0, 20) + "..") //set tab title.
                 target.tabElements.title.title = viewTitle;
                 if (tabGroup.getActiveTab() == target) { // if the active tab is the tab that needs title change.
                     electron.getCurrentWindow().title = viewTitle + " - Pocket Browser" // then change the window title.
@@ -138,7 +141,7 @@ function changeTitle(target,event) {
                 target.setTitle(viewTitle);
             }
         }
-    } catch(err) {
+    } catch (err) {
         pocket.error("Error " + err + ": while changing title");
     }
 }
@@ -177,7 +180,7 @@ function backOnline() {
 
     if (onlineState === false) {
         pocket.info("Warning: Connection is back.")
-        onlineState=true;
+        onlineState = true;
         document.getElementById("wifi").hidden = "hidden";
         notifier.options.labels.warning = "Connection Back!";
         notifier.warning("Reconnected to the internet!")
@@ -198,18 +201,18 @@ function loadURL() {
 
     if (isSystemPage(url)) {
         pocket.info("Loading system page: " + url);
-        loadingSystemPage=true;
+        loadingSystemPage = true;
         systemPageType(url.slice(9))
     } else {
         var getTab = tabGroup.getActiveTab();
         getTab.webview.nodeIntegration = false;
         if (url.slice(0, 8).toLowerCase() === "https://") {
             pocket.info("Loading via HTTPS")
-            loadingSystemPage=false;
+            loadingSystemPage = false;
             getTab.webview.loadURL(url);
         } else if (url.slice(0, 7).toLowerCase() === "http://") {
             pocket.info("Loading via HTTP")
-            loadingSystemPage=false;
+            loadingSystemPage = false;
             getTab.webview.loadURL(url);
         } else if (url.slice(0, 8).toLowerCase() === "file:///") {
             pocket.info("Loading local file")
@@ -221,7 +224,7 @@ function loadURL() {
             getTab.webview.loadURL("http://" + url);
         } else {
             pocket.info("Loading via Search.")
-            loadingSystemPage=false;
+            loadingSystemPage = false;
             var dataPath = require("electron").remote.app.getPath("userData");
 
             fs.readFile(dataPath + '/data/engine.pocket', function (err, data) {
@@ -229,24 +232,25 @@ function loadURL() {
                     pocket.error("Error " + err + ": ./userData/data/engine.pocket")
                     throw err;
                 }
-                getTab.webview.loadURL(String(data).replace("%s",url));
+                getTab.webview.loadURL(String(data).replace("%s", url));
             });
         }
 
 
     }
 }
+
 //function used in page loaded event.
 
-function changeAddress(target,event) {
+function changeAddress(target, event) {
     //if loading system page, then do nothing.
     //otherwise, if url is http, send warn notification.
     // then turn off the loading gif, and set the address bar value if target tab is same as active one.
     if (loadingSystemPage === true) {
-        loadingSystemPage=false;
+        loadingSystemPage = false;
     } else {
         if (event.url) {
-            if (event.url.slice(0,8) === "https://") {
+            if (event.url.slice(0, 8) === "https://") {
                 var protocol = "https";
             } else if (event.url.slice(0, 7) === "http://") {
                 notifier.options.labels.warning = "In-Secure Webpage!"
@@ -256,15 +260,15 @@ function changeAddress(target,event) {
                 var protocol = "";
                 pocket.info("Changed Address, Unknown Protocol.")
             }
-            checkPerms(target,event)
+            checkPerms(target, event)
             showCookies(event);
             checkHistory(event.url)
             target.setIcon("");
 
             if (tabGroup.getActiveTab() === target) {
                 changeSecureState(protocol)
-                    if ($("#address").is(":focus")) return;
-                    document.getElementById("address").value = event.url;
+                if ($("#address").is(":focus")) return;
+                document.getElementById("address").value = event.url;
 
 
             }
@@ -275,6 +279,7 @@ function changeAddress(target,event) {
 
 
 }
+
 // function used when page starts loading.
 function changeState(target) {
     if (target.webview.isLoadingMainFrame()) {
@@ -282,18 +287,20 @@ function changeState(target) {
     }
 
 }
+
 function resetState(target) {
-if (!target.webview.isLoadingMainFrame()) {
-    target.setIcon("");
+    if (!target.webview.isLoadingMainFrame()) {
+        target.setIcon("");
+    }
 }
-}
+
 let allowedWebsites = [];
 let unallowedWebsites = [];
 let mode = 1;
 
 if (fs.existsSync(dataPath + "/data/security.pocket")) {
-        mode = fs.readFileSync(dataPath + "/data/security.pocket");
-    }
+    mode = fs.readFileSync(dataPath + "/data/security.pocket");
+}
 
 async function checkMode(target) {
     let website = target.webview.src;
@@ -346,62 +353,63 @@ function changeSecureState(state) {
             document.getElementById("shield").title = "";
         }
 
-    } catch(err) {
+    } catch (err) {
         pocket.error("Error " + err + ": while changing secure state");
     }
 }
 
 function changeSitePerms(perm) {
-var getTab = tabGroup.getActiveTab();
+    var getTab = tabGroup.getActiveTab();
     var dataPath = require("electron").remote.app.getPath("userData");
 
-if (!fs.existsSync(dataPath + "/data/perms")) fs.mkdirSync(dataPath + "/data/perms");
-if (perm === 0) {
-    //notifications
-    if (!fs.existsSync(dataPath + "/data/perms/not")) fs.mkdirSync(dataPath + "/data/perms/not")
- var notPerm = confirm("Do you want to give notifications access to current website?");
+    if (!fs.existsSync(dataPath + "/data/perms")) fs.mkdirSync(dataPath + "/data/perms");
+    if (perm === 0) {
+        //notifications
+        if (!fs.existsSync(dataPath + "/data/perms/not")) fs.mkdirSync(dataPath + "/data/perms/not")
+        var notPerm = confirm("Do you want to give notifications access to current website?");
 
-    if (getTab.webview.src.slice(0,8) === "https://") {
-        var start = getTab.webview.src.slice(8);
-    } else if (getTab.webview.src.slice(0,7) === "http://") {
-        var start = getTab.webview.src.slice(7);
-    } else {
-        var start = getTab.webview.src;
+        if (getTab.webview.src.slice(0, 8) === "https://") {
+            var start = getTab.webview.src.slice(8);
+        } else if (getTab.webview.src.slice(0, 7) === "http://") {
+            var start = getTab.webview.src.slice(7);
+        } else {
+            var start = getTab.webview.src;
+        }
+        if (start.slice(0, 4) === "www.") {
+            start = start.slice(4)
+        }
+        if (start.substr(0, start.indexOf('/'))) {
+            var address = start.substr(0, start.indexOf('/'));
+        }
+
+        if (notPerm === true) {
+
+            fs.writeFile(dataPath + '/data/perms/not/' + address, 'true', function (err) {
+                if (err) return pocket.error(err);
+
+                reloadPage();
+            });
+        } else {
+            var dataPath = require("electron").remote.app.getPath("userData");
+
+            fs.writeFile(dataPath + '/data/perms/not/' + address, 'false', function (err) {
+                if (err) return pocket.error(err);
+                getTab.webview.executeJavaScript("window.Notification = null")
+                notifier.options.labels.info = "Notifications";
+                notifier.info("Disabled for current website!");
+            });
+
+        }
+    } else if (perm === 1) {
+        //popups
+    } else if (perm === 2) {
+        //js
+        getTab.webview.webpreferences = "javascript=no";
     }
-    if (start.slice(0,4) === "www.") {
-        start = start.slice(4)
-    }
-    if (start.substr(0, start.indexOf('/'))) {
-        var address = start.substr(0, start.indexOf('/'));
-    }
 
- if (notPerm === true) {
-
-     fs.writeFile(dataPath + '/data/perms/not/' + address, 'true', function (err) {
-         if (err) return pocket.error(err);
-
-         reloadPage();
-     });
- } else {
-     var dataPath = require("electron").remote.app.getPath("userData");
-
-     fs.writeFile( dataPath + '/data/perms/not/' + address, 'false', function (err) {
-         if (err) return pocket.error(err);
-         getTab.webview.executeJavaScript("window.Notification = null")
-         notifier.options.labels.info = "Notifications";
-         notifier.info("Disabled for current website!");
-     });
-
- }
-} else if (perm === 1) {
-    //popups
-} else if (perm === 2) {
-    //js
-getTab.webview.webpreferences = "javascript=no";
 }
 
-}
-function checkPerms(target,event) {
+function checkPerms(target, event) {
 
     if (event.url.slice(0, 8) === "https://") {
         var start = event.url.slice(8);
@@ -456,44 +464,48 @@ function checkPerms(target,event) {
 //ToDo: Continue Cookie Manager.
 
 var allCookies = [];
+
 function showCookies(event) {
     allCookies = [];
     var url = event.url;
-    electron.session.defaultSession.cookies.get({ url: url })
+    electron.session.defaultSession.cookies.get({url: url})
         .then((cookies) => {
             document.getElementById("cookies").innerHTML = "";
-            for(var i = 0;i<cookies.length;i++) {
+            for (var i = 0; i < cookies.length; i++) {
                 //if (!domains.i) {
                 //    domains.i = true;
                 allCookies[i] = cookies[i];
                 allCookies[i].url = url;
-                    document.getElementById("cookies").innerHTML += "<p class='dropdown-item' onclick='loadCookie(" + i + ")'>" + cookies[i].name + "</p>";
+                document.getElementById("cookies").innerHTML += "<p class='dropdown-item' onclick='loadCookie(" + i + ")'>" + cookies[i].name + "</p>";
                 //}
             }
         }).catch((error) => {
         pocket.error("Error " + error + ": while showing cookies.")
     })
 }
+
 function loadCookie(cookie) {
-   var delCookie = confirm("Name: " + allCookies[cookie].name + "\nDomain: " + allCookies[cookie].domain + "\nPath: " + allCookies[cookie].path + "\nExpires: " + allCookies[cookie].expirationDate + "\nValue:\n" + allCookies[cookie].value + "\n\nDelete Cookie?")
+    var delCookie = confirm("Name: " + allCookies[cookie].name + "\nDomain: " + allCookies[cookie].domain + "\nPath: " + allCookies[cookie].path + "\nExpires: " + allCookies[cookie].expirationDate + "\nValue:\n" + allCookies[cookie].value + "\n\nDelete Cookie?")
 
     if (delCookie == true) {
         electron.session.defaultSession.cookies.remove(allCookies[cookie].url, allCookies[cookie].name)
     }
 }
+
 var dataPath = require("electron").remote.app.getPath("userData");
+
 function addToHistory(url) {
-    if (!fs.existsSync(dataPath + "/data")){
+    if (!fs.existsSync(dataPath + "/data")) {
         fs.mkdirSync(dataPath + "/data");
     }
-    if(fs.existsSync(dataPath + "/data/history.pocket")) {
+    if (fs.existsSync(dataPath + "/data/history.pocket")) {
         fs.appendFile(dataPath + "/data/history.pocket", url + "\n", function (err) {
             if (err) {
                 pocket.error(err)
             }
         });
     } else {
-        fs.writeFile(dataPath + "/data/history.pocket",url + "\n",function (err) {
+        fs.writeFile(dataPath + "/data/history.pocket", url + "\n", function (err) {
             if (err) pocket.error(err)
         })
     }
@@ -502,12 +514,12 @@ function addToHistory(url) {
 function checkHistory(text) {
     var bool = false;
     var dataPath = require("electron").remote.app.getPath("userData");
-    if (!fs.existsSync(dataPath + "/data")){
+    if (!fs.existsSync(dataPath + "/data")) {
         fs.mkdirSync(dataPath + "/data");
     }
 
-    if(!fs.existsSync(dataPath + "/data/history.pocket")) {
-        fs.writeFile(dataPath + "/data/history.pocket",text + "\n",function (err) {
+    if (!fs.existsSync(dataPath + "/data/history.pocket")) {
+        fs.writeFile(dataPath + "/data/history.pocket", text + "\n", function (err) {
             if (err) pocket.error(err);
         })
 
@@ -525,7 +537,9 @@ function checkHistory(text) {
         })
     }
 }
+
 var fullHistory = [];
+
 function getHistory() {
 
     var dataPath = require("electron").remote.app.getPath("userData");
@@ -583,11 +597,12 @@ function toggleFullscreen() {
         notifier.options.labels.info = "FullScreen";
         notifier.info("Fullscreen is now disabled!");
     } else {
-     document.getElementById("fullSc").src = "node_modules/bootstrap-icons/icons/fullscreen-exit.svg"
-     notifier.options.labels.info = "FullScreen";
-     notifier.info("Fullscreen is now enabled!");
+        document.getElementById("fullSc").src = "node_modules/bootstrap-icons/icons/fullscreen-exit.svg"
+        notifier.options.labels.info = "FullScreen";
+        notifier.info("Fullscreen is now enabled!");
     }
 }
+
 function zoom(type) {
     if (type == "add") {
         var newZoom = tabGroup.getActiveTab().webview.getZoomLevel() + 0.5;
@@ -618,10 +633,11 @@ function downloadSettings(name) {
         else if (action == 1) downloadItems[name].cancel();
     }
 }
+
 function sendError(code) {
     if (fs.existsSync(dataPath + "/data/errors.pocket")) {
         console.log("exists")
-        if (fs.readFileSync(dataPath + "/data/errors.pocket",{encoding: "utf8"}) === "true") {
+        if (fs.readFileSync(dataPath + "/data/errors.pocket", {encoding: "utf8"}) === "true") {
             // send
             pocket.info("Sent Error Report to Pocket Team.");
             return fetch(encodeURI("https://pocket-inc.ml/api/browser/error.php?error=" + code + "&os=" + process.platform + "&ver=" + browserVersion));
@@ -640,29 +656,31 @@ function addBookmark() {
         let current = fs.readFileSync(dataPath + "/data/bookmarks.json");
         let json = JSON.parse(current);
         json[name] = url;
-        newData= JSON.stringify(json)
+        newData = JSON.stringify(json)
     } else {
         newData = '{"' + name + '": "' + url + '"}'
     }
-    fs.writeFileSync(dataPath + "/data/bookmarks.json",newData);
+    fs.writeFileSync(dataPath + "/data/bookmarks.json", newData);
     loadBookmarks()
 
 }
+
 function loadBookmarks() {
     document.getElementById("bookmarked").innerHTML = ""
     if (fs.existsSync(dataPath + "/data/bookmarks.json")) {
         let file = fs.readFileSync(dataPath + "/data/bookmarks.json");
         let bookmarks = JSON.parse(file)
         let bookmarksObj = Object.keys(bookmarks)
-        for (let i=0;i<bookmarksObj.length;i++) {
+        for (let i = 0; i < bookmarksObj.length; i++) {
             document.getElementById("bookmarked").innerHTML += "<div class='dropdown-item' onclick='openBookmark(" + i + ")'>" + bookmarksObj[i] + "</div>";
         }
     }
-    }
-    function openBookmark(id) {
-        let file = fs.readFileSync(dataPath + "/data/bookmarks.json");
-        let bookmarks = JSON.parse(file)
-        let bookmarksObj = Object.keys(bookmarks)
-        let currentTab = tabGroup.getActiveTab();
-        currentTab.webview.loadURL(bookmarks[bookmarksObj[id]])
-    }
+}
+
+function openBookmark(id) {
+    let file = fs.readFileSync(dataPath + "/data/bookmarks.json");
+    let bookmarks = JSON.parse(file)
+    let bookmarksObj = Object.keys(bookmarks)
+    let currentTab = tabGroup.getActiveTab();
+    currentTab.webview.loadURL(bookmarks[bookmarksObj[id]])
+}
