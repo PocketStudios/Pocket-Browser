@@ -1,14 +1,12 @@
-<h3><img src="style/s-icon.png"> Pocket Browser</h3>
+<h3><img src="s-icon.png"> Pocket Browser</h3>
 
-<h6>Made for privacy, going towards security.</h6>
+<h6>The browser that'll make your browsing more secure.</h6>
 <hr width="25%">
 <p>Annoyed from getting tracked while browsing the web?</p>
 <p>Download <a href="http://github.com/PocketInc/Pocket-Browser/releases">Pocket Browser</a> and stop all tracking activities</p>
 <a href="https://snapcraft.io/pocket-browser">
 <img alt="Get it from the Snap Store" src="https://snapcraft.io/static/images/badges/en/snap-store-black.svg" />
 </a>
-<hr>
-<p><b>Note:</b> This is the nightly version, want <a href="https://github.com/PocketInc/Pocket-Browser">Stable</a> instead?</p>
 <hr>
 <h3>Contributing:</h3>
 <p>If you'd like to help this project, please look at the <a href="https://github.com/PocketInc/Pocket-Browser/issues/1">Issue #1</a>
