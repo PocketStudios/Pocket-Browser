@@ -98,9 +98,16 @@ function buildMenu(props) {
         { type: 'separator' },
         {
           label: "Bookmark page",
-          visible: !isLink,
+          visible: !isLink && !checkBookmark(),
             click() {
-              // todo add bookmark
+                addBookmark();
+            }
+        },
+        {
+            label: "UnBookmark page",
+            visible: !isLink && checkBookmark(),
+            click() {
+                removeBookmark();
             }
         },
         {

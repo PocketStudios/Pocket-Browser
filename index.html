@@ -29,6 +29,7 @@
     <script src="src/Security/secureDialog.js"></script>
     <!-- Sites -->
     <script src="src/Sites/history.js"></script>
+    <script src="src/Sites/bookmarks.js"></script>
     <!-- Menu -->
     <script src="src/Menu/Menu.js"></script>
     <script src="src/Menu/generateQR.js"></script>
@@ -59,7 +60,7 @@
             <hr>
             <li><button class="dropdown-item" onclick="toggleDevTools()">Developer Tools</button></li>
             <li><button class="dropdown-item" onclick="loadSystemPage('history')">History</button></li>
-            <li><button class="dropdown-item" href="#">Bookmarks</button></li>
+            <li><button class="dropdown-item" onclick="loadSystemPage('bookmarks')">Bookmarks</button></li>
             <hr>
             <li><button class="dropdown-item" onclick="showDevicesToCast()">Cast</button></li>
             <li><button class="dropdown-item" onclick="loadSystemPage('settings')">Settings</button></li>
