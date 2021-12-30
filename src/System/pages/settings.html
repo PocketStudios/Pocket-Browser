@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Settings - Pocket Browser</title>
+    <link rel="stylesheet" href="../../../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://pocket-inc.com/api/updater.js"></script>
+</head>
+<body>
+<nav id="nav">
+    <div style="margin-left: 15%">
+    <img id="logo" src="../../../resources/icons/s-icon.png" onclick="rotate()">
+    <h4>Settings</h4>
+    </div>
+    <hr class="w-100">
+    <div id="nav-buttons">
+    <a class="btn btn-light w-100" style="margin-bottom: 2%;height: unset" href="#search-engine">Search Engine</a>
+    <a class="btn btn-light w-100" style="margin-bottom: 2%;height: unset" href="#home-page">Home Page</a>
+    <a class="btn btn-light w-100" style="margin-bottom: 2%;height: unset" href="#security">Security</a>
+    <a class="btn btn-light w-100" style="margin-bottom: 2%;height: unset" href="#sync">Sync</a>
+    <a class="btn btn-light w-100" style="margin-bottom: 2%;height: unset" href="#extensions">Extensions</a>
+    <a class="btn btn-light w-100" style="margin-bottom: 2%;height: unset" href="#reset">Reset Settings</a>
+    <a class="btn btn-light w-100" style="margin-bottom: 2%;height: unset" href="#about">About</a>
+    </div>
+</nav>
+<div id="main">
+    <h5 id="search-engine">Search Engine:</h5>
+    <small>Browser's default search engine.</small>
+    <br><br>
+    <select id="searchengine">
+        <option value="0">DuckDuckGo</option>
+        <option value="1">Google</option>
+        <option value="2">Bing</option>
+        <option value="3">Other</option>
+    </select><br><br>
+    <div style="display: none" id="other-searchengine">
+        <input id="other-searchengine-input" class="input form-control w-25" placeholder="replace %s with search term"><br>
+        <button id="other-searchengine-button" class="btn">Save</button>
+    </div>
+    <hr class="w-25">
+
+    <h5 id="home-page">Home Page:</h5>
+    <small>Browser's default home page.</small>
+    <br><br>
+    <select id="homepage">
+        <option value="0">Pocket New</option>
+        <option value="1">DuckDuckGo</option>
+        <option value="2">Google</option>
+        <option value="3">Bing</option>
+        <option value="4">Other</option>
+    </select><br><br>
+    <div style="display: none" id="other-homepage">
+        <input id="other-homepage-input" class="input form-control w-25" placeholder="https://..."><br>
+        <button id="other-homepage-button" class="btn">Save</button>
+    </div>
+    <hr class="w-25">
+
+    <h5 id="security">Security:</h5>
+    <small>Browser's security mode.</small>
+    <br><br>
+    <select id="securitymode">
+        <option value="0">Basic</option>
+        <option value="1">Balanced</option>
+        <option value="2">Strict</option>
+    </select>
+    <hr class="w-25">
+    <h5 id="sync">Sync:</h5>
+    <small>You're not logged in.</small><br><br>
+    <button class="btn">Create Account</button>
+    <button class="btn">Login</button>
+
+    <hr class="w-25">
+    <h5 id="extensions">Extensions:</h5>
+    <small>Add-ons to browser functionality.</small><br><br>
+    <p>Dark Mode: <input type="checkbox"></p>
+    <p>Dark Website: <input type="checkbox"></p>
+    <p>Ad Block: <input type="checkbox"></p>
+    <p>Bug Reporter: <input type="checkbox"></p>
+    <hr class="w-25">
+    <button class="btn"><img style="animation: unset;border:0" src="../../../node_modules/bootstrap-icons/icons/bag-plus-fill.svg"> Install</button>
+    <hr class="w-25">
+    <h5 id="reset">Reset Settings:</h5>
+    <small>Re-setup default browser settings.</small><br><br>
+    <select>
+        <option>Choose option</option>
+        <option>Clear Cookies</option>
+    </select>
+    <hr class="w-25">
+        <h5 id="about">About:</h5>
+        <small id="update-state"></small><br><br>
+        <p>Pocket Browser v<span id="pb-version"></span></p>
+        <p>Chromium v<span id="pb-chromium"></span></p>
+        <p>OS: <span id="pb-os"></span></p>
+    <hr class="w-50">
+    <small>&copy; 2022 Pocket, Inc. All Rights Reserved.</small>
+    <script>
+        function rotate() {
+            if (!document.getElementById('logo').style.transform) {
+                document.getElementById('logo').style.transform = 'rotate(0deg)'
+           } else {
+                if (document.getElementById('logo').style.transform.slice(7,-4) == "360") {
+                    document.getElementById('logo').style = "background-color: red!important"
+                }
+                document.getElementById('logo').style.transform = 'rotate(' + (parseInt(document.getElementById('logo').style.transform.slice(7,-4))+10) + 'deg)'
+          }
+        }
+        window.addEventListener('load',function() {
+            if (parseFloat(latestVersion) <= parseFloat(document.getElementById('pb-version').innerHTML)) {
+                document.getElementById('update-state').innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="12" fill="green" class="bi bi-check-circle" viewBox="0 0 16 16">\n' +
+                    '  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>\n' +
+                    '  <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>\n' +
+                    '</svg> Latest Version.'
+                document.getElementById("update-state").style.color = "green"
+            } else {
+                document.getElementById('update-state').innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="12" fill="red" class="bi bi-upload" viewBox="0 0 16 16">\n' +
+                    '  <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>\n' +
+                    '  <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>\n' +
+                    '</svg> New Update Available.'
+                document.getElementById("update-state").style.color = "red"
+            }
+        })
+
+    </script>
+</div>
+</body>
+</html>

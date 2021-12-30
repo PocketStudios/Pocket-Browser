@@ -1,0 +1,88 @@
+<script>
+    var browserVersion = require("./package.json").version;
+</script>
+<script src="https://pocket-inc.com/api/updater.js" type="text/javascript"></script>
+<html>
+<head>
+    <link href="resources/css/style.css" rel="stylesheet">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="resources/css/electron-tabs.css" rel="stylesheet">
+    <link href="node_modules/dragula/dist/dragula.css" rel="stylesheet">
+    <link href="resources/css/autocomplete.css" rel="stylesheet">
+    <!-- Data -->
+    <script src="src/loadData.js"></script>
+    <!-- Tabs -->
+    <script src="src/Tabs/createTabs.js"></script>
+    <script src="src/Tabs/tabEvents.js"></script>
+    <script src="src/Tabs/tabFunctions.js"></script>
+    <script src="src/Tabs/tabActions.js"></script>
+    <!-- URL Bar -->
+    <script src="src/URLBar/changeURL.js"></script>
+    <script src="src/URLBar/loadURL.js"></script>
+    <script src="src/URLBar/barEvents.js"></script>
+    <!-- System -->
+    <script src="src/System/loadSystem.js"></script>
+    <!-- Security -->
+    <script src="src/Security/pageSecure.js"></script>
+    <script src="src/Security/secureDialog.js"></script>
+    <!-- Sites -->
+    <script src="src/Sites/history.js"></script>
+    <!-- Menu -->
+    <script src="src/Menu/Menu.js"></script>
+    <script src="src/Menu/generateQR.js"></script>
+    <script src="src/Menu/cast.js"></script>
+    <title>Pocket Browser</title>
+</head>
+<body>
+<nav class="nav bg-light" id="nav">
+
+    <div class="etabs-tabgroup">
+        <div class="etabs-tabs"></div>
+        <div class="etabs-buttons"><button onclick="addTab()">+</button></div>
+    </div>
+
+    <button class="btn btn-light toolbar-btn toolbar-hover" onclick="tabBack()"><img class="toolbar-icon" src="resources/icons/back.png"></button>
+    <button class="btn btn-light toolbar-btn toolbar-hover" onclick="tabForward()"><img class="toolbar-icon" src="resources/icons/forward.png"></button>
+    <button class="btn btn-light toolbar-btn toolbar-hover" id="state-btn"><img class="toolbar-icon" src="resources/icons/refresh.png"></button>
+    <button class="btn btn-light toolbar-btn toolbar-hover" onclick="goHome()"><img class="toolbar-icon" src="resources/icons/home.png"></button>
+    <button class="btn btn-light toolbar-btn toolbar-hover" onclick="goHome()"><img class="toolbar-icon" id="secure-icon" src="resources/icons/security.png"></button>
+    <input class="url" placeholder="Enter web address" id="address" spellcheck="false">
+    <button id="go" class="btn btn-light toolbar-btn" onclick="loadURL()"><img class="toolbar-icon" src="resources/icons/search.png"></button>
+    <div class="dropdown toolbar-btn menu-btn">
+        <button class="btn btn-light toolbar-hover" type="button" id="settingsMenu" data-bs-toggle="dropdown" aria-expanded="false"><img class="toolbar-icon" src="resources/icons/menu.png"></button>
+
+        <ul class="dropdown-menu" aria-labelledby="settingsMenu">
+            <li><button class="dropdown-item" onclick="addTab()">New Tab</button></li>
+            <li><button class="dropdown-item" onclick="addWindow()">New Window</button></li>
+            <hr>
+            <li><button class="dropdown-item" onclick="toggleDevTools()">Developer Tools</button></li>
+            <li><button class="dropdown-item" onclick="loadSystemPage('history')">History</button></li>
+            <li><button class="dropdown-item" href="#">Bookmarks</button></li>
+            <hr>
+            <li><button class="dropdown-item" onclick="showDevicesToCast()">Cast</button></li>
+            <li><button class="dropdown-item" onclick="loadSystemPage('settings')">Settings</button></li>
+            <li><button class="dropdown-item" href="#">Feedback</button></li>
+            <li><button class="dropdown-item" onclick="loadSystemPage('settings',false,'about')">About</button></li>
+            <li><button class="dropdown-item" onclick="require('@electron/remote').app.exit()">Exit</button></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="etabs-views"></div>
+<div style="position: fixed;bottom: 0;right: 0;background-color: #eeeeee" id="target-url" hidden="hidden"></div>
+<script>
+    const TabGroup = require("electron-tabs");
+    const dragula = require("dragula");
+    let tabGroup = new TabGroup({
+        ready: function (tabGroup) {
+            dragula([tabGroup.tabContainer], {
+                direction: "horizontal"
+            });
+        }
+    });
+    addTab()
+</script>
+</body>
+</html>
