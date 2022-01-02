@@ -1,14 +1,15 @@
-- Site Perms.
 - Cookies.
 - Extensions.
+- error pages.
 - Find in page.
 - zoom/fullscreen.
 - Downloads.
-- Bookmarks.
 - Key shortcuts.
 - feedback page.
 - start page.
 - sync.
-- reset settings in settigs.
+- reset settings in settings.
+- Site Perms.
+- Vid Down.
 - README.
 - DOCS.

@@ -2,7 +2,7 @@ function isSystemPage(target) {
     let url = document.getElementById("address").value;
     if (target) url = target;
     if (url.startsWith("pocket://")) {
-        if (require("fs").existsSync(__dirname + "/src/System/pages/" + url.slice(9) + ".html")) {
+        if (require("fs").existsSync(path.join(__dirname, "/src/System/pages/", url.slice(9) + ".html"))) {
             return true;
         }
     } else {
@@ -13,7 +13,7 @@ function isSystemPage(target) {
 function loadSystemPage(target,current = false,part = "") {
 let page = document.getElementById("address").value.slice(9);
 if (target) page = target;
-if (require("fs").existsSync(__dirname + "/src/System/pages/" + page + ".html")) {
+if (require("fs").existsSync(path.join(__dirname, "/src/System/pages/", page + ".html"))) {
         let position;
         if (current) {
             position = tabGroup.getActiveTab().getPosition() | 0;
@@ -21,13 +21,13 @@ if (require("fs").existsSync(__dirname + "/src/System/pages/" + page + ".html"))
         }
         let electron = require("@electron/remote");
         let newTab = tabGroup.addTab({
-            src: __dirname + "/src/System/pages/" + page + ".html#" + part,
+            src: path.join(__dirname, "/src/System/pages/", page + ".html#" + part),
             active: true,
             title: page[0].toUpperCase() + page.slice(1),
             visible: true,
             closable: true,
             webviewAttributes: {
-                preload: __dirname + "/src/System/pages/" + page + ".js"
+                preload: path.join(__dirname, "/src/System/pages/", page + ".js")
             }
         })
     if (current) newTab.setPosition(position)

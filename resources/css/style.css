@@ -31,3 +31,18 @@
 #target-url:hover {
     left: 0;
 }
+.input {
+    width: 50%;
+    border-radius: 5px;
+    outline-color: darkslategrey;
+    border: 2px solid darkslategrey;
+    background-color: lightskyblue;
+    transition: background-color 1s ease-out, color 1s ease-out;
+}
+.input:hover {
+    background-color: skyblue;
+}
+.input:focus {
+    color: lightskyblue;
+    background-color: darkslategrey;
+}
