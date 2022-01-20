@@ -1,9 +1,9 @@
-let homePage = "https://duck.com";
+let homePage = "pocket://new";
 let dataPath = require("@electron/remote").app.getPath("userData");
 let path = require("path");
 let fs = require('fs');
 if (fs.existsSync(path.join(dataPath,"/home.pocket"))) {
-	homePage = fs.readFileSync(path.join(dataPath,"/home.pocket"),"utf8") || "https://duck.com";
+	homePage = fs.readFileSync(path.join(dataPath,"/home.pocket"),"utf8") || "pocket://new";
 }
 let searchEngine = "https://duck.com/%s";
 if (fs.existsSync(path.join(dataPath,"/search.pocket"))) {

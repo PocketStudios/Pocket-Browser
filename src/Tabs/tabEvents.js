@@ -3,7 +3,6 @@ function addEvents(tab) {
     Promise.all([domready]).then(() => {
         var newAgent = tab.webview.getUserAgent().replace(" Electron/" + process.versions['electron'], "").replace("PocketBrowser/1.6.2", "Edg/91.0.831.1")
         tab.webview.setUserAgent(newAgent)
-
         tab.webview.addEventListener('did-finish-load', function () {
         changeState(0)
         });
@@ -22,9 +21,7 @@ function addEvents(tab) {
         })
         tab.webview.addEventListener('did-fail-load', function (event) {
             if (event.errorCode == -3) return;
-            //if (event.errorCode == -21 || event.errorCode == -106) loadSystemPage("connection")
-            //if (event.errorCode == -113) loadSystemPage("insecure")
-            //if (event.errorCode == -6) loadSystemPage("file")
+            loadErrorModal(event.errorCode)
         })
         tab.webview.addEventListener("update-target-url", function (event) {
             if (event.url == "") {
@@ -68,8 +65,15 @@ function addEvents(tab) {
             }
             // changeSecure()
         })
+        require("@electron/remote").webContents.fromId(tab.webview.getWebContentsId()).on('before-input-event', (event, input) => {
+           shortcuts(input)
+        })
     })
 }
+require("@electron/remote").getCurrentWindow().webContents.on('before-input-event',(event,input) => {
+    shortcuts(input)
+})
+
 const emittedOnce = (element, eventName) => new Promise(resolve => {
     element.addEventListener(eventName, event => resolve(event), {once: true})
 })
