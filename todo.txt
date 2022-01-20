@@ -1,7 +1,6 @@
 - Cookies.
 - Extensions.
 - Find in page.
-- zoom/fullscreen.
 - Key shortcuts.
 - sync.
 - Site Perms.

@@ -70,6 +70,19 @@
             <li><button class="dropdown-item" onclick="loadSystemPage('bookmarks')">Bookmarks</button></li>
             <li><button class="dropdown-item" onclick="downloadsList()">Downloads</button></li>
             <hr>
+            <div class="custom-dropdown-item">
+                <button class="btn custom-btn-light" onclick="toggleFullScreen()" type="button"><img
+                        height="15" id="fullScreen" src="node_modules/bootstrap-icons/icons/fullscreen.svg" title="Full Screen"
+                        width="15"></button>
+                <b> | </b>
+                <button class="btn custom-btn-light" onclick="zoom('add')"><img
+                        height="15" src="node_modules/bootstrap-icons/icons/zoom-in.svg" title="Zoom In" width="15">
+                </button>
+                <button class="btn custom-btn-light" onclick="zoom('minus')"><img
+                        height="15" src="node_modules/bootstrap-icons/icons/zoom-out.svg" title="Zoom out" width="15">
+                </button>
+            </div>
+            <hr>
             <li><button class="dropdown-item" onclick="showDevicesToCast()">Cast</button></li>
             <li><button class="dropdown-item" onclick="loadSystemPage('settings')">Settings</button></li>
             <li><button class="dropdown-item" onclick="feedbackDialog()">Feedback</button></li>
