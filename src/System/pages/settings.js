@@ -13,6 +13,8 @@ window.addEventListener('load',function () {
 
         document.getElementById('securitymode').addEventListener('change',pocket.setSecurityMode)
 
+        document.getElementById('resetsettings').addEventListener('change',pocket.resetSettings)
+
         document.getElementById('pb-version').innerHTML = require("../../../package.json").version;
         document.getElementById('pb-chromium').innerHTML = process.versions['chrome']
         document.getElementById('pb-os').innerHTML = process.platform + " " + process.arch
@@ -99,4 +101,29 @@ pocket.loadSecurity = function () {
 		} else {
 			document.getElementById("securitymode").value = 1;
 		}
+}
+pocket.resetSettings = async function () {
+    let value = document.getElementById('resetsettings').value;
+    if (value == 0) return;
+    if (confirm("Are you sure?") === false) return document.getElementById('resetsettings').value = 0;
+    if (value == 1) {
+        require("@electron/remote").session.defaultSession.clearStorageData([], function () {
+        }).then(function () {
+            alert("Cleared Successfully.")
+        })
+    } else if (value == 2) {
+        await require("fs").writeFileSync(require("path").join(require("@electron/remote").app.getPath("userData"),"/history.pocket"),"")
+        alert("Cleared Successfully.");
+    } else if (value == 3) {
+        await require("fs").writeFileSync(require("path").join(require("@electron/remote").app.getPath("userData"),"/bookmarks.json"),"{}")
+        alert("Cleared Successfully.");
+    } else if (value == 4) {
+        if (require("fs").existsSync(require("path").join(require("@electron/remote").app.getPath("userData"),"/search.pocket"))) require("fs").unlinkSync(require("path").join(require("@electron/remote").app.getPath("userData"),"/search.pocket"))
+        if (require("fs").existsSync(require("path").join(require("@electron/remote").app.getPath("userData"),"/home.pocket"))) require("fs").unlinkSync(require("path").join(require("@electron/remote").app.getPath("userData"),"/home.pocket"))
+        if (require("fs").existsSync(require("path").join(require("@electron/remote").app.getPath("userData"),"/errors.pocket"))) require("fs").unlinkSync(require("path").join(require("@electron/remote").app.getPath("userData"),"/errors.pocket"))
+        if (require("fs").existsSync(require("path").join(require("@electron/remote").app.getPath("userData"),"/security.pocket"))) require("fs").unlinkSync(require("path").join(require("@electron/remote").app.getPath("userData"),"/security.pocket"))
+
+        alert("Resetted Successfully.");
+    }
+    document.getElementById('resetsettings').value = 0;
 }
