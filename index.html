@@ -30,11 +30,17 @@
     <!-- Sites -->
     <script src="src/Sites/history.js"></script>
     <script src="src/Sites/bookmarks.js"></script>
+    <script src="src/Sites/error.js"></script>
     <!-- Menu -->
     <script src="src/Menu/Menu.js"></script>
     <script src="src/Menu/generateQR.js"></script>
     <script src="src/Menu/cast.js"></script>
 	<script src="src/Menu/feedback.js"></script>
+    <!-- Keyboard -->
+    <script src="src/Keyboard/shortcuts.js"></script>
+    <!-- Downloads -->
+    <script src="src/Downloads/downloadFile.js"></script>
+    <script src="src/Downloads/downloads.js"></script>
     <title>Pocket Browser</title>
 </head>
 <body>
@@ -62,6 +68,7 @@
             <li><button class="dropdown-item" onclick="toggleDevTools()">Developer Tools</button></li>
             <li><button class="dropdown-item" onclick="loadSystemPage('history')">History</button></li>
             <li><button class="dropdown-item" onclick="loadSystemPage('bookmarks')">Bookmarks</button></li>
+            <li><button class="dropdown-item" onclick="downloadsList()">Downloads</button></li>
             <hr>
             <li><button class="dropdown-item" onclick="showDevicesToCast()">Cast</button></li>
             <li><button class="dropdown-item" onclick="loadSystemPage('settings')">Settings</button></li>
