@@ -15,7 +15,7 @@ function checkHistory(text) {
         })
         fileLbl.on("end", function () {
             if (bool === false) {
-                let oldHistory = fs.readFileSync(path.join(dataPath, "/history.pocket","utf8"));
+                let oldHistory = fs.readFileSync(path.join(dataPath, "/history.pocket"),"utf8");
                 fs.writeFileSync(path.join(dataPath, "/history.pocket"),text + "\n" + oldHistory)
             }
         })
