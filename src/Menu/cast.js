@@ -4,14 +4,12 @@ function castTo(id) {
     client.devices[id].play(tabGroup.getActiveTab().webview.src)
 }
 function showControls(choosenDevice) {
+    Swal.close();
     let fullDiv = document.createElement("div");
     fullDiv.innerHTML = "<img width='32' src='node_modules/bootstrap-icons/icons/stop-btn.svg' onclick='client.devices[" + choosenDevice + "].stop()'><img width='32' src='node_modules/bootstrap-icons/icons/pause-btn.svg' onclick='client.devices[" + choosenDevice + "].pause()'><img width='32' src='node_modules/bootstrap-icons/icons/play-btn.svg' onclick='client.devices[" + choosenDevice + "].resume()'><br><p>Volume:<input type='range' min='0' max='100' value='" + getVolume(choosenDevice) + "' class='form-control' id='cast-volume' onchange='changeVolume(" + choosenDevice + ")'></p>" + showButtons(choosenDevice) + "</p>"
-    require("sweetalert")({
+    Swal.fire({
         title: client.devices[choosenDevice].friendlyName,
-        content: fullDiv,
-        button: {
-            className: "btn"
-        }
+        html: fullDiv
     })
 
 }
@@ -24,13 +22,9 @@ function showDevicesToCast() {
     })
     let fullDiv = document.createElement("div");
     fullDiv.innerHTML = devices
-    require("sweetalert")({
+    Swal.fire({
         title: "Choose device",
-        content: fullDiv,
-        button: {
-            className: "btn"
-        },
-        onSubmit: showControls
+        html: fullDiv
     })
 }
 function changeVolume(id) {

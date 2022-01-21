@@ -17,12 +17,9 @@ function downloadsList() {
     }
     let fullDiv = document.createElement("div");
     fullDiv.innerHTML = content;
-    require("sweetalert")({
+    Swal.fire({
         title: "Downloads",
-        content: fullDiv,
-        button: {
-            className: "btn"
-        }
+        html: fullDiv
     })
 }
 function pauseDownload(id) {

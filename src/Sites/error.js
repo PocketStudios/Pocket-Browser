@@ -81,11 +81,8 @@ function loadErrorModal(error) {
         fullDiv.appendChild(line)
         fullDiv.appendChild(errorSolutions)
         console.log(fullDiv)
-        require("sweetalert")({
-            content: fullDiv,
-            button: {
-                className: "btn"
-            }
+        Swal.fire({
+            html: fullDiv
         })
     }
 }

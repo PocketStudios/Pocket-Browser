@@ -21,7 +21,7 @@
     "electron-tabs": "^0.15.0",
     "line-by-line": "^0.1.6",
     "qrcode": "^1.5.0",
-    "sweetalert": "^2.1.2",
+    "sweetalert2": "^11.3.6",
     "v8-compile-cache": "^2.3.0"
   }
 }

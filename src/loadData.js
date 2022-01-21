@@ -2,6 +2,8 @@ let homePage = "pocket://new";
 let dataPath = require("@electron/remote").app.getPath("userData");
 let path = require("path");
 let fs = require('fs');
+let Swal = require("sweetalert2");
+
 if (fs.existsSync(path.join(dataPath,"/home.pocket"))) {
 	homePage = fs.readFileSync(path.join(dataPath,"/home.pocket"),"utf8") || "pocket://new";
 }

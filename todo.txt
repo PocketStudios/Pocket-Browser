@@ -1,6 +1,5 @@
 - Cookies.
-- Extensions.
-- Find in page.
+- Extensions. (Added with upcoming update later)
 - Key shortcuts.
 - sync.
 - Site Perms.

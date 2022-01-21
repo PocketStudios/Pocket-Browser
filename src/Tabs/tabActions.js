@@ -25,3 +25,34 @@ function zoom(type) {
         tabGroup.getActiveTab().webview.setZoomLevel(newZoom)
     }
 }
+function find() {
+    let fullDiv = document.createElement("div")
+    let input = document.createElement("input");
+    input.className = "form-control";
+    input.id = "find";
+    let lineBreak = document.createElement("br");
+    let confirmButton = document.createElement("button");
+    confirmButton.onclick = function() {
+        tabGroup.getActiveTab().webview.findInPage(document.getElementById('find').value);
+    }
+    confirmButton.innerHTML = "Find"
+    confirmButton.classList = "btn btn-info";
+    let closeButton = document.createElement("button");
+    closeButton.innerHTML = "Close"
+    closeButton.classList = "btn btn-secondary";
+    closeButton.onclick = function () {
+        Swal.close();
+    }
+    fullDiv.append(input)
+    fullDiv.append(lineBreak)
+    fullDiv.append(confirmButton)
+    fullDiv.append(closeButton)
+    Swal.fire({
+        title: "Find in page",
+        position: 'top-end',
+        showConfirmButton: false,
+        showCancelButton: false,
+        confirmButtonText: "Find",
+        html: fullDiv
+    })
+}
