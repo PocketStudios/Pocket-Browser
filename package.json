@@ -10,6 +10,9 @@
   "keywords": [],
   "author": "Pocket, Inc.",
   "license": "MIT",
+  "devDependencies": {
+    "electron": "^16.0.5"
+  },
   "dependencies": {
     "@cliqz/adblocker": "^1.23.4",
     "@electron/remote": "^2.0.1",
@@ -18,7 +21,6 @@
     "bootstrap-icons": "^1.7.2",
     "chromecast-api": "^0.4.0",
     "dragula": "^3.7.3",
-    "electron": "^16.0.5",
     "electron-tabs": "^0.15.0",
     "line-by-line": "^0.1.6",
     "qrcode": "^1.5.0",
