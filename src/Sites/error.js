@@ -62,10 +62,6 @@ function loadErrorModal(error) {
     if (errors.filter(error => parseFloat(error.error) == code).length > 0) {
         let errorInfo = errors.filter(error => parseFloat(error.error) == code)[0];
         let fullDiv = document.createElement("center");
-        let img = document.createElement("img");
-        img.src = require("path").join("node_modules","bootstrap-icons","icons","emoji-frown.svg")
-        img.style = "animation: unset;width: 128px;border-radius:50%"
-        img.addEventListener('click',function() { img.style.backgroundColor = "red"; img.src = require("path").join('node_modules','bootstrap-icons','icons','emoji-angry.svg') })
         let errorMain = document.createElement("h2");
         errorMain.innerHTML = "Error " + error
         let errorDesc = document.createElement("small");
@@ -75,13 +71,13 @@ function loadErrorModal(error) {
         let errorSolutions = document.createElement("div");
         errorInfo.listSolutions.forEach(solution => errorSolutions.innerHTML += "<br>" + solution)
 
-        fullDiv.appendChild(img)
         fullDiv.appendChild(errorMain)
         fullDiv.appendChild(errorDesc)
         fullDiv.appendChild(line)
         fullDiv.appendChild(errorSolutions)
         console.log(fullDiv)
         Swal.fire({
+            icon: "warning",
             html: fullDiv
         })
     }

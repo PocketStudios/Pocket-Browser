@@ -1,8 +1,2 @@
-- Cookies.
-- Extensions. (Added with upcoming update later)
-- Key shortcuts.
-- sync.
-- Site Perms.
-- Vid Down.
 - README.
 - DOCS.
