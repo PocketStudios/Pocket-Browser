@@ -43,7 +43,7 @@ autocomplete({
             suggestions.unshift(Object.create({label: website + " - Local File", value: website}));
         } else {
             let searchEngine;
-            if (fs.existsSync(dataPath + "/engine.pocket")) searchEngine = await fs.readFileSync(dataPath + '/engine.pocket');
+            if (fs.existsSync(dataPath + "/search.pocket")) searchEngine = await fs.readFileSync(dataPath + '/search.pocket');
             else searchEngine = "https://duck.com/%s";
             suggestions.unshift(Object.create({
                 label: website + " - Search",
