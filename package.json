@@ -11,7 +11,8 @@
   "author": "Pocket, Inc.",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^16.0.5"
+    "electron": "^16.0.5",
+    "electron-builder": "^22.14.5"
   },
   "dependencies": {
     "@cliqz/adblocker": "^1.23.4",
@@ -26,5 +27,15 @@
     "qrcode": "^1.5.0",
     "sweetalert2": "^11.3.6",
     "v8-compile-cache": "^2.3.0"
+  },
+  "build": {
+    "asar": false,
+    "linux": {
+      "icon": "build/icon.png",
+      "category": "Network"
+    },
+    "win": {
+      "icon": "build/icon.png"
+    }
   }
 }

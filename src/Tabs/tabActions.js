@@ -57,7 +57,9 @@ function find() {
     })
 }
 function darkWebsite() {
-    tabGroup.eachTab(function (tab) {
-        tab.webview.executeJavaScript("document.body.style.backgroundColor = 'black';\ndocument.body.style.color = 'white';")
-    })
+    if (dark == "true") {
+        tabGroup.eachTab(function (tab) {
+            tab.webview.executeJavaScript("document.body.style.backgroundColor = 'black';\ndocument.body.style.color = 'white';")
+        })
+    }
 }

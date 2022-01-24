@@ -34,13 +34,13 @@ if (!fs.existsSync(path.join(dataPath,"/errors.pocket")) || !fs.existsSync(path.
 }
 
 if (fs.existsSync(path.join(dataPath,"/ads.pocket"))) {
-	adBlock = fs.readFileSync(path.join(dataPath,"/ads.pocket"),"utf8") || true;
+	adBlock = fs.readFileSync(path.join(dataPath,"/ads.pocket"),"utf8") || "false";
 }
 
 if (fs.existsSync(path.join(dataPath,"/dark.pocket"))) {
-	dark = fs.readFileSync(path.join(dataPath,"/dark.pocket"),"utf8") || true;
+	dark = fs.readFileSync(path.join(dataPath,"/dark.pocket"),"utf8") || "false"
 }
 
 if (fs.existsSync(path.join(dataPath,"/vid-down.pocket"))) {
-	vidDown = fs.readFileSync(path.join(dataPath,"/vid-down.pocket"),"utf8") || true;
+	vidDown = fs.readFileSync(path.join(dataPath,"/vid-down.pocket"),"utf8") || "false";
 }
