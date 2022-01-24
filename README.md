@@ -1,8 +1,8 @@
-<center>
+<div align="center">
 <img src="resources/icons/s-icon.png">
 <h3>Pocket Browser</h3>
 [ <a href="/releases">Download</a> - <a href="https://pocket-inc.com/browser/docs">Docs</a> - <a href="https://pocket-inc.com/support">Feedback</a> ]
-</center>
+</div>
 <p>The next-generation secure browser, prevents trackers while giving you the best browsing experience.</p>
 <hr>
 <h4>Top Features:</h4>
