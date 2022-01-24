@@ -27,6 +27,8 @@
     <!-- Security -->
     <script src="src/Security/pageSecure.js"></script>
     <script src="src/Security/secureDialog.js"></script>
+    <script src="src/Security/permissionRequest.js"></script>
+    <script src="src/Security/adBlock.js"></script>
     <!-- Sites -->
     <script src="src/Sites/history.js"></script>
     <script src="src/Sites/bookmarks.js"></script>
@@ -55,7 +57,7 @@
     <button class="btn btn-light toolbar-btn toolbar-hover" onclick="tabForward()"><img class="toolbar-icon" src="resources/icons/forward.png"></button>
     <button class="btn btn-light toolbar-btn toolbar-hover" id="state-btn"><img class="toolbar-icon" src="resources/icons/refresh.png"></button>
     <button class="btn btn-light toolbar-btn toolbar-hover" onclick="goHome()"><img class="toolbar-icon" src="resources/icons/home.png"></button>
-    <button class="btn btn-light toolbar-btn toolbar-hover" onclick="goHome()"><img class="toolbar-icon" id="secure-icon" src="resources/icons/security.png"></button>
+    <button class="btn btn-light toolbar-btn toolbar-hover" onclick="secureDialog()"><img class="toolbar-icon" id="secure-icon" src="resources/icons/security.png"></button>
     <input class="url" placeholder="Enter web address" id="address" spellcheck="false">
     <button id="go" class="btn btn-light toolbar-btn" onclick="loadURL()"><img class="toolbar-icon" src="resources/icons/search.png"></button>
     <div class="dropdown toolbar-btn menu-btn">
@@ -83,6 +85,7 @@
                 </button>
             </div>
             <hr>
+            <li><button class="dropdown-item" onclick="find()">Find</button> </li>
             <li><button class="dropdown-item" onclick="showDevicesToCast()">Cast</button></li>
             <li><button class="dropdown-item" onclick="loadSystemPage('settings')">Settings</button></li>
             <li><button class="dropdown-item" onclick="feedbackDialog()">Feedback</button></li>

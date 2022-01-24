@@ -4,6 +4,7 @@ window.addEventListener('load',function () {
         pocket.loadSearchEngine();
         pocket.loadHomePage();
         pocket.loadSecurity();
+        pocket.loadExtensions();
         // Change Settings Events
         document.getElementById('searchengine').addEventListener('change',pocket.setSearchEngine)
         document.getElementById('other-searchengine-button').addEventListener('click',pocket.setOtherSearchEngine)
@@ -14,6 +15,10 @@ window.addEventListener('load',function () {
         document.getElementById('securitymode').addEventListener('change',pocket.setSecurityMode)
 
         document.getElementById('resetsettings').addEventListener('change',pocket.resetSettings)
+
+        document.getElementById('adblock').addEventListener('change',function () {pocket.toggleExtension('ads','adblock')})
+        document.getElementById('darkwebsite').addEventListener('change',function () {pocket.toggleExtension('dark','darkwebsite')})
+        document.getElementById('vid-down').addEventListener('change',function () {pocket.toggleExtension('vid-down','vid-down')})
 
         document.getElementById('pb-version').innerHTML = require("../../../package.json").version;
         document.getElementById('pb-chromium').innerHTML = process.versions['chrome']
@@ -126,4 +131,39 @@ pocket.resetSettings = async function () {
         alert("Resetted Successfully.");
     }
     document.getElementById('resetsettings').value = 0;
+}
+pocket.toggleExtension = function (extension,element) {
+    let elm = document.getElementById(element);
+    if (elm.checked) {
+        require("fs").writeFileSync(require("path").join(require("@electron/remote").app.getPath("userData"),extension + ".pocket"),"true")
+    } else {
+        require("fs").writeFileSync(require("path").join(require("@electron/remote").app.getPath("userData"),extension + ".pocket"),"false")
+    }
+}
+
+pocket.loadExtensions = function () {
+    if (require("fs").existsSync(require("path").join(require("@electron/remote").app.getPath("userData"),"/ads.pocket"),"utf8")) {
+        let ads = require("fs").readFileSync(require("@electron/remote").app.getPath("userData") + "/ads.pocket","utf8")
+        if (ads == "true") {
+            document.getElementById('adblock').checked = true;
+        } else document.getElementById('adblock').checked = false;
+    } else {
+        document.getElementById("adblock").checked = false;
+    }
+    if (require("fs").existsSync(require("path").join(require("@electron/remote").app.getPath("userData"),"/dark.pocket"),"utf8")) {
+        let dark = require("fs").readFileSync(require("@electron/remote").app.getPath("userData") + "/dark.pocket","utf8")
+        if (dark == "true") {
+            document.getElementById('darkwebsite').checked = true;
+        } else document.getElementById('darkwebsite').checked = false;
+    } else {
+        document.getElementById("darkwebsite").checked = false;
+    }
+    if (require("fs").existsSync(require("path").join(require("@electron/remote").app.getPath("userData"),"/vid-down.pocket"),"utf8")) {
+        let viddown = require("fs").readFileSync(require("@electron/remote").app.getPath("userData") + "/vid-down.pocket","utf8")
+        if (viddown == "true") {
+            document.getElementById('vid-down').checked = true;
+        } else document.getElementById('vid-down').checked = false;
+    } else {
+        document.getElementById("vid-down").checked = false;
+    }
 }

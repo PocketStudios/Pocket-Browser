@@ -11,6 +11,7 @@
   "author": "Pocket, Inc.",
   "license": "MIT",
   "dependencies": {
+    "@cliqz/adblocker": "^1.23.4",
     "@electron/remote": "^2.0.1",
     "autocompleter": "^6.1.2",
     "bootstrap": "^5.1.3",

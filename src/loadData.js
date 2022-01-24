@@ -1,4 +1,7 @@
 let homePage = "pocket://new";
+let adBlock = false;
+let dark = false;
+let vidDown = false;
 let dataPath = require("@electron/remote").app.getPath("userData");
 let path = require("path");
 let fs = require('fs');
@@ -28,4 +31,16 @@ if (!fs.existsSync(path.join(dataPath,"/errors.pocket")) || !fs.existsSync(path.
 		newWindow.setMenu(null);
 		newWindow.setTitle("Start - Pocket Browser")
 
+}
+
+if (fs.existsSync(path.join(dataPath,"/ads.pocket"))) {
+	adBlock = fs.readFileSync(path.join(dataPath,"/ads.pocket"),"utf8") || true;
+}
+
+if (fs.existsSync(path.join(dataPath,"/dark.pocket"))) {
+	dark = fs.readFileSync(path.join(dataPath,"/dark.pocket"),"utf8") || true;
+}
+
+if (fs.existsSync(path.join(dataPath,"/vid-down.pocket"))) {
+	vidDown = fs.readFileSync(path.join(dataPath,"/vid-down.pocket"),"utf8") || true;
 }
