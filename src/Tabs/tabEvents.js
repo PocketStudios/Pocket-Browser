@@ -5,6 +5,7 @@ function addEvents(tab) {
         tab.webview.setUserAgent(newAgent)
         tab.webview.addEventListener('did-finish-load', function () {
         changeState(0)
+        darkWebsite()
         });
 // when page favicon is updated, run change favicon function.
         tab.webview.addEventListener("page-favicon-updated", function () {
@@ -39,10 +40,12 @@ function addEvents(tab) {
         tab.webview.addEventListener("did-navigate", function (event) {
             event.preventDefault();
             changeURL(tab, event);
+            darkWebsite()
              changeSecure()
         })
         tab.webview.addEventListener("did-navigate-in-page", function (event) {
              changeURL(tab, event);
+             darkWebsite()
              changeSecure()
         })
         tab.webview.addEventListener("new-window", function (window) {
