@@ -6,8 +6,9 @@
 <head>
     <link href="resources/css/style.css" rel="stylesheet">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<!--    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>-->
+<!--    <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">-->
+    <link href="node_modules/bulma/css/bulma.css" rel="stylesheet">
     <link href="resources/css/electron-tabs.css" rel="stylesheet">
     <link href="node_modules/dragula/dist/dragula.css" rel="stylesheet">
     <link href="resources/css/autocomplete.css" rel="stylesheet">
@@ -38,6 +39,7 @@
     <script src="src/Menu/generateQR.js"></script>
     <script src="src/Menu/cast.js"></script>
 	<script src="src/Menu/feedback.js"></script>
+    <script src="src/Menu/navMenu.js"></script>
     <!-- Keyboard -->
     <script src="src/Keyboard/shortcuts.js"></script>
     <!-- Downloads -->
@@ -48,55 +50,105 @@
 <body>
 <nav class="nav bg-light" id="nav">
 
-    <div class="etabs-tabgroup">
-        <div class="etabs-tabs"></div>
-        <div class="etabs-buttons"><button onclick="addTab()">+</button></div>
+        <div class="etabs-tabgroup">
+            <div class="etabs-tabs"></div>
+            <div class="etabs-buttons"><button onclick="addTab()">+</button></div>
+        </div>
+        <div class="buttons has-addons mr-2">
+        <button class="button is-rounded toolbar-hover" onclick="tabBack()"><img class="toolbar-icon" src="resources/icons/back.png"></button>
+        <button class="button is-rounded  toolbar-hover" id="state-btn"><img class="toolbar-icon" src="resources/icons/refresh.png"></button>
+        <button class="button is-rounded toolbar-hover" onclick="tabForward()"><img class="toolbar-icon" src="resources/icons/forward.png"></button>
     </div>
-
-    <button class="btn btn-light toolbar-btn toolbar-hover" onclick="tabBack()"><img class="toolbar-icon" src="resources/icons/back.png"></button>
-    <button class="btn btn-light toolbar-btn toolbar-hover" onclick="tabForward()"><img class="toolbar-icon" src="resources/icons/forward.png"></button>
-    <button class="btn btn-light toolbar-btn toolbar-hover" id="state-btn"><img class="toolbar-icon" src="resources/icons/refresh.png"></button>
-    <button class="btn btn-light toolbar-btn toolbar-hover" onclick="goHome()"><img class="toolbar-icon" src="resources/icons/home.png"></button>
-    <button class="btn btn-light toolbar-btn toolbar-hover" onclick="secureDialog()"><img class="toolbar-icon" id="secure-icon" src="resources/icons/security.png"></button>
-    <input class="url" placeholder="Enter web address" id="address" spellcheck="false">
-    <button id="go" class="btn btn-light toolbar-btn" onclick="loadURL()"><img class="toolbar-icon" src="resources/icons/search.png"></button>
-    <div class="dropdown toolbar-btn menu-btn">
-        <button class="btn btn-light toolbar-hover" type="button" id="settingsMenu" data-bs-toggle="dropdown" aria-expanded="false"><img class="toolbar-icon" src="resources/icons/menu.png"></button>
-
-        <ul class="dropdown-menu" aria-labelledby="settingsMenu">
-            <li><button class="dropdown-item" onclick="addTab()">New Tab</button></li>
-            <li><button class="dropdown-item" onclick="addWindow()">New Window</button></li>
-            <hr>
-            <li><button class="dropdown-item" onclick="toggleDevTools()">Developer Tools</button></li>
-            <li><button class="dropdown-item" onclick="loadSystemPage('history')">History</button></li>
-            <li><button class="dropdown-item" onclick="loadSystemPage('bookmarks')">Bookmarks</button></li>
-            <li><button class="dropdown-item" onclick="downloadsList()">Downloads</button></li>
-            <hr>
-            <div class="custom-dropdown-item">
-                <button class="btn custom-btn-light" onclick="toggleFullScreen()" type="button"><img
-                        height="15" id="fullScreen" src="node_modules/bootstrap-icons/icons/fullscreen.svg" title="Full Screen"
-                        width="15"></button>
-                <b> | </b>
-                <button class="btn custom-btn-light" onclick="zoom('add')"><img
-                        height="15" src="node_modules/bootstrap-icons/icons/zoom-in.svg" title="Zoom In" width="15">
-                </button>
-                <button class="btn custom-btn-light" onclick="zoom('minus')"><img
-                        height="15" src="node_modules/bootstrap-icons/icons/zoom-out.svg" title="Zoom out" width="15">
-                </button>
-            </div>
-            <hr>
-            <li><button class="dropdown-item" onclick="find()">Find</button> </li>
-            <li><button class="dropdown-item" onclick="showDevicesToCast()">Cast</button></li>
-            <li><button class="dropdown-item" onclick="loadSystemPage('settings')">Settings</button></li>
-            <li><button class="dropdown-item" onclick="feedbackDialog()">Feedback</button></li>
-            <li><button class="dropdown-item" onclick="loadSystemPage('settings',false,'about')">About</button></li>
-            <li><button class="dropdown-item" onclick="require('@electron/remote').app.exit()">Exit</button></li>
-        </ul>
+    <div class="buttons has-addons mr-2">
+        <button class="button toolbar-hover" onclick="goHome()"><img class="toolbar-icon" src="resources/icons/home.png"></button>
+        <button class="button toolbar-hover" onclick="secureDialog()"><img class="toolbar-icon" id="secure-icon" src="resources/icons/security.png"></button>
     </div>
+<!--    <button class="btn btn-light toolbar-btn toolbar-hover" onclick="tabBack()"><img class="toolbar-icon" src="resources/icons/back.png"></button>-->
+<!--    <button class="btn btn-light toolbar-btn toolbar-hover" onclick="tabForward()"><img class="toolbar-icon" src="resources/icons/forward.png"></button>-->
+<!--    <button class="btn btn-light toolbar-btn toolbar-hover" id="state-btn"><img class="toolbar-icon" src="resources/icons/refresh.png"></button>-->
+    <input class="input url" placeholder="Enter web address" id="address" spellcheck="false">
+    <button id="go" class="button" onclick="loadURL()"><img class="toolbar-icon" src="resources/icons/search.png"></button>
+    <button id="menuBtn" class="button menu-btn toolbar-hover" type="button"><img class="toolbar-icon" src="resources/icons/menu.png"></button>
+
+    <!--    <div class="dropdown toolbar-btn menu-btn">-->
+<!--        <div class="dropdown-trigger">-->
+<!--        <button class="button toolbar-hover" type="button" aria-haspopup="true" aria-controls="settingsMenu"><img class="toolbar-icon" src="resources/icons/menu.png"></button>-->
+<!--        </div>-->
+<!--        <div class="dropdown-menu" aria-labelledby="settingsMenu" id="settingsMenu">-->
+<!--            <div class="dropdown-item"><button class="button">New Tab</button></div>-->
+<!--            <div class="dropdown-content">-->
+<!--            <button class="dropdown-item" onclick="addTab()">New Tab</button>-->
+<!--           <button class="dropdown-item" onclick="addWindow()">New Window</button>-->
+<!--            <hr>-->
+<!--            <button class="dropdown-item" onclick="toggleDevTools()">Developer Tools</button>-->
+<!--            <button class="dropdown-item" onclick="loadSystemPage('history')">History</button>-->
+<!--            <button class="dropdown-item" onclick="loadSystemPage('bookmarks')">Bookmarks</button>-->
+<!--            <button class="dropdown-item" onclick="downloadsList()">Downloads</button>-->
+<!--            <hr>-->
+<!--            <div class="custom-dropdown-item">-->
+<!--                <button class="btn custom-btn-light" onclick="toggleFullScreen()" type="button"><img-->
+<!--                        height="15" id="fullScreen" src="node_modules/bootstrap-icons/icons/fullscreen.svg" title="Full Screen"-->
+<!--                        width="15"></button>-->
+<!--                <b> | </b>-->
+<!--                <button class="btn custom-btn-light" onclick="zoom('add')"><img-->
+<!--                        height="15" src="node_modules/bootstrap-icons/icons/zoom-in.svg" title="Zoom In" width="15">-->
+<!--                </button>-->
+<!--                <button class="btn custom-btn-light" onclick="zoom('minus')"><img-->
+<!--                        height="15" src="node_modules/bootstrap-icons/icons/zoom-out.svg" title="Zoom out" width="15">-->
+<!--                </button>-->
+<!--            </div>-->
+<!--            <hr>-->
+<!--            <button class="dropdown-item" onclick="find()">Find</button>-->
+<!--            <button class="dropdown-item" onclick="showDevicesToCast()">Cast</button>-->
+<!--            <button class="dropdown-item" onclick="loadSystemPage('settings')">Settings</button>-->
+<!--            <button class="dropdown-item" onclick="feedbackDialog()">Feedback</button>-->
+<!--            <button class="dropdown-item" onclick="loadSystemPage('settings',false,'about')">About</button>-->
+<!--            <button class="dropdown-item" onclick="require('@electron/remote').app.exit()">Exit</button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
 </nav>
 
 <div class="etabs-views"></div>
 <div style="position: fixed;bottom: 0;right: 0;background-color: #eeeeee" id="target-url" hidden="hidden"></div>
+
+<div class="modal" id="settingsModal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <aside class="menu text-white">
+            <input class="input bg-dark">
+            <p class="menu-label">
+                Tabs
+            </p>
+            <ul class="menu-list">
+                <li><a onclick="menuClick(0)">New Tab</a></li>
+                <li><a onclick="menuClick(1)">New Window</a></li>
+            </ul>
+            <p class="menu-label">
+                Window
+            </p>
+            <ul class="menu-list">
+                <li><a onclick="menuClick(2)">Developer Tools</a></li>
+                <li><a onclick="menuClick(3)">Full Screen</a></li>
+                <li><a onclick="menuClick(4)">Find in window</a></li>
+                <li><a onclick="menuClick(5)">Cast</a></li>
+            </ul>
+            <p class="menu-label">
+                Settings
+            </p>
+            <ul class="menu-list">
+                <li><a onclick="menuClick(6)">History</a></li>
+                <li><a onclick="menuClick(7)">Bookmarks</a></li>
+                <li><a onclick="menuClick(8)">Downloads</a></li>
+                <li><a onclick="menuClick(9)">Settings</a></li>
+                <li><a onclick="menuClick(10)">Feedback</a></li>
+                <li><a onclick="menuClick(11)">About</a></li>
+                <li><a onclick="menuClick(12)">Exit</a></li>
+            </ul>
+        </aside>
+    </div>
+    <button class="modal-close is-large" aria-label="close" onclick="modal.classList.toggle('is-active')"></button>
+</div>
 <script>
     const TabGroup = require("electron-tabs");
     const dragula = require("dragula");
@@ -108,6 +160,11 @@
         }
     });
     addTab()
+    var modal = document.getElementById("settingsModal");
+    document.getElementById("menuBtn").addEventListener('click', function(event) {
+        event.stopPropagation();
+        modal.classList.toggle('is-active');
+    });
 </script>
 </body>
 </html>
