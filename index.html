@@ -25,6 +25,7 @@
     <script src="src/URLBar/barEvents.js"></script>
     <!-- System -->
     <script src="src/System/loadSystem.js"></script>
+    <script src="src/System/Settings.js"></script>
     <!-- Security -->
     <script src="src/Security/pageSecure.js"></script>
     <script src="src/Security/secureDialog.js"></script>
@@ -184,9 +185,9 @@
                 Search Engine
             </p>
             <ul class="menu-list">
-                <li><a onclick="menuClick(0)">Google</a></li>
-                <li><a onclick="menuClick(1)">DuckDuckGo</a></li>
-                <li><a onclick="menuClick(1)">Bing</a></li>
+                <li><a onclick="setSearchEngine(0)">Google</a></li>
+                <li><a onclick="setSearchEngine(1)">DuckDuckGo</a></li>
+                <li><a onclick="setSearchEngine(2)">Bing</a></li>
             </ul>
         </aside>
     </div>
@@ -204,9 +205,10 @@
                 Home Page
             </p>
             <ul class="menu-list">
-                <li><a onclick="menuClick(0)">Google</a></li>
-                <li><a onclick="menuClick(1)">DuckDuckGo</a></li>
-                <li><a onclick="menuClick(1)">Bing</a></li>
+                <li><a onclick="setHomePage(0)">Pocket Default</a></li>
+                <li><a onclick="setHomePage(1)">Google</a></li>
+                <li><a onclick="setHomePage(2)">DuckDuckGo</a></li>
+                <li><a onclick="setHomePage(3)">Bing</a></li>
             </ul>
         </aside>
     </div>
@@ -224,9 +226,9 @@
                 Security Mode
             </p>
             <ul class="menu-list">
-                <li><a onclick="menuClick(0)">Basic</a></li>
-                <li><a onclick="menuClick(1)">Moderate</a></li>
-                <li><a onclick="menuClick(1)">Strict</a></li>
+                <li><a onclick="setSecurityMode(0)">Basic</a></li>
+                <li><a onclick="setSecurityMode(1)">Moderate</a></li>
+                <li><a onclick="setSecurityMode(2)">Strict</a></li>
             </ul>
         </aside>
     </div>
