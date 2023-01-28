@@ -1,5 +1,5 @@
-function menuClick(i) {
-    document.getElementById("settingsModal").classList.toggle('is-active');
+async function menuClick(i) {
+    modal.classList.toggle('is-active');
 
     if (i == 0) {
         addTab();
@@ -20,11 +20,11 @@ function menuClick(i) {
     } else if (i == 8) {
         showDownloads();
     } else if (i == 9) {
-        loadSystemPage("settings")
+        settingsModal.classList.add('is-active');
     } else if (i == 10) {
-        loadSystemPage("feedback")
+        feedbackDialog()
     } else if (i == 11) {
-        loadSystemPage("about")
+        loadSystemPage("settings")
     } else if (i == 12) {
         electron.remote.app.quit();
     }

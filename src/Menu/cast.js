@@ -17,8 +17,8 @@ function showDevicesToCast() {
     let devices = "";
     let nbOfDevices = 0;
     client.devices.forEach(function(device) {
-        devices += "<button class='btn' onclick='showControls(" + nbOfDevices + ")'>" + device.friendlyName + "</button>"
-            nbOfDevices++;
+        devices += "<button class='button' onclick='showControls(" + nbOfDevices + ")'>" + device.friendlyName + "</button>"
+        nbOfDevices++;
     })
     let fullDiv = document.createElement("div");
     fullDiv.innerHTML = devices
@@ -42,7 +42,7 @@ function getVolume(id) {
 function showButtons(id) {
     try {
         if (client.devices[id].getCurrentTime()) {
-            return client.devices[id].getCurrentTime() + "<br><button class='btn' onclick='client.devices[" + id + "].close()'>Close Connection</button>"
+            return client.devices[id].getCurrentTime() + "<br><button class='button' onclick='client.devices[" + id + "].close()'>Close Connection</button>"
         } else {
             return "No video running.<br><button class='btn' onclick='castTo(" + id + ")'>Cast</button>";
         }

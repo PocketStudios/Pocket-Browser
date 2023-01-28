@@ -1,6 +1,6 @@
 {
   "name": "pocket-browser",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "description": "An open-source browser.",
   "main": "main.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "debug": "ELECTRON_ENV=dev electron ."
   },
   "keywords": [],
-  "author": "Pocket, Inc.",
+  "author": "Pocket Studios",
   "license": "MIT",
   "devDependencies": {
     "electron": "latest",
@@ -34,7 +34,7 @@
     "asar": false,
     "linux": {
       "icon": "build/icon.png",
-      "category": "Network"
+      "category": "Internet"
     },
     "win": {
       "icon": "build/icon.png"

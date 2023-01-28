@@ -1,5 +1,5 @@
 window.addEventListener('load',function () {
-
+        console.log(require("electron"))
         // Load Settings
         pocket.loadSearchEngine();
         pocket.loadHomePage();

@@ -1,7 +1,7 @@
 <script>
     var browserVersion = require("./package.json").version;
 </script>
-<script src="https://pocket-inc.com/api/updater.js" type="text/javascript"></script>
+
 <html>
 <head>
     <link href="resources/css/style.css" rel="stylesheet">
@@ -112,7 +112,7 @@
 <div class="etabs-views"></div>
 <div style="position: fixed;bottom: 0;right: 0;background-color: #eeeeee" id="target-url" hidden="hidden"></div>
 
-<div class="modal" id="settingsModal">
+<div class="modal" id="menuModal">
     <div class="modal-background"></div>
     <div class="modal-content">
         <aside class="menu text-white">
@@ -133,6 +133,7 @@
                 <li><a onclick="menuClick(4)">Find in window</a></li>
                 <li><a onclick="menuClick(5)">Cast</a></li>
             </ul>
+
             <p class="menu-label">
                 Settings
             </p>
@@ -149,6 +150,109 @@
     </div>
     <button class="modal-close is-large" aria-label="close" onclick="modal.classList.toggle('is-active')"></button>
 </div>
+
+<div class="modal" id="settingsModal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <aside class="menu text-white">
+            <a class="menu-label" onclick="settings.classList.toggle('is-active'); modal.classList.toggle('is-active')"><-</a>
+            <p class="menu-label">
+                Settings
+            </p>
+            <ul class="menu-list">
+                <li><a onclick="settings.classList.toggle('is-active'); searchEngineModal.classList.add('is-active')">Search
+                    Engine</a></li>
+                <li><a onclick="settings.classList.toggle('is-active'); homePageModal.classList.add('is-active')">Home
+                    Page</a></li>
+                <li><a onclick="settings.classList.toggle('is-active'); securityModal.classList.add('is-active');">Security
+                    Mode</a></li>
+                <li><a onclick="settings.classList.toggle('is-active'); extenModal.classList.add('is-active');">Extensions</a>
+                </li>
+            </ul>
+        </aside>
+    </div>
+    <button aria-label="close" class="modal-close is-large" onclick="settings.classList.toggle('is-active')"></button>
+</div>
+
+<div class="modal" id="searchEngineModal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <aside class="menu text-white">
+            <a class="menu-label"
+               onclick="searchEngineModal.classList.toggle('is-active'); settings.classList.toggle('is-active')"><-</a>
+            <p class="menu-label">
+                Search Engine
+            </p>
+            <ul class="menu-list">
+                <li><a onclick="menuClick(0)">Google</a></li>
+                <li><a onclick="menuClick(1)">DuckDuckGo</a></li>
+                <li><a onclick="menuClick(1)">Bing</a></li>
+            </ul>
+        </aside>
+    </div>
+    <button aria-label="close" class="modal-close is-large"
+            onclick="searchEngineModal.classList.toggle('is-active')"></button>
+</div>
+
+<div class="modal" id="homePageModal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <aside class="menu text-white">
+            <a class="menu-label"
+               onclick="homePageModal.classList.toggle('is-active'); settings.classList.toggle('is-active')"><-</a>
+            <p class="menu-label">
+                Home Page
+            </p>
+            <ul class="menu-list">
+                <li><a onclick="menuClick(0)">Google</a></li>
+                <li><a onclick="menuClick(1)">DuckDuckGo</a></li>
+                <li><a onclick="menuClick(1)">Bing</a></li>
+            </ul>
+        </aside>
+    </div>
+    <button aria-label="close" class="modal-close is-large"
+            onclick="homePageModal.classList.toggle('is-active')"></button>
+</div>
+
+<div class="modal" id="securityModal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <aside class="menu text-white">
+            <a class="menu-label"
+               onclick="securityModal.classList.toggle('is-active'); settings.classList.toggle('is-active')"><-</a>
+            <p class="menu-label">
+                Security Mode
+            </p>
+            <ul class="menu-list">
+                <li><a onclick="menuClick(0)">Basic</a></li>
+                <li><a onclick="menuClick(1)">Moderate</a></li>
+                <li><a onclick="menuClick(1)">Strict</a></li>
+            </ul>
+        </aside>
+    </div>
+    <button aria-label="close" class="modal-close is-large"
+            onclick="securityModal.classList.toggle('is-active')"></button>
+</div>
+
+<div class="modal" id="extenModal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <aside class="menu text-white">
+            <a class="menu-label"
+               onclick="extenModal.classList.toggle('is-active'); settings.classList.toggle('is-active')"><-</a>
+            <p class="menu-label">
+                Extensions
+            </p>
+            <ul class="menu-list">
+                <li><a class="has-text-success" onclick="menuClick(0)">Ad Block [Enabled]</a></li>
+                <li><a class="has-text-danger" onclick="menuClick(1)">DarkMode [Disabled]</a></li>
+                <li><a class="has-text-danger" onclick="menuClick(1)">Video Downloder [Disabled]</a></li>
+            </ul>
+        </aside>
+    </div>
+    <button aria-label="close" class="modal-close is-large"
+            onclick="securityModal.classList.toggle('is-active')"></button>
+</div>
 <script>
     const TabGroup = require("electron-tabs");
     const dragula = require("dragula");
@@ -160,8 +264,14 @@
         }
     });
     addTab()
-    var modal = document.getElementById("settingsModal");
-    document.getElementById("menuBtn").addEventListener('click', function(event) {
+    var modal = document.getElementById("menuModal");
+    let settings = document.getElementById("settingsModal");
+    let searchEngineModal = document.getElementById("searchEngineModal");
+    let homePageModal = document.getElementById("homePageModal");
+    let securityModal = document.getElementById("securityModal");
+    let extenModal = document.getElementById("extenModal");
+
+    document.getElementById("menuBtn").addEventListener('click', function (event) {
         event.stopPropagation();
         modal.classList.toggle('is-active');
     });

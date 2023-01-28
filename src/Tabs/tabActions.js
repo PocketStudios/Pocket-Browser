@@ -28,7 +28,7 @@ function zoom(type) {
 function find() {
     let fullDiv = document.createElement("div")
     let input = document.createElement("input");
-    input.className = "form-control";
+    input.className = "input mb-3";
     input.id = "find";
     let lineBreak = document.createElement("br");
     let confirmButton = document.createElement("button");
@@ -36,10 +36,10 @@ function find() {
         tabGroup.getActiveTab().webview.findInPage(document.getElementById('find').value);
     }
     confirmButton.innerHTML = "Find"
-    confirmButton.classList = "btn btn-info";
+    confirmButton.classList = "button is-info mb-4";
     let closeButton = document.createElement("button");
     closeButton.innerHTML = "Close"
-    closeButton.classList = "btn btn-secondary";
+    closeButton.classList = "button is-danger";
     closeButton.onclick = function () {
         Swal.close();
     }
@@ -48,7 +48,7 @@ function find() {
     fullDiv.append(confirmButton)
     fullDiv.append(closeButton)
     Swal.fire({
-        title: "Find in page",
+        title: "Find in Page",
         position: 'top-end',
         showConfirmButton: false,
         showCancelButton: false,
