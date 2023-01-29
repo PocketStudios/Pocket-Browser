@@ -16,7 +16,7 @@ function setOtherSearchEngine(value) {
 }
 
 // Home Page
-let homepages = ["pocket://new", "https://google.com/", "https://duckduckgo.com", "https://bing.com/"]
+let homepages = ["https://google.com/", "https://duckduckgo.com", "https://bing.com/"]
 
 function setHomePage(option) {
     console.log(option)

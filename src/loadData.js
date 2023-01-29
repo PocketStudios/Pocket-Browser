@@ -1,4 +1,4 @@
-let homePage = "pocket://new";
+let homePage = "https://google.com";
 let adBlock = false;
 let dark = false;
 let vidDown = false;
@@ -8,7 +8,7 @@ let fs = require('fs');
 let Swal = require("sweetalert2");
 
 if (fs.existsSync(path.join(dataPath,"/home.pocket"))) {
-	homePage = fs.readFileSync(path.join(dataPath,"/home.pocket"),"utf8") || "pocket://new";
+	homePage = fs.readFileSync(path.join(dataPath, "/home.pocket"), "utf8") || "https://google.com";
 }
 let searchEngine = "https://duck.com/%s";
 if (fs.existsSync(path.join(dataPath,"/search.pocket"))) {
