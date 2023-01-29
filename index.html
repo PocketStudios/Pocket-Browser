@@ -112,12 +112,11 @@
 
 <div class="etabs-views"></div>
 <div style="position: fixed;bottom: 0;right: 0;background-color: #eeeeee" id="target-url" hidden="hidden"></div>
-
+<!--Settings Dialogs-->
 <div class="modal" id="menuModal">
     <div class="modal-background"></div>
     <div class="modal-content">
         <aside class="menu text-white">
-            <input class="input bg-dark">
             <p class="menu-label">
                 Tabs
             </p>
@@ -255,6 +254,28 @@
     <button aria-label="close" class="modal-close is-large"
             onclick="securityModal.classList.toggle('is-active')"></button>
 </div>
+
+<div class="modal" id="aboutModal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <aside class="menu text-white">
+            <a class="menu-label"
+               onclick="aboutModal.classList.toggle('is-active'); modal.classList.toggle('is-active')"><-</a>
+            <p class="menu-label">
+                About
+            </p>
+            <ul class="menu-list">
+                <li>Pocket Browser v<span id="pbv"></span></li>
+                <li>Chromium: v<span id="chv"></span></li>
+                <hr>
+                <li>&copy; 2023 Pocket Studios. All Rights Reserved.</li>
+                <li>https://github.com/Pocket-Studios/PocketBrowser</li>
+            </ul>
+        </aside>
+    </div>
+    <button aria-label="close" class="modal-close is-large"
+            onclick="aboutModal.classList.toggle('is-active')"></button>
+</div>
 <script>
     const TabGroup = require("electron-tabs");
     const dragula = require("dragula");
@@ -272,10 +293,15 @@
     let homePageModal = document.getElementById("homePageModal");
     let securityModal = document.getElementById("securityModal");
     let extenModal = document.getElementById("extenModal");
+    let aboutModal = document.getElementById("aboutModal");
 
     document.getElementById("menuBtn").addEventListener('click', function (event) {
         event.stopPropagation();
         modal.classList.toggle('is-active');
+    });
+    window.addEventListener('load', function () {
+        document.getElementById("pbv").innerHTML = require('@electron/remote').app.getVersion();
+        document.getElementById("chv").innerHTML = process.versions.chrome;
     });
 </script>
 </body>

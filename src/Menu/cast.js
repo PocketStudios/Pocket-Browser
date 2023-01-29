@@ -30,7 +30,7 @@ function showDevicesToCast() {
 function changeVolume(id) {
     let volume = document.getElementById("cast-volume").value;
     console.log("Changing volume of " + id + " to " + volume)
-    client.devices[id].setVolume(volume);
+    client.devices[id].setVolume(volume / 100);
 }
 function getVolume(id) {
     if (client.devices[id].getVolume()) {

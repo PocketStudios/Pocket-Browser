@@ -19,12 +19,11 @@ function secureDialog(mode) {
 
             require("@electron/remote").session.defaultSession.cookies.get({url: tabGroup.getActiveTab().webview.src}).then(cookies => cookies.forEach(function (cookie) {
                 let button = document.createElement("button");
-                button.className = "btn btn-light";
+                button.className = "button";
                 button.onclick = function () {
-                    cookieDialog(tabGroup.getActiveTab().webview.src,cookie.name)
-                    }
+                    cookieDialog(tabGroup.getActiveTab().webview.src, cookie.name)
+                }
                 button.innerHTML = cookie.name;
-
                 fullDiv.appendChild(button)
 
             })).then(function () {

@@ -14,9 +14,9 @@ async function menuClick(i) {
     } else if (i == 5) {
         showDevicesToCast();
     } else if (i == 6) {
-    loadSystemPage("history")
+    History();
     } else if (i == 7) {
-        loadSystemPage("bookmarks")
+        Bookmarks();
     } else if (i == 8) {
         showDownloads();
     } else if (i == 9) {
@@ -24,7 +24,7 @@ async function menuClick(i) {
     } else if (i == 10) {
         feedbackDialog()
     } else if (i == 11) {
-        loadSystemPage("settings")
+        aboutModal.classList.add('is-active');
     } else if (i == 12) {
         electron.remote.app.quit();
     }

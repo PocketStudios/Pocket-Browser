@@ -1,6 +1,4 @@
 var fullHistory = [];
-let linebyline = require("line-by-line");
-
 function checkHistory(text) {
     var bool = false;
 
