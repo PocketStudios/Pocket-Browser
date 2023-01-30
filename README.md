@@ -33,4 +33,4 @@
 <p>For code/running/building problems, create an issue.</p>
 <p>For Functionality and feedback, contact <a href="emailto:pocket.studios.ld@gmail.com">us</a>.</p>
 <hr>
-<p align="center">&copy; 2023 - Pocket, Inc.</p>
+<p align="center">&copy; 2023 - Pocket Studios.</p>
