@@ -11,7 +11,8 @@
   "author": "Pocket Studios",
   "license": "MIT",
   "devDependencies": {
-    "electron": "latest"
+    "electron": "latest",
+    "electron-builder": "latest"
   },
   "dependencies": {
     "@cliqz/adblocker": "^1.23.4",
