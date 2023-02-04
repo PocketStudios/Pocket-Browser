@@ -5,6 +5,6 @@ function changeSecure() {
     } else if (url.startsWith("http://")) {
         document.getElementById("secure-icon").src = "resources/icons/insecure.png"
     } else if (url.startsWith("file:///")) {
-        document.getElementById("secure-icon").src = "node_modules/bootstrap-icons/icons/info.svg"
+        document.getElementById("secure-icon").src = "resources/icons/info.svg"
     }
 }

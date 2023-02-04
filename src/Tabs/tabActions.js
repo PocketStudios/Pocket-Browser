@@ -9,11 +9,6 @@ if (currentTab.isDevToolsOpened()) {
 function toggleFullScreen() {
         let newState = !require("@electron/remote").getCurrentWindow().isFullScreen();
         require("@electron/remote").getCurrentWindow().setFullScreen(newState);
-        if (newState == false) {
-            document.getElementById("fullScreen").src = "node_modules/bootstrap-icons/icons/fullscreen.svg"
-        } else {
-            document.getElementById("fullScreen").src = "node_modules/bootstrap-icons/icons/fullscreen-exit.svg"
-        }
 }
 
 function zoom(type) {

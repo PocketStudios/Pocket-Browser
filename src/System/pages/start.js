@@ -19,13 +19,13 @@ function nextPage() {
                 "    <div class=\"container\">\n" +
                 "    <div class=\"row\">\n" +
                 "        <div class=\"col\">\n" +
-                "            <button class=\"btn big-btn h-50\" id=\"basic\" onclick=\"changeMode('0')\"><img class=\"normal-img\" src=\"../../../node_modules/bootstrap-icons/icons/shield-exclamation.svg\" width=\"12\" height=\"12\"><br> Basic</button>\n" +
+                "            <button class=\"btn big-btn h-50\" id=\"basic\" onclick=\"changeMode('0')\"><img class=\"normal-img\" src=\"../../../resources/icons/shield-exclamation.svg\" width=\"12\" height=\"12\"><br> Basic</button>\n" +
                 "        </div>\n" +
                 "        <div class=\"col\">\n" +
-                "            <button class=\"btn big-btn\" id=\"balanced\" onclick=\"changeMode('1')\"><img class=\"normal-img\" src=\"../../../node_modules/bootstrap-icons/icons/shield.svg\" width=\"12\" height=\"12\"><br> Balanced</button>\n" +
+                "            <button class=\"btn big-btn\" id=\"balanced\" onclick=\"changeMode('1')\"><img class=\"normal-img\" src=\"../../../resources/icons/shield.svg\" width=\"12\" height=\"12\"><br> Balanced</button>\n" +
                 "        </div>\n" +
                 "        <div class=\"col\">\n" +
-                "            <button class=\"btn big-btn\" id=\"strict\" onclick=\"changeMode('2')\"><img class=\"normal-img\" src=\"../../../node_modules/bootstrap-icons/icons/shield-check.svg\" width=\"12\" height=\"12\"><br> Strict</button>\n" +
+                "            <button class=\"btn big-btn\" id=\"strict\" onclick=\"changeMode('2')\"><img class=\"normal-img\" src=\"../../../resources/icons/shield-check.svg\" width=\"12\" height=\"12\"><br> Strict</button>\n" +
                 "        </div>\n" +
                 "    </div>\n" +
                 "        <div id=\"info\"></div>\n" +

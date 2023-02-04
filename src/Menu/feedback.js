@@ -9,8 +9,8 @@ Swal.fire({
 		new Promise(async function (resolve) {
 				const params = new FormData();
 				params.append('desc', encodeURI(feedbackText.value));
-				params.append('os',encodeURI(process.platform))
-				params.append('ver',"1.7.0")
+				params.append('os', encodeURI(process.platform))
+            params.append('ver', "1.8.0")
 
 				const response = await fetch('https://pocket-inc.com/api/browser/feedback.php', {method: 'POST', body: params});
 				const data = await response.json();

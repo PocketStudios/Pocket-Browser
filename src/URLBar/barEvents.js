@@ -9,10 +9,10 @@ document.getElementById("address").addEventListener('keydown', function (event) 
         document.getElementById("address").value = tabGroup.getActiveTab().webview.src;
     }
 })
-document.getElementById("address").addEventListener("click", function () {
-    let electron = require("@electron/remote");
-    electron.getCurrentWindow().webContents.selectAll()
-})
+    document.getElementById("address").addEventListener("focus", function () {
+        let electron = require("@electron/remote");
+        electron.getCurrentWindow().webContents.selectAll()
+    })
 // auto complete
 let autocomplete = require("autocompleter")
 autocomplete({
@@ -32,13 +32,13 @@ autocomplete({
                 suggestions[i].label = suggestions[i].label.slice(0, 50) + "..."
             }
         }
-        if (text.includes(".com") || text.includes(".net") || text.includes(".org") || text.includes("www.") || text.includes("http")) {
-            suggestions.unshift(Object.create({
-                label: website,
-                value: website
-            }));
-        } else if (text.startsWith("pocket://")) {
-            suggestions.unshift(Object.create({label: website + " - System Page", value: website}));
+        // detect if it is a url
+        if ((text.startsWith("http://") || text.startsWith("https://")) && !text.includes(" ") && text.split(".").length > 1) {
+            suggestions.unshift(Object.create({label: website, value: website}));
+        } else if (text.startsWith("www.") && text.split(".").length > 2) {
+            suggestions.unshift(Object.create({label: "https://" + website, value: "https://" + website}));
+        } else if (text.split(".").length > 1) {
+            suggestions.unshift(Object.create({label: "https://www." + website, value: "https://www." + website}));
         } else if (text.startsWith("file:///")) {
             suggestions.unshift(Object.create({label: website + " - Local File", value: website}));
         } else {

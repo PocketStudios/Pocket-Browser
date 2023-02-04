@@ -1,17 +1,22 @@
 require("@electron/remote").session.defaultSession.setPermissionRequestHandler((webContents, permission, callback,details) => {
-    const url = webContents.getURL()
+    const url = webContents.getURL();
+    //get domain from url
+    let domain = url.split("/")[2];
     let permissionType = permission;
     if (permission == "media") {
-        if (details.mediaTypes.includes("video")) {
-            permissionType = "camera";
-        } else if (details.mediaTypes.includes("audio")) {
-            permissionType = "microphone"
+        permissionType = "media";
+        if (details.mediaTypes) {
+            if (details.mediaTypes.includes("video")) {
+                permissionType = "camera";
+            } else if (details.mediaTypes.includes("audio")) {
+                permissionType = "microphone"
+            }
         }
     }
     if (fs.existsSync(path.join(dataPath, permissionType + ".json"))) {
-        let permissionLinks = JSON.parse(fs.readFileSync(path.join(dataPath,permissionType + ".json")));
-        if (url in permissionLinks) {
-            if (permissionLinks[url] == true) {
+        let permissionLinks = JSON.parse(fs.readFileSync(path.join(dataPath, permissionType + ".json")));
+        if (domain in permissionLinks) {
+            if (permissionLinks[domain] == true) {
                 callback(true)
                 return;
             } else {
@@ -36,13 +41,13 @@ require("@electron/remote").session.defaultSession.setPermissionRequestHandler((
         }
         if (fs.existsSync(path.join(dataPath,permissionType + ".json"))) {
             let currentData = JSON.parse(fs.readFileSync(path.join(dataPath,permissionType + ".json"),"utf8"));
-            currentData[url] = returned;
-            fs.writeFileSync(path.join(dataPath,permissionType + ".json"),JSON.stringify(currentData,null," "),"utf8");
+            currentData[domain] = returned;
+            fs.writeFileSync(path.join(dataPath, permissionType + ".json"), JSON.stringify(currentData, null, " "), "utf8");
 
         } else {
             let obj = {}
-            obj[url] = returned;
-            fs.writeFileSync(path.join(dataPath,permissionType + ".json"),JSON.stringify(obj,null," "),"utf8");
+            obj[domain] = returned;
+            fs.writeFileSync(path.join(dataPath, permissionType + ".json"), JSON.stringify(obj, null, " "), "utf8");
 
         }
     })

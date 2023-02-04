@@ -35,39 +35,39 @@ function secureDialog(mode) {
         } else if (value.isDenied) {
             let fullDiv = document.createElement("div");
             if (fs.existsSync(path.join(dataPath,"camera.json"))) {
-                let data = JSON.parse(fs.readFileSync(path.join(dataPath,"camera.json"),"utf8"));
-                let url = tabGroup.getActiveTab().webview.src;
+                let data = JSON.parse(fs.readFileSync(path.join(dataPath, "camera.json"), "utf8"));
+                let url = tabGroup.getActiveTab().webview.src.split("/")[2];
                 if (url in data) {
                     if (data[url] == true) {
-                        cameraAccess="checked";
-                    }
+                        cameraAccess = "checked";
+                    } else cameraAccess = "";
                 }
             }
             if (fs.existsSync(path.join(dataPath,"microphone.json"))) {
-                let data = JSON.parse(fs.readFileSync(path.join(dataPath,"microphone.json"),"utf8"));
-                let url = tabGroup.getActiveTab().webview.src;
+                let data = JSON.parse(fs.readFileSync(path.join(dataPath, "microphone.json"), "utf8"));
+                let url = tabGroup.getActiveTab().webview.src.split("/")[2];
                 if (url in data) {
                     if (data[url] == true) {
-                        micAccess="checked";
-                    }
+                        micAccess = "checked";
+                    } else micAccess = "";
                 }
             }
             if (fs.existsSync(path.join(dataPath,"notifications.json"))) {
-                let data = JSON.parse(fs.readFileSync(path.join(dataPath,"notifications.json"),"utf8"));
-                let url = tabGroup.getActiveTab().webview.src;
+                let data = JSON.parse(fs.readFileSync(path.join(dataPath, "notifications.json"), "utf8"));
+                let url = tabGroup.getActiveTab().webview.src.split("/")[2];
                 if (url in data) {
                     if (data[url] == true) {
-                        notsAccess="checked";
-                    }
+                        notsAccess = "checked";
+                    } else notsAccess = "";
                 }
             }
             if (fs.existsSync(path.join(dataPath,"geolocation.json"))) {
-                let data = JSON.parse(fs.readFileSync(path.join(dataPath,"geolocation.json"),"utf8"));
-                let url = tabGroup.getActiveTab().webview.src;
+                let data = JSON.parse(fs.readFileSync(path.join(dataPath, "geolocation.json"), "utf8"));
+                let url = tabGroup.getActiveTab().webview.src.split("/")[2];
                 if (url in data) {
                     if (data[url] == true) {
-                        locAccess="checked";
-                    }
+                        locAccess = "checked";
+                    } else locAccess = "";
                 }
             }
             let cameraText = document.createElement("p")
@@ -120,7 +120,7 @@ async function cookieDialog(url,name) {
 }
 function changePermission(permission) {
     let returned = false;
-    let url = tabGroup.getActiveTab().webview.src;
+    let url = tabGroup.getActiveTab().webview.src.split("/")[2];
     if (permission == "camera") {
         if (cameraAccess == "checked") {
             cameraAccess = "";

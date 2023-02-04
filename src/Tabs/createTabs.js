@@ -4,7 +4,6 @@ function addTab(url) {
     if (url) {
         page = url;
     } else {
-        if (isSystemPage(homePage)) return loadSystemPage(homePage.slice(9))
         page = homePage;
     }
 
@@ -31,7 +30,7 @@ function addWindow() {
     })
     require('@electron/remote').require("@electron/remote/main").enable(newWindow.webContents)
     newWindow.loadFile('index.html')
-    //newWindow.setMenu(null)
+    newWindow.setMenu(null)
 
     const newAgent = newWindow.webContents.getUserAgent().replace(" Electron/" + process.versions['electron'],"")
     newWindow.webContents.setUserAgent(newAgent)

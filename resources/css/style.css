@@ -111,3 +111,28 @@ input:checked + .slider:before {
 .slider.round:before {
     border-radius: 50%;
 }
+
+.menu-list a:not(.has-text-success) {
+    text-decoration: none;
+    color: #7d7d7d !important;
+}
+
+.menu-list a:hover {
+    text-decoration: none;
+    color: black !important;
+}
+
+.menu-list li:hover {
+    background-color: white;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 10px;
+
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background: white;
+}

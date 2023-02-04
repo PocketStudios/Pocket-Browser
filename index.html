@@ -1,13 +1,23 @@
 <script>
-    var browserVersion = require("./package.json").version;
+    (async () => {
+        try {
+            let browserVersion = require("./package.json").version;
+            let latestVersion = await fetch("https://api.github.com/repos/PocketStudios/Pocket-Browser/releases/latest").then(res => res.json()).then(res => res.tag_name);
+            latestVersion = latestVersion.substring(1);
+            if (browserVersion < latestVersion) {
+                alert("You are not using the latest version of Pocket Browser. Please update to the latest version to ensure the best experience.");
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    })();
+
 </script>
 
 <html>
 <head>
     <link href="resources/css/style.css" rel="stylesheet">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-<!--    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>-->
-<!--    <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">-->
     <link href="node_modules/bulma/css/bulma.css" rel="stylesheet">
     <link href="resources/css/electron-tabs.css" rel="stylesheet">
     <link href="node_modules/dragula/dist/dragula.css" rel="stylesheet">
@@ -142,7 +152,7 @@
                 <li><a onclick="menuClick(7)">Bookmarks</a></li>
                 <li><a onclick="menuClick(8)">Downloads</a></li>
                 <li><a onclick="menuClick(9)">Settings</a></li>
-                <li><a onclick="menuClick(10)">Feedback</a></li>
+                <li><a onclick="menuClick(10)">Help</a></li>
                 <li><a onclick="menuClick(11)">About</a></li>
                 <li><a onclick="menuClick(12)">Exit</a></li>
             </ul>
@@ -166,7 +176,6 @@
                     Page</a></li>
                 <li><a onclick="settings.classList.toggle('is-active'); securityModal.classList.add('is-active');">Security
                     Mode</a></li>
-                <li><a onclick="settings.classList.toggle('is-active'); extenModal.classList.add('is-active');">Extensions</a>
                 </li>
             </ul>
         </aside>
@@ -184,9 +193,9 @@
                 Search Engine
             </p>
             <ul class="menu-list">
-                <li><a onclick="setSearchEngine(0)">Google</a></li>
-                <li><a onclick="setSearchEngine(1)">DuckDuckGo</a></li>
-                <li><a onclick="setSearchEngine(2)">Bing</a></li>
+                <li><a id="sg" onclick="setSearchEngine(0)">Google</a></li>
+                <li><a id="sd" onclick="setSearchEngine(1)">DuckDuckGo</a></li>
+                <li><a id="sb" onclick="setSearchEngine(2)">Bing</a></li>
             </ul>
         </aside>
     </div>
@@ -204,9 +213,9 @@
                 Home Page
             </p>
             <ul class="menu-list">
-                <li><a onclick="setHomePage(0)">Google</a></li>
-                <li><a onclick="setHomePage(1)">DuckDuckGo</a></li>
-                <li><a onclick="setHomePage(2)">Bing</a></li>
+                <li><a id="hg" onclick="setHomePage(0)">Google</a></li>
+                <li><a id="hd" onclick="setHomePage(1)">DuckDuckGo</a></li>
+                <li><a id="hb" onclick="setHomePage(2)">Bing</a></li>
             </ul>
         </aside>
     </div>
@@ -224,9 +233,9 @@
                 Security Mode
             </p>
             <ul class="menu-list">
-                <li><a onclick="setSecurityMode(0)">Basic</a></li>
-                <li><a onclick="setSecurityMode(1)">Moderate</a></li>
-                <li><a onclick="setSecurityMode(2)">Strict</a></li>
+                <li><a id="s1" onclick="setSecurityMode(0)">Basic</a></li>
+                <li><a id="s2" onclick="setSecurityMode(1)">Moderate</a></li>
+                <li><a id="s3" onclick="setSecurityMode(2)">Strict</a></li>
             </ul>
         </aside>
     </div>
@@ -263,6 +272,7 @@
             <p class="menu-label">
                 About
             </p>
+            <img src="resources/icons/s-icon.png" style="width: 32px">
             <ul class="menu-list">
                 <li>Pocket Browser v<span id="pbv"></span></li>
                 <li>Chromium: v<span id="chv"></span></li>
@@ -302,6 +312,49 @@
         document.getElementById("pbv").innerHTML = require('@electron/remote').app.getVersion();
         document.getElementById("chv").innerHTML = process.versions.chrome;
     });
+
+    function checkHome() {
+        document.getElementById("hg").classList.remove("has-text-success");
+        document.getElementById("hd").classList.remove("has-text-success");
+        document.getElementById("hb").classList.remove("has-text-success");
+        if (homePage == "https://google.com") {
+            document.getElementById("hg").classList.add("has-text-success");
+        } else if (homePage == "https://duckduckgo.com") {
+            document.getElementById("hd").classList.add("has-text-success");
+        } else if (homePage == "https://bing.com") {
+            document.getElementById("hb").classList.add("has-text-success");
+        }
+    }
+
+    function checkSecurity() {
+        document.getElementById("s1").classList.remove("has-text-success");
+        document.getElementById("s2").classList.remove("has-text-success");
+        document.getElementById("s3").classList.remove("has-text-success");
+        if (securityMode == 0) {
+            document.getElementById("s1").classList.add("has-text-success");
+        } else if (securityMode == 1) {
+            document.getElementById("s2").classList.add("has-text-success");
+        } else if (securityMode == 2) {
+            document.getElementById("s3").classList.add("has-text-success");
+        }
+    }
+
+    function checkSearch() {
+        document.getElementById("sg").classList.remove("has-text-success");
+        document.getElementById("sd").classList.remove("has-text-success");
+        document.getElementById("sb").classList.remove("has-text-success");
+        if (searchEngine == "https://google.com/search?q=%s") {
+            document.getElementById("sg").classList.add("has-text-success");
+        } else if (searchEngine == "https://duckduckgo.com/%s") {
+            document.getElementById("sd").classList.add("has-text-success");
+        } else if (searchEngine == "https://bing.com/search?q=%s") {
+            document.getElementById("sb").classList.add("has-text-success");
+        }
+    }
+
+    checkHome();
+    checkSecurity();
+    checkSearch();
 </script>
 </body>
 </html>

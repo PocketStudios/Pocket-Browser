@@ -18,11 +18,11 @@ async function menuClick(i) {
     } else if (i == 7) {
         Bookmarks();
     } else if (i == 8) {
-        showDownloads();
+        downloadsList();
     } else if (i == 9) {
         settingsModal.classList.add('is-active');
     } else if (i == 10) {
-        feedbackDialog()
+        addTab("https://pocket-studios.gitbook.io/pocketbrowser/");
     } else if (i == 11) {
         aboutModal.classList.add('is-active');
     } else if (i == 12) {

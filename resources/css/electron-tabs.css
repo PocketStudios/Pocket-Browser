@@ -1,13 +1,14 @@
 .etabs-tabgroup {
-  width: 100%;
-  height: 32px;
-  cursor: default;
-  font: caption;
-  font-size: 14px;
-  -webkit-user-select: none;
-  user-select: none;
-  display: none;
-  overflow: auto;
+    width: 100%;
+    height: 32px;
+    cursor: default;
+    font: caption;
+    font-size: 14px;
+    -webkit-user-select: none;
+    user-select: none;
+    display: none;
+    overflow: auto;
+    margin-bottom: 1%;
 }
 
 .etabs-tabgroup.visible {

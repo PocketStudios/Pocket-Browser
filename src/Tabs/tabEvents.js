@@ -1,7 +1,7 @@
 function addEvents(tab) {
     const domready = emittedOnce(tab.webview, "dom-ready");
     Promise.all([domready]).then(() => {
-        var newAgent = tab.webview.getUserAgent().replace(" Electron/" + process.versions['electron'], "").replace("pocket-browser/1.7.0", "Edg/91.0.831.1")
+        var newAgent = tab.webview.getUserAgent().replace(" Electron/" + process.versions['electron'], "").replace("pocket-browser/1.8.0", "Edg/109.0.1518.70")
         tab.webview.setUserAgent(newAgent)
         tab.webview.addEventListener('did-finish-load', function () {
         changeState(0)

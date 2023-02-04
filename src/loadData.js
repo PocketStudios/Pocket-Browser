@@ -1,6 +1,7 @@
 let homePage = "https://google.com";
 let adBlock = false;
 let dark = false;
+let securityMode = 1;
 let vidDown = false;
 let dataPath = require("@electron/remote").app.getPath("userData");
 let path = require("path");
@@ -10,7 +11,7 @@ let Swal = require("sweetalert2");
 if (fs.existsSync(path.join(dataPath,"/home.pocket"))) {
 	homePage = fs.readFileSync(path.join(dataPath, "/home.pocket"), "utf8") || "https://google.com";
 }
-let searchEngine = "https://duck.com/%s";
+let searchEngine = "https://google.com/search?q=%s";
 if (fs.existsSync(path.join(dataPath,"/search.pocket"))) {
 searchEngine = fs.readFileSync(path.join(dataPath, "/search.pocket"),"utf8") || "https://duck.com/%s";
 }
@@ -25,22 +26,17 @@ if (!fs.existsSync(path.join(dataPath,"/errors.pocket")) || !fs.existsSync(path.
 				contextIsolation: false,
 				webviewTag: true
 			}
-		})
-		require("@electron/remote").require("@electron/remote/main").enable(newWindow.webContents)
-		newWindow.loadFile(path.join(__dirname,"src/System/pages/start.html"));
-		newWindow.setMenu(null);
-		newWindow.setTitle("Start - Pocket Browser")
+	})
+	require("@electron/remote").require("@electron/remote/main").enable(newWindow.webContents)
+	newWindow.loadFile(path.join(__dirname, "src/System/pages/start.html"));
+	newWindow.setMenu(null);
+	newWindow.setTitle("Start - Pocket Browser")
 
 }
 
-if (fs.existsSync(path.join(dataPath,"/ads.pocket"))) {
-	adBlock = fs.readFileSync(path.join(dataPath,"/ads.pocket"),"utf8") || "false";
-}
-
-if (fs.existsSync(path.join(dataPath,"/dark.pocket"))) {
-	dark = fs.readFileSync(path.join(dataPath,"/dark.pocket"),"utf8") || "false"
-}
-
-if (fs.existsSync(path.join(dataPath,"/vid-down.pocket"))) {
-	vidDown = fs.readFileSync(path.join(dataPath,"/vid-down.pocket"),"utf8") || "false";
+if (fs.existsSync(path.join(dataPath, "/vid-down.pocket"))) {
+	vidDown = fs.readFileSync(path.join(dataPath, "/vid-down.pocket"), "utf8") || "false";
+} else vidDown = "true";
+if (fs.existsSync(path.join(dataPath, "/security.pocket"))) {
+	securityMode = fs.readFileSync(path.join(dataPath, "/security.pocket"), "utf8") || 1;
 }

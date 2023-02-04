@@ -5,6 +5,8 @@ let searchEngines = ["https://google.com/search?q=%s", "https://duckduckgo.com/%
 function setSearchEngine(option) {
     if (searchEngines.length > option) {
         require("fs").writeFileSync(require("path").join(require("@electron/remote").app.getPath("userData"), "/search.pocket"), searchEngines[option])
+        searchEngine = searchEngines[option];
+        checkSearch();
     }
     searchEngineModal.classList.remove("is-active")
 }
@@ -16,12 +18,13 @@ function setOtherSearchEngine(value) {
 }
 
 // Home Page
-let homepages = ["https://google.com/", "https://duckduckgo.com", "https://bing.com/"]
+let homepages = ["https://google.com", "https://duckduckgo.com", "https://bing.com"]
 
 function setHomePage(option) {
-    console.log(option)
     if (homepages.length > option) {
         require("fs").writeFileSync(require("path").join(require("@electron/remote").app.getPath("userData"), "/home.pocket"), homepages[option])
+        homePage = homepages[option];
+        checkHome();
     }
     homePageModal.classList.remove("is-active")
 
@@ -35,12 +38,16 @@ function setOtherHomePage(value) {
 function setSecurityMode(option) {
     require("fs").writeFileSync(require("path").join(require("@electron/remote").app.getPath("userData"), "/security.pocket"), option.toString())
     securityModal.classList.remove("is-active")
+    securityMode = option;
+    checkSecurity();
 
 }
 
 let history = [];
-
+let historyData = [];
 function History() {
+    history = [];
+    historyData = [];
     if (!require("fs").existsSync(require("path").join(require("@electron/remote").app.getPath("userData"), "/history.pocket"))) Swal.fire({
         title: 'History',
         html: "<p>Empty!</p>",
@@ -50,9 +57,10 @@ function History() {
     })
     let lbl = require("line-by-line");
     let lr = new lbl(require("path").join(require("@electron/remote").app.getPath("userData"), "/history.pocket"));
-    let html = "<input id='term' onchange='findHistory(this)' class='input mb-3' placeholder='Search History'><button class='button is-danger'>Clear</button><table class='table is-fullwidth'><thead><tr><th>URL</th><th>Actions</th></tr></thead><tbody id='historyTable'>";
+    let html = "<input id='term' onchange='findHistory(this)' class='input mb-3' placeholder='Search History'><button class='button is-danger' onclick='clearHistory()'>Clear</button><table class='table is-fullwidth'><thead><tr><th>URL</th><th>Actions</th></tr></thead><tbody id='historyTable'>";
     lr.on("line", function (line) {
         history.push(line);
+        historyData[line] = (history.length - 1);
         if (line.length > 50) {
             line = line.substring(0, 50) + "..."
         }
@@ -83,18 +91,25 @@ function findHistory(e) {
     results = 0;
     document.getElementById("historyTable").innerHTML = "";
     history.filter(item => item.includes(term)).forEach(function (item) {
+        let value = historyData[item];
         if (item.length > 50) {
             item = item.substring(0, 50) + "..."
         }
-        document.getElementById("historyTable").innerHTML += "<tr><th>" + item + "</th><td><button class='button is-primary' onclick='loadHistory(" + i + ")'>Open</button> </td></tr>";
+        document.getElementById("historyTable").innerHTML += "<tr><th>" + item + "</th><td><button class='button is-primary' onclick='loadHistory(" + value + ")'>Open</button> </td></tr>";
         results++;
     })
 
 }
 
+function clearHistory() {
+    require("fs").writeFileSync(require("path").join(require("@electron/remote").app.getPath("userData"), "/history.pocket"), "")
+    Swal.close();
+}
+
 let bookmarks = [];
 
 function Bookmarks() {
+    bookmarks = [];
     if (!require("fs").existsSync(require("path").join(require("@electron/remote").app.getPath("userData"), "/bookmarks.json"))) Swal.fire({
         title: 'Bookmarks',
         html: "<p>Empty!</p>",
@@ -103,13 +118,13 @@ function Bookmarks() {
         showConfirmButton: false,
     })
     let bookmarksJson = require("fs").readFileSync(require("path").join(require("@electron/remote").app.getPath("userData"), "/bookmarks.json"));
-    let html = "<input id='term' onchange='findBookmark(this)' class='input mb-3' placeholder='Search Bookmark'><button class='button is-danger'>Clear</button><table class='table is-fullwidth'><thead><tr><th>Name</th><th>URL</th><th>Actions</th></tr></thead><tbody id='bookmarkTable'>";
+    let html = "<input id='term' onchange='findBookmark(this)' class='input mb-3' placeholder='Search Bookmark'><button class='button is-danger' onclick='clearBookmarks()'>Clear</button><table class='table is-fullwidth'><thead><tr><th>Name</th><th>URL</th><th>Actions</th></tr></thead><tbody id='bookmarkTable'>";
     let json = JSON.parse(bookmarksJson);
     for (let i = 0; i < (Object.keys(json).length + 1); i++) {
         if (Object.keys(json).length > i) {
             let name = Object.keys(json)[i];
             let line = json[name];
-            bookmarks.push({name: name, url: json[name]});
+            bookmarks.push({name: name, url: json[name], value: i});
             if (line.length > 50) {
                 line = line.substring(0, 50) + "..."
             }
@@ -139,15 +154,21 @@ function findBookmark(e) {
     results = 0;
     document.getElementById("bookmarkTable").innerHTML = "";
     bookmarks.filter(item => item.url.includes(term) || item.name.includes(term)).forEach(function (item) {
-        if (item.length > 50) {
-            item = item.substring(0, 50) + "..."
-        }
         let name = item.name;
         let line = item.url;
-        document.getElementById("bookmarkTable").innerHTML += "<tr><th>" + name + "</th><th>" + line + "</th><td><button class='button is-primary' onclick='loadBookmark(" + (bookmarks.length - 1) + ")'>Open</button> </td></tr>";
+        if (line.length > 50) {
+            line = line.substring(0, 50) + "..."
+        }
+        let value = item.value;
+        document.getElementById("bookmarkTable").innerHTML += "<tr><th>" + name + "</th><th>" + line + "</th><td><button class='button is-primary' onclick='loadBookmark(" + value + ")'>Open</button> </td></tr>";
         results++;
     })
 
+}
+
+function clearBookmarks() {
+    require("fs").writeFileSync(require("path").join(require("@electron/remote").app.getPath("userData"), "/bookmarks.json"), "{}")
+    Swal.close();
 }
 
 // pocket.resetSettings = async function () {

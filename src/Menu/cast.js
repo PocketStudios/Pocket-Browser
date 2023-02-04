@@ -6,7 +6,7 @@ function castTo(id) {
 function showControls(choosenDevice) {
     Swal.close();
     let fullDiv = document.createElement("div");
-    fullDiv.innerHTML = "<img width='32' src='node_modules/bootstrap-icons/icons/stop-btn.svg' onclick='client.devices[" + choosenDevice + "].stop()'><img width='32' src='node_modules/bootstrap-icons/icons/pause-btn.svg' onclick='client.devices[" + choosenDevice + "].pause()'><img width='32' src='node_modules/bootstrap-icons/icons/play-btn.svg' onclick='client.devices[" + choosenDevice + "].resume()'><br><p>Volume:<input type='range' min='0' max='100' value='" + getVolume(choosenDevice) + "' class='form-control' id='cast-volume' onchange='changeVolume(" + choosenDevice + ")'></p>" + showButtons(choosenDevice) + "</p>"
+    fullDiv.innerHTML = "<img width='32' src='resources/icons/stop-btn.svg' onclick='client.devices[" + choosenDevice + "].stop()'><img width='32' src='resources/icons/pause-btn.svg' onclick='client.devices[" + choosenDevice + "].pause()'><img width='32' src='resources/icons/play-btn.svg' onclick='client.devices[" + choosenDevice + "].resume()'><br><p>Volume:<input type='range' min='0' max='100' value='" + getVolume(choosenDevice) + "' class='form-control' id='cast-volume' onchange='changeVolume(" + choosenDevice + ")'></p>" + showButtons(choosenDevice) + "</p>"
     Swal.fire({
         title: client.devices[choosenDevice].friendlyName,
         html: fullDiv
@@ -44,9 +44,9 @@ function showButtons(id) {
         if (client.devices[id].getCurrentTime()) {
             return client.devices[id].getCurrentTime() + "<br><button class='button' onclick='client.devices[" + id + "].close()'>Close Connection</button>"
         } else {
-            return "No video running.<br><button class='btn' onclick='castTo(" + id + ")'>Cast</button>";
+            return "No video running.<br><button class='button' onclick='castTo(" + id + ")'>Cast</button>";
         }
     } catch(err) {
-        return "No video running.<br><button class='btn' onclick='castTo(" + id + ")'>Cast</button>";
+        return "No video running.<br><button class='button' onclick='castTo(" + id + ")'>Cast</button>";
     }
 }
