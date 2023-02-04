@@ -21,7 +21,6 @@ jobs:
         uses: samuelmeuli/action-snapcraft@v1
         if: startsWith(matrix.os, 'ubuntu')
         with:
-          # Log in to Snap Store
           snapcraft_token: ${{ secrets.snapcraft_token }}
       - name: Build/release Electron app
         uses: samuelmeuli/action-electron-builder@v1
