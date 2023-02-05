@@ -17,8 +17,6 @@ require("@electron/remote").session.defaultSession.webRequest.onBeforeRequest({u
         }
     }
     if (securityMode != 0) {
-        if (block.includes(details.referrer)) return callback({cancel: true});
-        if (ignore.includes(details.referrer)) return callback({cancel: false});
         const {match} = engine.match(Request.fromRawDetails({
             type: details.resourceType,
             url: details.url,
@@ -31,6 +29,8 @@ require("@electron/remote").session.defaultSession.webRequest.onBeforeRequest({u
             if (securityMode == 2) {
                 callback({cancel: true})
             } else {
+                if (block.includes(details.referrer)) return callback({cancel: true});
+                if (ignore.includes(details.referrer)) return callback({cancel: false});
                 Swal.fire({
                     title: "Ads Detected",
                     text: "Should we block the ads?",
