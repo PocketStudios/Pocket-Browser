@@ -34,8 +34,7 @@
       "icon": "build/icon.png",
       "category": "Network",
       "publish": [
-        "github",
-        "snapStore"
+        "github"
       ]
     },
     "win": {
