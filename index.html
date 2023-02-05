@@ -74,50 +74,9 @@
         <button class="button toolbar-hover" onclick="goHome()"><img class="toolbar-icon" src="resources/icons/home.png"></button>
         <button class="button toolbar-hover" onclick="secureDialog()"><img class="toolbar-icon" id="secure-icon" src="resources/icons/security.png"></button>
     </div>
-<!--    <button class="btn btn-light toolbar-btn toolbar-hover" onclick="tabBack()"><img class="toolbar-icon" src="resources/icons/back.png"></button>-->
-<!--    <button class="btn btn-light toolbar-btn toolbar-hover" onclick="tabForward()"><img class="toolbar-icon" src="resources/icons/forward.png"></button>-->
-<!--    <button class="btn btn-light toolbar-btn toolbar-hover" id="state-btn"><img class="toolbar-icon" src="resources/icons/refresh.png"></button>-->
-    <input class="input url" placeholder="Enter web address" id="address" spellcheck="false">
+ <input class="input url" id="address" placeholder="Enter web address" spellcheck="false">
     <button id="go" class="button" onclick="loadURL()"><img class="toolbar-icon" src="resources/icons/search.png"></button>
     <button id="menuBtn" class="button menu-btn toolbar-hover" type="button"><img class="toolbar-icon" src="resources/icons/menu.png"></button>
-
-    <!--    <div class="dropdown toolbar-btn menu-btn">-->
-<!--        <div class="dropdown-trigger">-->
-<!--        <button class="button toolbar-hover" type="button" aria-haspopup="true" aria-controls="settingsMenu"><img class="toolbar-icon" src="resources/icons/menu.png"></button>-->
-<!--        </div>-->
-<!--        <div class="dropdown-menu" aria-labelledby="settingsMenu" id="settingsMenu">-->
-<!--            <div class="dropdown-item"><button class="button">New Tab</button></div>-->
-<!--            <div class="dropdown-content">-->
-<!--            <button class="dropdown-item" onclick="addTab()">New Tab</button>-->
-<!--           <button class="dropdown-item" onclick="addWindow()">New Window</button>-->
-<!--            <hr>-->
-<!--            <button class="dropdown-item" onclick="toggleDevTools()">Developer Tools</button>-->
-<!--            <button class="dropdown-item" onclick="loadSystemPage('history')">History</button>-->
-<!--            <button class="dropdown-item" onclick="loadSystemPage('bookmarks')">Bookmarks</button>-->
-<!--            <button class="dropdown-item" onclick="downloadsList()">Downloads</button>-->
-<!--            <hr>-->
-<!--            <div class="custom-dropdown-item">-->
-<!--                <button class="btn custom-btn-light" onclick="toggleFullScreen()" type="button"><img-->
-<!--                        height="15" id="fullScreen" src="node_modules/bootstrap-icons/icons/fullscreen.svg" title="Full Screen"-->
-<!--                        width="15"></button>-->
-<!--                <b> | </b>-->
-<!--                <button class="btn custom-btn-light" onclick="zoom('add')"><img-->
-<!--                        height="15" src="node_modules/bootstrap-icons/icons/zoom-in.svg" title="Zoom In" width="15">-->
-<!--                </button>-->
-<!--                <button class="btn custom-btn-light" onclick="zoom('minus')"><img-->
-<!--                        height="15" src="node_modules/bootstrap-icons/icons/zoom-out.svg" title="Zoom out" width="15">-->
-<!--                </button>-->
-<!--            </div>-->
-<!--            <hr>-->
-<!--            <button class="dropdown-item" onclick="find()">Find</button>-->
-<!--            <button class="dropdown-item" onclick="showDevicesToCast()">Cast</button>-->
-<!--            <button class="dropdown-item" onclick="loadSystemPage('settings')">Settings</button>-->
-<!--            <button class="dropdown-item" onclick="feedbackDialog()">Feedback</button>-->
-<!--            <button class="dropdown-item" onclick="loadSystemPage('settings',false,'about')">About</button>-->
-<!--            <button class="dropdown-item" onclick="require('@electron/remote').app.exit()">Exit</button>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
 </nav>
 
 <div class="etabs-views"></div>
